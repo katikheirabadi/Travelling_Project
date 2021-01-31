@@ -38,8 +38,8 @@ namespace Travelling
             services.AddDbContext<TravellingDBContext>(o => { o.UseSqlServer(Configuration.GetConnectionString("TravellConection")); });
             services.AddTransient<IRepository<User>, Repository<User>>();
             services.AddTransient<IRepository<Comment>, Repository<Comment>>();
-            services.AddTransient<IRepository<Rate>, Repository<Rate>>();
-            services.AddTransient<IRepository<Turist_PLace>, Repository<Turist_PLace>>();
+            services.AddTransient<IRepository<Turist_Place>, Repository<Turist_Place>>();
+            services.AddTransient<IRepository<Turist_Place>, Repository<Turist_Place>>();
             services.AddTransient<IRepository<UserLogin>, Repository<UserLogin>>();      
         }
 

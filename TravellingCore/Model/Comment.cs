@@ -13,6 +13,6 @@ namespace TravellingCore.Model
         public int userid { get; set; }
         public User user { get; set; }
         public int TP_id { get; set; }
-        public Turist_PLace TP_ { get; set; }
+        public Turist_Place TP_ { get; set; }
     }
 }

@@ -5,7 +5,7 @@ using TravellingCore.ContextRepositoryInterface;
 
 namespace TravellingCore.Model
 {
-    public class Turist_PLace : IEntity
+    public class Turist_Place : IEntity
     {
         public int id { get; set; }
         public string Name { get; set; }
@@ -13,5 +13,7 @@ namespace TravellingCore.Model
         public string CountryName { get; set; }
         public string Description { get; set; }
         public int Visit { get; set; }
+        public List<Comment> Comments { get; set; }
+        public List<Turist_Place> Rates { get; set; }
     }
 }

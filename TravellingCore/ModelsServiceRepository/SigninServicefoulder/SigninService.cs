@@ -10,20 +10,21 @@ using TravellingCore.Model;
 
 namespace TravellingCore.ModelsServiceRepository.SigninRepository
 {
-    public class SigninRepository : ISigninuserRepository
+    public class SigninService 
     {
         private readonly IRepository<User> repository;
         private readonly IMapper mapper;
 
-        public SigninRepository(IRepository<User> repository, IMapper mapper)
+        public SigninService(IRepository<User> repository, IMapper mapper)
         {
             this.repository = repository;
             this.mapper = mapper;
         }
-        public Task Create(SigninInputDTO signin)
+        public Task Signin(SigninInputDTO signin)
         {
             repository.Insert(mapper.Map<User>(signin));
             return repository.Save();
         }
     }
 }
+
