@@ -9,6 +9,6 @@ namespace TravellingCore.ModelsServiceRepository.SigninRepository
 {
     public interface ISigninuserRepository
     {
-        public Task<IActionResult> Create(SigninInputDTO signin);
+        public Task Create(SigninInputDTO signin);
     }
 }
