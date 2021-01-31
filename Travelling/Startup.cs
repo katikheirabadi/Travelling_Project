@@ -13,7 +13,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
+using TravellingCore.ContextRepositoryInterface;
 using TravellingCore.Mapp;
+using TravellingCore.Model;
+using TravellingEF.ContextRepository;
 using TravellingEF.DataBase;
 
 namespace Travelling
@@ -33,7 +36,11 @@ namespace Travelling
             services.AddControllers();
             services.AddAutoMapper(Assembly.GetAssembly(typeof(MappConfig)));
             services.AddDbContext<TravellingDBContext>(o => { o.UseSqlServer(Configuration.GetConnectionString("TravellConection")); });
-        }
+            services.AddTransient<IRepository<User>, Repository<User>>();
+            services.AddTransient<IRepository<Comment>, Repository<Comment>>();
+            services.AddTransient<IRepository<Rate>, Repository<Rate>>();
+            services.AddTransient<IRepository<Turist_PLace>, Repository<Turist_PLace>>();
+            services.AddTransient<IRepository<UserLogin>, Repository<UserLogin>>();        }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

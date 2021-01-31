@@ -9,6 +9,10 @@ namespace TravellingCore.ModelsServiceRepository.SigninRepository
 {
     public class SigninRepository : ISigninuserRepository
     {
+        public SigninRepository()
+        {
+
+        }
         public Task<IActionResult> Create(SigninInputDTO signin)
         {
             throw new NotImplementedException();
