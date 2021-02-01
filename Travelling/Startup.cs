@@ -17,6 +17,7 @@ using TravellingCore.ContextRepositoryInterface;
 using TravellingCore.Mapp;
 using TravellingCore.Model;
 using TravellingCore.ModelsServiceRepository.SigninRepository;
+using TravellingCore.ServiceRepository.LoginService;
 using TravellingEF.ContextRepository;
 using TravellingEF.DataBase;
 
@@ -43,6 +44,7 @@ namespace Travelling
             services.AddTransient<IRepository<Rate>, Repository<Rate>>();
             services.AddTransient<IRepository<UserLogin>, Repository<UserLogin>>();
             services.AddTransient<SigninService>();
+            services.AddTransient<LoginServicr>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
