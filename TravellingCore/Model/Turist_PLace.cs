@@ -14,6 +14,6 @@ namespace TravellingCore.Model
         public string Description { get; set; }
         public int Visit { get; set; }
         public List<Comment> Comments { get; set; }
-        public List<Turist_Place> Rates { get; set; }
+        public List<Rate> Rates { get; set; }
     }
 }
