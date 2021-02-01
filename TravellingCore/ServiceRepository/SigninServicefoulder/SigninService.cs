@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using TravellingCore.ContextRepositoryInterface;
 using TravellingCore.Dto.Sign_in;
 using TravellingCore.Model;
+using System.Linq;
 
 namespace TravellingCore.ModelsServiceRepository.SigninRepository
 {
@@ -20,10 +21,17 @@ namespace TravellingCore.ModelsServiceRepository.SigninRepository
             this.repository = repository;
             this.mapper = mapper;
         }
-        public Task Signin(SigninInputDTO signin)
+        public async Task<string> Signin(SigninInputDTO signin)
         {
-            repository.Insert(mapper.Map<User>(signin));
-            return repository.Save();
+            var usersignin = mapper.Map<User>(signin);
+            if (usersignin.Password != usersignin.Re_Password)
+                return "Re_Pasword is not Correct";
+            var Users = await repository.GetAll();
+            if (Users.FirstOrDefault(u => u.Username == usersignin.Username) != null)
+                return "Accont whit this username exist...";
+            repository.Insert(usersignin);
+            await repository.Save();
+            return $"Wellcome {usersignin.FullName}";
         }
     }
 }

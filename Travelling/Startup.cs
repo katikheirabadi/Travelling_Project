@@ -16,6 +16,7 @@ using System.Threading.Tasks;
 using TravellingCore.ContextRepositoryInterface;
 using TravellingCore.Mapp;
 using TravellingCore.Model;
+using TravellingCore.ModelsServiceRepository.SigninRepository;
 using TravellingEF.ContextRepository;
 using TravellingEF.DataBase;
 
@@ -39,8 +40,9 @@ namespace Travelling
             services.AddTransient<IRepository<User>, Repository<User>>();
             services.AddTransient<IRepository<Comment>, Repository<Comment>>();
             services.AddTransient<IRepository<Turist_Place>, Repository<Turist_Place>>();
-            services.AddTransient<IRepository<Turist_Place>, Repository<Turist_Place>>();
-            services.AddTransient<IRepository<UserLogin>, Repository<UserLogin>>();      
+            services.AddTransient<IRepository<Rate>, Repository<Rate>>();
+            services.AddTransient<IRepository<UserLogin>, Repository<UserLogin>>();
+            services.AddTransient<SigninService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

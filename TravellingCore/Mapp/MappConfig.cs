@@ -11,7 +11,12 @@ namespace TravellingCore.Mapp
     {
         public MappConfig()
         {
-            CreateMap<SigninInputDTO, User>();
+            CreateMap<SigninInputDTO, User>().ForMember(o=> o.FullName , x=> x.MapFrom( p=> p.FullName))
+                .ForMember(o => o.Username, x => x.MapFrom(p => p.Username))
+                .ForMember(o => o.Password, x => x.MapFrom(p => p.Password))
+                .ForMember(o => o.Re_Password, x => x.MapFrom(p => p.Re_Password))
+                .ForMember(o => o.Phone_Number, x => x.MapFrom(p => p.Phone_Number));
+
         }
     }
 }
