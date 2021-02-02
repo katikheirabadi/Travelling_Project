@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using TravellingCore.ContextRepositoryInterface;
 using TravellingCore.Dto.SearchByName;
 using TravellingCore.Model;
+using TravellingCore.ModelsServiceRepository.Models.Methods;
 
 namespace Travelling.Controllers
 {
@@ -15,19 +16,26 @@ namespace Travelling.Controllers
     [ApiController]
     public class HomeController : ControllerBase
     {
-        private readonly IMapper mapper;
-        private readonly IRepository<Turist_Place> turistPlace;
-        public HomeController(IRepository<Turist_Place> turistPlace, IMapper mapper)
+        private readonly Turist_PLace_Service turist;
+        public HomeController(Turist_PLace_Service turist)
         {
-            this.turistPlace = turistPlace;
-            this.mapper = mapper;
+            this.turist = turist;
         }
         [HttpGet]
-        public NameOutputDTO SearchbyName([FromQuery] string Name)
+        public async Task<IActionResult> SearchbyName([FromQuery] string Name)
         {
-            var place = turistPlace.GetQuery()
-                .FirstOrDefault(x => x.Name.Contains(Name));
-            return mapper.Map<NameOutputDTO>(place);
+            var place = await turist.SearchByName(Name);
+            if (place == null)
+                return NotFound();
+            return Ok(place);
+        }
+        [HttpGet]
+        public async Task<IActionResult> New_Places([FromQuery] int size)
+        {
+            var example = await turist.New_Places(size);
+            if (example == null)
+                return NotFound();
+            return Ok(example);
         }
     }
 }

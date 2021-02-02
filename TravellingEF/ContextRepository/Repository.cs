@@ -19,18 +19,18 @@ namespace TravellingEF.ContextRepository
         }
         public string Delete(int id)
         {
-            var item=dBContext.Set<T>().FirstOrDefault(T => T.id == id);
-            if(item!=null)
-            {
-                dBContext.Remove(id);
-                return $"item with id = {id} deleted.... ";
-            }
-            return "Not Found ...";
+            var item = dBContext.Set<T>().FirstOrDefault(T => T.id == id);
+            if (item != null)
+               {
+                   dBContext.Remove(id);
+                   return $"item with id = {id} deleted.... ";
+               }
+               return "Not Found ...";
         }
 
         public  Task<T> Get(int id)
         {
-            return this.dBContext.Set<T>().FirstOrDefaultAsync(x => x.id == id);
+            return this.dBContext.Set<T>().FirstOrDefaultAsync(x => x.id == id); 
         }
 
         public Task<List<T>> GetAll()
@@ -50,7 +50,14 @@ namespace TravellingEF.ContextRepository
 
         public Task Save()
         {
-            return dBContext.SaveChangesAsync();
+            try
+            {
+                return dBContext.SaveChangesAsync();
+            }
+            catch
+            {
+                return null;
+            }
         }
 
         public string Update(T input)

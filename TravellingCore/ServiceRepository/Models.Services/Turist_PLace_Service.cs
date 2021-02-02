@@ -1,18 +1,23 @@
-﻿using System;
+﻿using AutoMapper;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TravellingCore.ContextRepositoryInterface;
+using TravellingCore.Dto.NewPlace;
+using TravellingCore.Dto.SearchByName;
 using TravellingCore.Model;
 
 namespace TravellingCore.ModelsServiceRepository.Models.Methods
 {
-    public class Turist_PLace_Service 
+    public class Turist_PLace_Service
     {
+        private readonly IMapper mapper;
         private readonly IRepository<Turist_Place> repository;
-        public Turist_PLace_Service(IRepository<Turist_Place> repository)
+        public Turist_PLace_Service(IRepository<Turist_Place> repository, IMapper mapper)
         {
+            this.mapper = mapper;
             this.repository = repository;
         }
         public string Delete(int id)
@@ -49,6 +54,22 @@ namespace TravellingCore.ModelsServiceRepository.Models.Methods
         {
             return repository.Update(item);
         }
-
+        public async Task<NameOutputDTO> SearchByName(string Name)
+        {
+            var place = await repository.GetAll();
+            var placeName = place.FirstOrDefault(x => x.Name == Name);
+            return mapper.Map<NameOutputDTO>(placeName);
+        }
+        public async Task<NewListInputDTO> New_Places(int size)
+        {
+            var AllPlace = await repository.GetAll();
+            var ReversePlace = AllPlace.AsQueryable().Reverse();
+            var newPlace = ReversePlace.Take(size).ToList();
+            var finall = mapper.Map<List<NewInputDTO>>(newPlace);
+            return new NewListInputDTO()
+            {
+                Turism_Places = finall.ToList()
+            };
+        }
     }
 }

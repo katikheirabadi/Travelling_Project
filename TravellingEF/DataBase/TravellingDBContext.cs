@@ -10,7 +10,7 @@ namespace TravellingEF.DataBase
     {
         public DbSet<User> Users { get; set; }
         public DbSet<Comment> Comments { get; set; }
-        public DbSet<Turist_Place> Rates { get; set; }
+        public DbSet<Rate> Rates { get; set; }
         public DbSet<Turist_Place> Turist_PLaces { get; set; }
         public DbSet<UserLogin> UserLogins { get; set; }
 
@@ -26,7 +26,7 @@ namespace TravellingEF.DataBase
         {
             modelBuilder.Entity<User>(b => b.ToTable("user"));
             modelBuilder.Entity<Comment>(b => b.ToTable("Comment"));
-            modelBuilder.Entity<Turist_Place>(b => b.ToTable("Rate"));
+            modelBuilder.Entity<Rate>(b => b.ToTable("Rate"));
             modelBuilder.Entity<Turist_Place>(b => b.ToTable("Turist_PLace"));
             modelBuilder.Entity<UserLogin>(b => b.ToTable("UserLogin"));
 

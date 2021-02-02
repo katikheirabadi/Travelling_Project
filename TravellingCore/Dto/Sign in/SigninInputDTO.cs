@@ -7,13 +7,13 @@ namespace TravellingCore.Dto.Sign_in
 {
     public class SigninInputDTO
     {
-        [Required]
+        [Required(ErrorMessage ="you must enter this field ")]
         public string FullName { get; set; }
-        [Required]
+        [Required(ErrorMessage = "you must enter this field ")]
         public string Username { get; set; }
-        [Required]
+        [Required(ErrorMessage = "you must enter this field ")]
         public string Password { get; set; }
-        [Required]
+        [Required(ErrorMessage = "you must enter this field ")]
         public string Re_Password { get; set; }
         public string Phone_Number { get; set; }
     }

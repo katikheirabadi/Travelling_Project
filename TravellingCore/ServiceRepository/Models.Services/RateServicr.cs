@@ -11,9 +11,14 @@ namespace TravellingCore.ModelsServiceRepository.Models.Methods
     public class RateServicr
     {
         private readonly IRepository<Rate> repository;
-        public RateServicr(IRepository<Rate> repository)
+        private readonly IRepository<UserLogin> repository1;
+        private readonly IRepository<Turist_Place> repository2;
+
+        public RateServicr(IRepository<Rate> repository,IRepository<UserLogin> repository1,IRepository<Turist_Place> repository2)
         {
             this.repository = repository;
+            this.repository1 = repository1;
+            this.repository2 = repository2;
         }
         public string Delete(int id)
         {
@@ -35,10 +40,30 @@ namespace TravellingCore.ModelsServiceRepository.Models.Methods
             return repository.GetQuery();
         }
 
-        public void Insert(Rate item)
+        public async Task<string> Insert(int rate , string place , string Token)
         {
-            repository.Insert(item);
-        }
+            var users = await repository1.GetAll();
+            var user = users.FirstOrDefault(u => u.Token == Token);
+            if (user == null)
+                return "We don't have any Login-user with this Token ";
+            TimeSpan time = user.ExpireDate.Date - DateTime.Now.Date;
+            if (time.TotalMilliseconds < 0)
+                return "your accont has expierd and you must log in again";
+            var places = repository2.GetQuery();
+            var place1 = places.FirstOrDefault(p => p.Name == (place));
+            if (place == null)
+                return "Not found any place with this name";
+
+            repository.Insert(new Rate()
+            {
+                RecordDate = DateTime.Now,
+                RateInt = rate,
+                Tp_id = place1.id,
+                userid = user.userid
+            }) ;
+           
+            return "we add your Rate .";
+          }
 
         public Task Save()
         {

@@ -22,6 +22,10 @@ namespace Travelling.Controllers
         [HttpPost]
         public async Task<IActionResult> Add(LoginInputDto loginitem)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
             var result =await login.AddLogin(loginitem);
             if (result == "Not Found Any User with this Information...")
                 return NotFound("Not Found Any User with this Information...");
