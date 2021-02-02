@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TravellingCore.ContextRepositoryInterface;
 using TravellingCore.Dto.NewPlace;
+using TravellingCore.Dto.SearchByCountry;
 using TravellingCore.Dto.SearchByName;
 using TravellingCore.Model;
 
@@ -70,6 +71,13 @@ namespace TravellingCore.ModelsServiceRepository.Models.Methods
             {
                 Turism_Places = finall.ToList()
             };
+        }
+        public async Task<CountryListOutPutDto> SearchByCountry(string Name)
+        {
+            var Places = await repository.GetAll();
+            var MyPlaces = Places.Where(x => x.CountryName == Name).ToList();
+            var Reasult = MyPlaces.Select(x => mapper.Map<CountryOutPutDto>(x)).ToList();
+            return new CountryListOutPutDto() { Places = Reasult };
         }
     }
 }
