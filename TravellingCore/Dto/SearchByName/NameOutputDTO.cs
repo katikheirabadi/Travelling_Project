@@ -6,8 +6,7 @@ namespace TravellingCore.Dto.SearchByName
 {
     public class NameOutputDTO
     {
-        public int id { get; set; }
         public string Atrraction { get; set; }
-        public string CountryName { get; set; }
+        public string Description { get; set; }
     }
 }
