@@ -47,7 +47,7 @@ namespace TravellingCore.ServiceRepository.LoginService
                 await repository1.Save();
             }
             
-            return $"Wellcome to your accont with code {loginuser.Token}...";
+            return $"Wellcome to your accont with code {loginuser.Token}";
             
         }
     }
