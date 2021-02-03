@@ -11,6 +11,7 @@ using TravellingCore.Dto.SearchByAtr;
 using TravellingCore.Dto.searchByCity;
 using TravellingCore.Dto.SearchByCountry;
 using TravellingCore.Dto.SearchByName;
+using TravellingCore.Dto.SearchByVisted;
 using TravellingCore.Dto.TPlace;
 using TravellingCore.Model;
 
@@ -66,6 +67,7 @@ namespace TravellingCore.ModelsServiceRepository.Models.Methods
             var placeName = place.FirstOrDefault(x => x.Name == Name);
             return mapper.Map<NameOutputDTO>(placeName);
         }
+        
         public async Task<NewListInputDTO> New_Places(int size)
         {
             var AllPlace = await repository.GetAll();
@@ -82,8 +84,19 @@ namespace TravellingCore.ModelsServiceRepository.Models.Methods
             var myCity = await repository.GetAll();
             var newCity = myCity.Where(x => x.CityName == city).ToList();
             var finallcity = newCity.Select(x => mapper.Map<CityOutputDTO>(x)).ToList();
-            return new CityListOutputDTO() {
+            return new CityListOutputDTO()
+            {
                 Turism_Places = finallcity
+            };
+        }
+        public async Task<VisitedListOutputDTO> SearchbyVisited()
+        {
+            var place1 = await repository.GetAll();
+            var mcity = place1.Select(x =>place1.Max()).ToList();
+            var finallplace = mcity.Select(x => mapper.Map<VisitedOutputDTO>(x)).ToList();
+            return new VisitedListOutputDTO()
+            {
+                Turism_Places = finallplace
             };
         }
         public async Task<AtrListOutputDTO> SearchByAttraction(string atr)
