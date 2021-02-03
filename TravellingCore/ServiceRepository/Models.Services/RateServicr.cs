@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TravellingCore.ContextRepositoryInterface;
+using TravellingCore.Dto.Rate;
 using TravellingCore.Model;
 
 namespace TravellingCore.ModelsServiceRepository.Models.Methods
@@ -40,7 +41,7 @@ namespace TravellingCore.ModelsServiceRepository.Models.Methods
             return repository.GetQuery();
         }
 
-        public async Task<string> Insert(int rate , string place , string Token)
+        public async Task<string> Insert(RateInputDto  rate , string Token)
         {
             var users = await repository1.GetAll();
             var user = users.FirstOrDefault(u => u.Token == Token);
@@ -50,14 +51,14 @@ namespace TravellingCore.ModelsServiceRepository.Models.Methods
             if (time.TotalMilliseconds < 0)
                 return "your accont has expierd and you must log in again";
             var places = repository2.GetQuery();
-            var place1 = places.FirstOrDefault(p => p.Name == place);
-            if (place == null)
+            var place1 = places.FirstOrDefault(p => p.Name == rate.place);
+            if (place1 == null)
                 return "Not found any place with this name";
 
             repository.Insert(new Rate()
             {
                 RecordDate = DateTime.Now,
-                RateInt = rate,
+                RateInt = rate.Rate,
                 Tp_id = place1.id,
                 userid = user.userid
             }) ;
