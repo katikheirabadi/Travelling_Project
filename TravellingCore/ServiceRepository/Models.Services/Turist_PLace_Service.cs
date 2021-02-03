@@ -81,10 +81,10 @@ namespace TravellingCore.ModelsServiceRepository.Models.Methods
             var Reasult = MyPlaces.Select(x => mapper.Map<CountryOutPutDto>(x)).ToList();
             return new CountryListOutPutDto() { Places = Reasult };
         }
-        private int AverageRate(Rate rate)
-        {
-            var result = repository.GetQuery().Include(p => p.Rates).ThenInclude()
+        //private int AverageRate(Rate rate)
+        //{
+        //    var result = repository.GetQuery().Include(p => p.Rates).ThenInclude()
             
-        }
+        //}
     }
 }

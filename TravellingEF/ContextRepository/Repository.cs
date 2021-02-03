@@ -25,7 +25,7 @@ namespace TravellingEF.ContextRepository
                    dBContext.Remove(id);
                    return $"item with id = {id} deleted.... ";
                }
-               return "Not Found ...";
+               throw new Exception("Not found");
         }
 
         public  Task<T> Get(int id)
@@ -56,7 +56,7 @@ namespace TravellingEF.ContextRepository
             }
             catch
             {
-                return null;
+                throw new Exception("you have Exception please check...");
             }
         }
 
