@@ -9,7 +9,7 @@ using TravellingCore.ModelsServiceRepository.SigninRepository;
 
 namespace Travelling.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     [ApiController]
     public class Sign_inController : ControllerBase
     {
@@ -20,7 +20,7 @@ namespace Travelling.Controllers
             this.signin = signin;
         }
         [HttpPost]
-        public async Task<IActionResult> Add(SigninInputDTO signin_item)
+        public async Task<IActionResult> Add([FromBody]SigninInputDTO signin_item)
         {
             if(!ModelState.IsValid)
             {
