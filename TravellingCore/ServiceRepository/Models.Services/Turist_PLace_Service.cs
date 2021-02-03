@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,12 +17,13 @@ namespace TravellingCore.ModelsServiceRepository.Models.Methods
     {
         private readonly IMapper mapper;
         private readonly IRepository<Turist_Place> repository;
+        
         public Turist_PLace_Service(IRepository<Turist_Place> repository, IMapper mapper)
         {
             this.mapper = mapper;
             this.repository = repository;
         }
-        public string Delete(int id)
+        public  string Delete(int id)
         {
             return repository.Delete(id);
         }
@@ -78,6 +80,11 @@ namespace TravellingCore.ModelsServiceRepository.Models.Methods
             var MyPlaces = Places.Where(x => x.CountryName == Name).ToList();
             var Reasult = MyPlaces.Select(x => mapper.Map<CountryOutPutDto>(x)).ToList();
             return new CountryListOutPutDto() { Places = Reasult };
+        }
+        private int AverageRate(Rate rate)
+        {
+            var result = repository.GetQuery().Include(p => p.Rates).ThenInclude()
+            
         }
     }
 }
