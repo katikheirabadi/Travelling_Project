@@ -3,6 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using TravellingCore.Dto.NewPlace;
+using TravellingCore.Dto.SearchByAtr;
+using TravellingCore.Dto.searchByCity;
 using TravellingCore.Dto.SearchByCountry;
 using TravellingCore.Dto.SearchByName;
 using TravellingCore.Dto.Sign_in;
@@ -22,6 +24,8 @@ namespace TravellingCore.Mapp
             CreateMap<Turist_Place, NameOutputDTO>();
             CreateMap<Turist_Place, NewInputDTO>()
                 .ForMember(x => x.Turist_Place_Name, y => y.MapFrom(z => z.Name));
+            CreateMap<Turist_Place, CityOutputDTO>();
+            CreateMap<Turist_Place, AtrOutputDTO>();
             CreateMap<Turist_Place, CountryOutPutDto>();
         }
     }

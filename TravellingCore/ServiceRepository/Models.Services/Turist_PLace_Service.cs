@@ -7,6 +7,8 @@ using System.Text;
 using System.Threading.Tasks;
 using TravellingCore.ContextRepositoryInterface;
 using TravellingCore.Dto.NewPlace;
+using TravellingCore.Dto.SearchByAtr;
+using TravellingCore.Dto.searchByCity;
 using TravellingCore.Dto.SearchByCountry;
 using TravellingCore.Dto.SearchByName;
 using TravellingCore.Model;
@@ -72,6 +74,25 @@ namespace TravellingCore.ModelsServiceRepository.Models.Methods
             return new NewListInputDTO()
             {
                 Turism_Places = finall.ToList()
+            };
+        }
+        public async Task<CityListOutputDTO> SearchbyCity(string city)
+        {
+            var myCity = await repository.GetAll();
+            var newCity = myCity.Where(x => x.CityName == city).ToList();
+            var finallcity = newCity.Select(x => mapper.Map<CityOutputDTO>(x)).ToList();
+            return new CityListOutputDTO() {
+                Turism_Places = finallcity
+            };
+        }
+        public async Task<AtrListOutputDTO> SearchByAttraction(string atr)
+        {
+            var myAtr = await repository.GetAll();
+            var newAtr = myAtr.Where(x => x.Atrraction == atr).ToList();
+            var finallAtr = newAtr.Select(x => mapper.Map<AtrOutputDTO>(x)).ToList();
+            return new AtrListOutputDTO()
+            {
+                places = finallAtr
             };
         }
         public async Task<CountryListOutPutDto> SearchByCountry(string Name)

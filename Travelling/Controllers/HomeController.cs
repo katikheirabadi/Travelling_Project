@@ -38,6 +38,21 @@ namespace Travelling.Controllers
             return Ok(example);
         }
         [HttpGet]
+        public async Task<IActionResult> SearchbyCity([FromQuery]string city_name)
+        {
+            var city = await turist.SearchbyCity(city_name);
+            if (city == null)
+                return NotFound();
+            return Ok(city);
+        }
+        public async Task<IActionResult> SearchByAttraction([FromQuery] string attraction)
+        {
+            var atr = await turist.SearchByAttraction(attraction);
+            if (atr == null)
+                return NotFound();
+            return Ok(atr);
+        }
+        [HttpGet]
         public async Task<IActionResult> Country_Name([FromQuery] string Country)
         {
             var Places = await turist.SearchByCountry(Country);
