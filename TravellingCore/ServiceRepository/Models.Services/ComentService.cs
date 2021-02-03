@@ -75,5 +75,9 @@ namespace TravellingCore.ModelsServiceRepository.Models.Methods
         {
             return repository.Update(item);
         }
+        public void Insert2(Comment comment)
+        {
+            repository.Insert(comment);
+        }
     }
 }

@@ -21,7 +21,7 @@ namespace TravellingCore.ModelsServiceRepository.Models.Methods
             this.mapper = mapper;
             this.repository = repository;
         }
-        public string Delete(int id)
+        public  string Delete(int id)
         {
             return repository.Delete(id);
         }
@@ -79,5 +79,6 @@ namespace TravellingCore.ModelsServiceRepository.Models.Methods
             var Reasult = MyPlaces.Select(x => mapper.Map<CountryOutPutDto>(x)).ToList();
             return new CountryListOutPutDto() { Places = Reasult };
         }
+        
     }
 }

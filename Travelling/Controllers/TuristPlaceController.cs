@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TravellingCore.Dto.Coment;
+using TravellingCore.Dto.Rate;
 using TravellingCore.Model;
 using TravellingCore.ModelsServiceRepository.Models.Methods;
 
@@ -33,9 +34,9 @@ namespace Travelling.Controllers
             return Ok(result);
         }
         [HttpPost]
-        public async Task<IActionResult> AddRate( int Rate , string place , [FromHeader] string Token)
+        public async Task<IActionResult> AddRate([FromBody] RateInputDto dto, [FromHeader] string Token)
         {
-            var result = await this.rate.Insert(Rate,place, Token);
+            var result = await this.rate.Insert(dto, Token);
             if (result != "we add your Rate .")
                 return BadRequest(result);
             await this.rate.Save();

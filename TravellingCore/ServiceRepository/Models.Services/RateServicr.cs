@@ -75,6 +75,10 @@ namespace TravellingCore.ModelsServiceRepository.Models.Methods
         {
             return repository.Update(item);
         }
+        public void Insert2(Rate rate)
+        {
+            repository.Insert(rate);
+        }
 
     }
 }
