@@ -37,5 +37,13 @@ namespace Travelling.Controllers
                 return NotFound();
             return Ok(example);
         }
+        [HttpGet]
+        public async Task<IActionResult> Country_Name([FromQuery] string Country)
+        {
+            var Places = await turist.SearchByCountry(Country);
+            if (Places == null)
+                return NotFound();
+            return Ok(Places);
+        }
     }
 }
