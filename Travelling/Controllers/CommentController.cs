@@ -4,8 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using TravellingCore.Dto.Coment;
-using TravellingCore.Dto.Rate;
 using TravellingCore.Model;
 using TravellingCore.ModelsServiceRepository.Models.Methods;
 
@@ -13,59 +11,22 @@ namespace Travelling.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
-    public class TuristPlaceController : ControllerBase
+    public class CommentController : ControllerBase
     {
-        private readonly ComentService coment;
-        private readonly RateServicr rate;
-        private readonly Turist_PLace_Service service;
+        private readonly ComentService service;
 
-        public TuristPlaceController(ComentService coment, RateServicr rate, Turist_PLace_Service _Service)
+        public CommentController(ComentService service)
         {
-            this.coment = coment;
-            this.rate = rate;
-            service = _Service;
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> AddComent([FromBody] ComentInsertDto coment, [FromHeader] string Token)
-        {
-            var result = await this.coment.Insert(coment, Token);
-            if (result != "we add your coment .")
-                return BadRequest(result);
-            await this.coment.Save();
-            return Ok(result);
+            this.service = service;
         }
         [HttpPost]
-        public async Task<IActionResult> AddRate([FromBody] RateInputDto dto, [FromHeader] string Token)
-        {
-            var result = await this.rate.Insert(dto, Token);
-            if (result != "we add your Rate .")
-                return BadRequest(result);
-            await this.rate.Save();
-            return Ok(result);
-        }
-        [HttpGet]
-        public async Task<IActionResult> ShowPlace([FromBody] string Name)
+        public async Task<IActionResult> DBCreate(Comment coment)
         {
             try
             {
-                var result = service.Get(Name);
-                return Ok(result);
-            }
-            catch(Exception e)
-            {
-                return NotFound(e.Message);
-            }
-        }
-        [HttpPost]
-        public async Task<IActionResult> DBCreate(Turist_Place place)
-        {
-            try
-            {
-                service.Insert(place);
+                service.Insert2(coment);
                 await service.Save();
-                place.Visit = 0;
-                return Ok(place.Name + "Add");
+                return Ok( "your comment Add");
             }
             catch (Exception e)
             {
@@ -114,23 +75,20 @@ namespace Travelling.Controllers
             }
         }
         [HttpGet]
-        public async Task<IActionResult> DBUpdatePlace(Turist_Place place)
+        public async Task<IActionResult> DBUpdatePlace(Comment comment)
         {
             try
             {
-                var result = service.Update(place);
+                var result = service.Update(comment);
                 await service.Save();
                 return Ok(result);
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 if (e.Message == "you have Exception please check...")
                     return BadRequest(e.Message);
                 return BadRequest("your update have exeption ...");
             }
         }
-
     }
-
 }
-

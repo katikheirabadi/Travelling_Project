@@ -8,6 +8,7 @@ using TravellingCore.Dto.searchByCity;
 using TravellingCore.Dto.SearchByCountry;
 using TravellingCore.Dto.SearchByName;
 using TravellingCore.Dto.Sign_in;
+using TravellingCore.Dto.TPlace;
 using TravellingCore.Model;
 
 namespace TravellingCore.Mapp
@@ -27,6 +28,7 @@ namespace TravellingCore.Mapp
             CreateMap<Turist_Place, CityOutputDTO>();
             CreateMap<Turist_Place, AtrOutputDTO>();
             CreateMap<Turist_Place, CountryOutPutDto>();
+            CreateMap<Turist_Place, PlaceOutputDto>();
         }
     }
 }

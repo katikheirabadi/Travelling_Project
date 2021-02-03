@@ -11,6 +11,7 @@ using TravellingCore.Dto.SearchByAtr;
 using TravellingCore.Dto.searchByCity;
 using TravellingCore.Dto.SearchByCountry;
 using TravellingCore.Dto.SearchByName;
+using TravellingCore.Dto.TPlace;
 using TravellingCore.Model;
 
 namespace TravellingCore.ModelsServiceRepository.Models.Methods
@@ -105,7 +106,19 @@ namespace TravellingCore.ModelsServiceRepository.Models.Methods
         //private int AverageRate(Rate rate)
         //{
         //    var result = repository.GetQuery().Include(p => p.Rates).ThenInclude()
-            
+
         //}
+        public async Task<PlaceOutputDto> Get(string Nameplace)
+        {
+            var places = await repository.GetAll();
+            var place = places.FirstOrDefault(p => p.Name == Nameplace);
+            if (place == null)
+                throw new Exception("we don't have this place...");
+            place.Visit++;
+            return mapper.Map<PlaceOutputDto>(place);
+
+        }
+     
+        
     }
 }
