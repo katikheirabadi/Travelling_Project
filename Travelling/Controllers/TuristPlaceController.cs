@@ -42,5 +42,6 @@ namespace Travelling.Controllers
             await this.rate.Save();
             return Ok(result);
         }
+        
     }
 }
