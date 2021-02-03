@@ -33,7 +33,7 @@ namespace Travelling.Controllers
             return Ok(result);
         }
         [HttpPost]
-        public async Task<IActionResult> AddRate(int Rate ,  string place , [FromHeader] string Token)
+        public async Task<IActionResult> AddRate( int Rate , string place , [FromHeader] string Token)
         {
             var result = await this.rate.Insert(Rate,place, Token);
             if (result != "we add your Rate .")

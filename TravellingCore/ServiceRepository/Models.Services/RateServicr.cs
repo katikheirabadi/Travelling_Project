@@ -50,7 +50,7 @@ namespace TravellingCore.ModelsServiceRepository.Models.Methods
             if (time.TotalMilliseconds < 0)
                 return "your accont has expierd and you must log in again";
             var places = repository2.GetQuery();
-            var place1 = places.FirstOrDefault(p => p.Name == (place));
+            var place1 = places.FirstOrDefault(p => p.Name == place);
             if (place == null)
                 return "Not found any place with this name";
 
