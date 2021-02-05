@@ -6,6 +6,6 @@ namespace TravellingCore.ContextRepositoryInterface
 {
     public interface IEntity
     {
-        public int id { get; set; }
+        public int Id { get; set; }
     }
 }
