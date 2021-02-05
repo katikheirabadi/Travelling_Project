@@ -6,56 +6,58 @@ using System.Threading.Tasks;
 using TravellingCore.ContextRepositoryInterface;
 using TravellingCore.Dto.Rate;
 using TravellingCore.Model;
+using TravellingCore.Services.Models.Services;
+using TravellingCore.Services.Models.Services.RateService;
 
 namespace TravellingCore.ModelsServiceRepository.Models.Methods
 {
-    public class RateServicr
+    public class RateServicr : IModelServicees<Rate> , IRateService
     {
-        private readonly IRepository<Rate> repository;
-        private readonly IRepository<UserLogin> repository1;
-        private readonly IRepository<TuristPlace> repository2;
+        private readonly IRepository<Rate> RateRepository;
+        private readonly IRepository<UserLogin> UserLoginRepository;
+        private readonly IRepository<TuristPlace> TuristPlaceRepository;
 
-        public RateServicr(IRepository<Rate> repository,IRepository<UserLogin> repository1,IRepository<TuristPlace> repository2)
+        public RateServicr(IRepository<Rate> RateRepository, IRepository<UserLogin> UserLoginRepository, IRepository<TuristPlace> TuristPlaceRepository)
         {
-            this.repository = repository;
-            this.repository1 = repository1;
-            this.repository2 = repository2;
+            this.RateRepository = RateRepository;
+            this.UserLoginRepository = UserLoginRepository;
+            this.TuristPlaceRepository = TuristPlaceRepository;
         }
         public string Delete(int id)
         {
-            return repository.Delete(id);
+            return RateRepository.Delete(id);
         }
 
         public Task<Rate> Get(int id)
         {
-            return repository.Get(id);
+            return RateRepository.Get(id);
         }
 
         public Task<List<Rate>> GetAll()
         {
-            return repository.GetAll();
+            return RateRepository.GetAll();
         }
 
         public IQueryable<Rate> GetQuery()
         {
-            return repository.GetQuery();
+            return RateRepository.GetQuery();
         }
 
-        public async Task<string> Insert(RateInputDto  rate , string Token)
+        public async Task<string> AddRate(RateInputDto  rate , string Token)
         {
-            var users = await repository1.GetAll();
+            var users = await UserLoginRepository.GetAll();
             var user = users.FirstOrDefault(u => u.Token == Token);
             if (user == null)
                 return "We don't have any Login-user with this Token ";
             TimeSpan time = user.ExpireDate.Date - DateTime.Now.Date;
             if (time.TotalMilliseconds < 0)
                 return "your accont has expierd and you must log in again";
-            var places = repository2.GetQuery();
+            var places = TuristPlaceRepository.GetQuery();
             var place1 = places.FirstOrDefault(p => p.Name == rate.place);
             if (place1 == null)
                 return "Not found any place with this name";
 
-            repository.Insert(new Rate()
+            RateRepository.Insert(new Rate()
             {
                 RecordDate = DateTime.Now,
                 RateInt = rate.Rate,
@@ -68,16 +70,16 @@ namespace TravellingCore.ModelsServiceRepository.Models.Methods
 
         public Task Save()
         {
-            return repository.Save();
+            return RateRepository.Save();
         }
 
         public string Update(Rate item)
         {
-            return repository.Update(item);
+            return RateRepository.Update(item);
         }
-        public void Insert2(Rate rate)
+        public void Insert(Rate rate)
         {
-            repository.Insert(rate);
+            RateRepository.Insert(rate);
         }
 
     }

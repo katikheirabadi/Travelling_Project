@@ -48,7 +48,7 @@ namespace Travelling
             services.AddTransient<LoginServicr>();
             services.AddTransient<ComentService>();
             services.AddTransient<RateServicr>();
-            services.AddTransient<Turist_PLace_Service>();
+            services.AddTransient<TuristPlaceService>();
           
         }
 

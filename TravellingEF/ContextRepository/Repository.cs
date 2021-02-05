@@ -23,8 +23,8 @@ namespace TravellingEF.ContextRepository
             if (item != null)
                {
                    dBContext.Remove(id);
-                   return $"item with id = {id} deleted.... ";
-               }
+                return $"item with id = {id} deleted.... ";
+               };
                throw new Exception("Not found");
         }
 

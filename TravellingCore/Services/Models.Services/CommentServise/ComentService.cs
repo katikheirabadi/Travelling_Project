@@ -6,55 +6,57 @@ using System.Threading.Tasks;
 using TravellingCore.ContextRepositoryInterface;
 using TravellingCore.Dto.Coment;
 using TravellingCore.Model;
+using TravellingCore.Services.Models.Services;
+using TravellingCore.Services.Models.Services.CommentServise;
 
 namespace TravellingCore.ModelsServiceRepository.Models.Methods
 {
-    public class ComentService
+    public class ComentService :ICommentService , IModelServicees<Comment>
     {
-        private readonly IRepository<Comment> repository;
-        private readonly IRepository<UserLogin> repository1;
-        private readonly IRepository<TuristPlace> repository2;
-        public ComentService(IRepository<Comment> repository,IRepository<UserLogin> repository1,IRepository<TuristPlace> repository2)
+        private readonly IRepository<Comment> CommentRepository;
+        private readonly IRepository<UserLogin> UserLoginRepository;
+        private readonly IRepository<TuristPlace> TuristPlaceRepository;
+        public ComentService(IRepository<Comment> CommentRepository, IRepository<UserLogin> UserLoginRepository, IRepository<TuristPlace> TuristPlaceRepository)
         {
-            this.repository = repository;
-            this.repository1 = repository1;
-            this.repository2 = repository2;
+            this.CommentRepository = CommentRepository;
+            this.UserLoginRepository = UserLoginRepository;
+            this.TuristPlaceRepository = TuristPlaceRepository;
         }
         public string Delete(int id)
         {
-            return repository.Delete(id);
+            return CommentRepository.Delete(id);
         }
 
         public Task<Comment> Get(int id)
         {
-            return repository.Get(id);
+            return CommentRepository.Get(id);
         }
 
         public Task<List<Comment>> GetAll()
         {
-            return repository.GetAll();
+            return CommentRepository.GetAll();
         }
 
         public IQueryable<Comment> GetQuery()
         {
-            return repository.GetQuery();
+            return CommentRepository.GetQuery();
         }
 
-        public async Task<string> Insert(ComentInsertDto coment, string Token)
+        public async Task<string> AddComment(ComentInsertDto coment, string Token)
         {
-            var users = await repository1.GetAll();
+            var users = await UserLoginRepository.GetAll();
             var user = users.FirstOrDefault(u => u.Token == Token);
             if (user == null)
                 return "We don't have any Login-user with this Token ";
             TimeSpan time = user.ExpireDate.Date - DateTime.Now.Date;
             if (time.TotalMilliseconds < 0)
                 return "your accont has expierd and you must log in again";
-            var places =  repository2.GetQuery();
+            var places =  TuristPlaceRepository.GetQuery();
             var place = places.FirstOrDefault(p => p.Name==(coment.Turist_Place));
             if (place == null)
                 return "Not found any place with this name";
 
-            repository.Insert(new Comment()
+            CommentRepository.Insert(new Comment()
             {
                 RecordDate = DateTime.Now,
                 Text = coment.comment,
@@ -68,16 +70,16 @@ namespace TravellingCore.ModelsServiceRepository.Models.Methods
 
         public Task Save()
         { 
-            return repository.Save();
+            return CommentRepository.Save();
         }
 
         public string Update(Comment item)
         {
-            return repository.Update(item);
+            return CommentRepository.Update(item);
         }
-        public void Insert2(Comment comment)
+        public void Insert(Comment comment)
         {
-            repository.Insert(comment);
+            CommentRepository.Insert(comment);
         }
     }
 }
