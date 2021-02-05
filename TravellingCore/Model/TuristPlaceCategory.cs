@@ -5,14 +5,12 @@ using TravellingCore.ContextRepositoryInterface;
 
 namespace TravellingCore.Model
 {
-    public class Rate : IEntity
+    public class TuristPlaceCategory : IEntity
     {
         public int Id { get; set; }
-        public int UserRate { get; set; }
-        public int UserId { get; set; }
         public int TuristPlaceId { get; set; }
-        public DateTime RecordDate { get; set; }
-        public User user { get; set; }
-        public TuristPlace Tp_ { get; set; }
+        public int CaregoryId { get; set; }
+        public List<TuristPlace> TuristPlaces { get; set; }
+        public List<Category> Categories { get; set; }
     }
 }
