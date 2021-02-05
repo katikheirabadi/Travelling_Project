@@ -14,10 +14,10 @@ namespace Travelling.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
-    public class HomeController : ControllerBase
+    public class SearchController : ControllerBase
     {
-        private readonly Turist_PLace_Service turist;
-        public HomeController(Turist_PLace_Service turist)
+        private readonly TuristPlaceService turist;
+        public SearchController(TuristPlaceService turist)
         {
             this.turist = turist;
         }
@@ -30,9 +30,9 @@ namespace Travelling.Controllers
             return Ok(place);
         }
         [HttpGet]
-        public async Task<IActionResult> New_Places([FromQuery] int size)
+        public async Task<IActionResult> NewPlaces([FromQuery] int size)
         {
-            var example = await turist.New_Places(size);
+            var example = await turist.NewPlaces(size);
             if (example == null)
                 return NotFound();
             return Ok(example);
@@ -59,7 +59,7 @@ namespace Travelling.Controllers
             return Ok(atr);
         }
         [HttpGet]
-        public async Task<IActionResult> Country_Name([FromQuery] string Country)
+        public async Task<IActionResult> SearchByCountryName([FromQuery] string Country)
         {
             var Places = await turist.SearchByCountry(Country);
             if (Places == null)

@@ -11,11 +11,11 @@ namespace Travelling.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
-    public class Sign_inController : ControllerBase
+    public class SignInController : ControllerBase
     {
         private readonly SigninService signin;
 
-        public Sign_inController(SigninService signin)
+        public SignInController(SigninService signin)
         {
             this.signin = signin;
         }

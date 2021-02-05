@@ -17,9 +17,9 @@ namespace Travelling.Controllers
     {
         private readonly ComentService coment;
         private readonly RateServicr rate;
-        private readonly Turist_PLace_Service service;
+        private readonly TuristPlaceService service;
 
-        public TuristPlaceController(ComentService coment, RateServicr rate, Turist_PLace_Service _Service)
+        public TuristPlaceController(ComentService coment, RateServicr rate, TuristPlaceService _Service)
         {
             this.coment = coment;
             this.rate = rate;
@@ -29,7 +29,7 @@ namespace Travelling.Controllers
         [HttpPost]
         public async Task<IActionResult> AddComent([FromBody] ComentInsertDto coment, [FromHeader] string Token)
         {
-            var result = await this.coment.Insert(coment, Token);
+            var result = await this.coment.AddComment(coment, Token);
             if (result != "we add your coment .")
                 return BadRequest(result);
             await this.coment.Save();
@@ -38,7 +38,7 @@ namespace Travelling.Controllers
         [HttpPost]
         public async Task<IActionResult> AddRate([FromBody] RateInputDto dto, [FromHeader] string Token)
         {
-            var result = await this.rate.Insert(dto, Token);
+            var result = await this.rate.AddRate(dto, Token);
             if (result != "we add your Rate .")
                 return BadRequest(result);
             await this.rate.Save();
@@ -49,7 +49,7 @@ namespace Travelling.Controllers
         {
             try
             {
-                var result = service.Get(Name);
+                var result = service.ShoPlaceByName(Name);
                 return Ok(result);
             }
             catch(Exception e)

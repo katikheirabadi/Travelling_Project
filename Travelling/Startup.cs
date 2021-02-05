@@ -39,16 +39,12 @@ namespace Travelling
             services.AddControllers();
             services.AddAutoMapper(Assembly.GetAssembly(typeof(MappConfig)));
             services.AddDbContext<TravellingDBContext>(o => { o.UseSqlServer(Configuration.GetConnectionString("TravellConection")); });
-            services.AddTransient<IRepository<User>, Repository<User>>();
-            services.AddTransient<IRepository<Comment>, Repository<Comment>>();
-            services.AddTransient<IRepository<TuristPlace>, Repository<TuristPlace>>();
-            services.AddTransient<IRepository<Rate>, Repository<Rate>>();
-            services.AddTransient<IRepository<UserLogin>, Repository<UserLogin>>();
+           
             services.AddTransient<SigninService>();
             services.AddTransient<LoginServicr>();
             services.AddTransient<ComentService>();
             services.AddTransient<RateServicr>();
-            services.AddTransient<Turist_PLace_Service>();
+            services.AddTransient<TuristPlaceService>();
           
         }
 

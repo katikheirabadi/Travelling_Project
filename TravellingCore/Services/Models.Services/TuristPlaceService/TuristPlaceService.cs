@@ -14,63 +14,65 @@ using TravellingCore.Dto.SearchByName;
 
 using TravellingCore.Dto.TPlace;
 using TravellingCore.Model;
+using TravellingCore.Services.Models.Services;
+using TravellingCore.Services.Models.Services.TuristPlaceService;
 
 namespace TravellingCore.ModelsServiceRepository.Models.Methods
 {
-    public class Turist_PLace_Service
+    public class TuristPlaceService : IModelServicees<TuristPlace> , ITuristPlaceService
     {
         private readonly IMapper mapper;
-        private readonly IRepository<TuristPlace> repository;
+        private readonly IRepository<TuristPlace> TuristPlaceRepository;
         
-        public Turist_PLace_Service(IRepository<TuristPlace> repository, IMapper mapper)
+        public TuristPlaceService(IRepository<TuristPlace> TuristPlaceRepository, IMapper mapper)
         {
             this.mapper = mapper;
-            this.repository = repository;
+            this.TuristPlaceRepository = TuristPlaceRepository;
         }
         public  string Delete(int id)
         {
-            return repository.Delete(id);
+            return TuristPlaceRepository.Delete(id);
         }
 
         public Task<TuristPlace> Get(int id)
         {
-            return repository.Get(id);
+            return TuristPlaceRepository.Get(id);
         }
 
         public Task<List<TuristPlace>> GetAll()
         {
-            return repository.GetAll();
+            return TuristPlaceRepository.GetAll();
         }
 
         public IQueryable<TuristPlace> GetQuery()
         {
-            return repository.GetQuery();
+            return TuristPlaceRepository.GetQuery();
         }
 
         public void Insert(TuristPlace item)
         {
-            repository.Insert(item);
+            TuristPlaceRepository.Insert(item);
         }
 
         public Task Save()
         {
-            return repository.Save();
+            return TuristPlaceRepository.Save();
         }
 
         public string Update(TuristPlace item)
         {
-            return repository.Update(item);
+            return TuristPlaceRepository.Update(item);
         }
         public async Task<NameOutputDTO> SearchByName(string Name)
         {
-            var place = await repository.GetAll();
+            var place = await TuristPlaceRepository.GetAll();
             var placeName = place.FirstOrDefault(x => x.Name == Name);
             return mapper.Map<NameOutputDTO>(placeName);
         }
         
-        public async Task<NewListInputDTO> New_Places(int size)
+        public async Task<NewListInputDTO> NewPlaces(int size)
         {
-            var AllPlace = await repository.GetAll();
+            var AllPlace = await TuristPlaceRepository.GetAll();
             var ReversePlace = AllPlace.AsQueryable().Reverse();
             var newPlace = ReversePlace.Take(size).ToList();
             var finall = mapper.Map<List<NewInputDTO>>(newPlace);
@@ -81,19 +83,19 @@ namespace TravellingCore.ModelsServiceRepository.Models.Methods
         }
         public async Task<CityListOutputDTO> SearchbyCity(string city)
         {
-            var myCity = await repository.GetAll();
-            var newCity = myCity.Where(x => x.CityName == city).ToList();
-            var finallcity = newCity.Select(x => mapper.Map<CityOutputDTO>(x)).ToList();
+            var myCity = await TuristPlaceRepository.GetAll();
+          //  var newCity = myCity.Where(x => x.C == city).ToList();
+          //  var finallcity = newCity.Select(x => mapper.Map<CityOutputDTO>(x)).ToList();
             return new CityListOutputDTO()
             {
-                Turism_Places = finallcity
+               // Turism_Places = finallcity
             };
         }
      
         public async Task<AtrListOutputDTO> SearchByAttraction(string atr)
         {
-            var myAtr = await repository.GetAll();
-            var newAtr = myAtr.Where(x => x.Atrraction == atr).ToList();
+            var myAtr = await TuristPlaceRepository.GetAll();
+            var newAtr = myAtr.Where(x => x.Category == atr).ToList();
             var finallAtr = newAtr.Select(x => mapper.Map<AtrOutputDTO>(x)).ToList();
             return new AtrListOutputDTO()
             {
@@ -102,10 +104,11 @@ namespace TravellingCore.ModelsServiceRepository.Models.Methods
         }
         public async Task<CountryListOutPutDto> SearchByCountry(string Name)
         {
-            var Places = await repository.GetAll();
-            var MyPlaces = Places.Where(x => x.CountryName == Name).ToList();
+            var Places = await TuristPlaceRepository.GetAll();
+            //taghir mikone
+            var MyPlaces = Places.Where(x => x.Name == Name).ToList();
             var Reasult = MyPlaces.Select(x => mapper.Map<CountryOutPutDto>(x)).ToList();
-            return new CountryListOutPutDto() { Places = Reasult };
+           return new CountryListOutPutDto() { Places = Reasult };
         }
       /*  private int AverageRate()
         {
@@ -113,9 +116,9 @@ namespace TravellingCore.ModelsServiceRepository.Models.Methods
 
 
         }*/
-        public async Task<PlaceOutputDto> Get(string Nameplace)
+        public async Task<PlaceOutputDto> ShoPlaceByName(string Nameplace)
         {
-            var places = await repository.GetAll();
+            var places = await TuristPlaceRepository.GetAll();
             var place = places.FirstOrDefault(p => p.Name == Nameplace);
             if (place == null)
                 throw new Exception("we don't have this place...");
