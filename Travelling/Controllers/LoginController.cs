@@ -13,9 +13,9 @@ namespace Travelling.Controllers
     [ApiController]
     public class LoginController : ControllerBase
     {
-        private readonly LoginServicr login;
+        private readonly LoginServices login;
 
-        public LoginController(LoginServicr login)
+        public LoginController(LoginServices login)
         {
             this.login = login;
         }

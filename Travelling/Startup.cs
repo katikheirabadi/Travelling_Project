@@ -41,7 +41,7 @@ namespace Travelling
             services.AddDbContext<TravellingDBContext>(o => { o.UseSqlServer(Configuration.GetConnectionString("TravellConection")); });
            
             services.AddTransient<SigninService>();
-            services.AddTransient<LoginServicr>();
+            services.AddTransient<LoginServices>();
             services.AddTransient<ComentService>();
             services.AddTransient<RateServicr>();
             services.AddTransient<TuristPlaceService>();

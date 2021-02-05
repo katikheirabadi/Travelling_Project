@@ -8,6 +8,9 @@ using TravellingCore.Dto.Coment;
 using TravellingCore.Dto.Rate;
 using TravellingCore.Model;
 using TravellingCore.ModelsServiceRepository.Models.Methods;
+using TravellingCore.Services.Models.Services.CommentServise;
+using TravellingCore.Services.Models.Services.RateService;
+using TravellingCore.Services.Models.Services.TuristPlaceService;
 
 namespace Travelling.Controllers
 {
@@ -15,11 +18,11 @@ namespace Travelling.Controllers
     [ApiController]
     public class TuristPlaceController : ControllerBase
     {
-        private readonly ComentService coment;
-        private readonly RateServicr rate;
-        private readonly TuristPlaceService service;
+        private readonly ICommentService coment;
+        private readonly IRateService rate;
+        private readonly ITuristPlaceService service;
 
-        public TuristPlaceController(ComentService coment, RateServicr rate, TuristPlaceService _Service)
+        public TuristPlaceController(ICommentService coment, IRateService rate, ITuristPlaceService _Service)
         {
             this.coment = coment;
             this.rate = rate;

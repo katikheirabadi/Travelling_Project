@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using TravellingCore.Model;
 using TravellingCore.ModelsServiceRepository.Models.Methods;
+using TravellingCore.Services.Models.Services.RateService;
 
 namespace Travelling.Controllers
 {
@@ -13,9 +14,9 @@ namespace Travelling.Controllers
     [ApiController]
     public class RateController : ControllerBase
     {
-        private readonly RateServicr service;
+        private readonly IRateService service;
 
-        public RateController(RateServicr service)
+        public RateController(IRateService service)
         {
             this.service = service;
         }
@@ -24,7 +25,7 @@ namespace Travelling.Controllers
         {
             try
             {
-                service.Insert2(Rate);
+                service.Insert(Rate);
                 await service.Save();
                 return Ok( "your rate Add");
             }

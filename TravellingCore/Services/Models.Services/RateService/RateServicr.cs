@@ -11,7 +11,7 @@ using TravellingCore.Services.Models.Services.RateService;
 
 namespace TravellingCore.ModelsServiceRepository.Models.Methods
 {
-    public class RateServicr : IModelServicees<Rate> , IRateService
+    public class RateServicr : IRateService
     {
         private readonly IRepository<Rate> RateRepository;
         private readonly IRepository<UserLogin> UserLoginRepository;

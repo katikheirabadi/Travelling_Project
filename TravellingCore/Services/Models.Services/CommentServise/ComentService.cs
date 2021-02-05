@@ -11,7 +11,7 @@ using TravellingCore.Services.Models.Services.CommentServise;
 
 namespace TravellingCore.ModelsServiceRepository.Models.Methods
 {
-    public class ComentService :ICommentService , IModelServicees<Comment>
+    public class ComentService :ICommentService 
     {
         private readonly IRepository<Comment> CommentRepository;
         private readonly IRepository<UserLogin> UserLoginRepository;

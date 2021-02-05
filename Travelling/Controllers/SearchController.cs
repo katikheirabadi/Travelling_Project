@@ -9,6 +9,7 @@ using TravellingCore.ContextRepositoryInterface;
 using TravellingCore.Dto.SearchByName;
 using TravellingCore.Model;
 using TravellingCore.ModelsServiceRepository.Models.Methods;
+using TravellingCore.Services.Models.Services.TuristPlaceService;
 
 namespace Travelling.Controllers
 {
@@ -16,8 +17,8 @@ namespace Travelling.Controllers
     [ApiController]
     public class SearchController : ControllerBase
     {
-        private readonly TuristPlaceService turist;
-        public SearchController(TuristPlaceService turist)
+        private readonly ITuristPlaceService turist;
+        public SearchController(ITuristPlaceService turist)
         {
             this.turist = turist;
         }

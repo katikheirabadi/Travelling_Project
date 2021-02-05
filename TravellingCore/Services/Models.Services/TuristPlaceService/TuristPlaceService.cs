@@ -19,7 +19,7 @@ using TravellingCore.Services.Models.Services.TuristPlaceService;
 
 namespace TravellingCore.ModelsServiceRepository.Models.Methods
 {
-    public class TuristPlaceService : IModelServicees<TuristPlace> , ITuristPlaceService
+    public class TuristPlaceService :  ITuristPlaceService
     {
         private readonly IMapper mapper;
         private readonly IRepository<TuristPlace> TuristPlaceRepository;

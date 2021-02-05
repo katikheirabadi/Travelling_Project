@@ -9,12 +9,12 @@ using System.Linq;
 
 namespace TravellingCore.ServiceRepository.LoginService
 {
-    public class LoginServicr
+    public class LoginServices
     {
         private readonly IRepository<User> repository;
         private readonly IRepository<UserLogin> repository1;
 
-        public LoginServicr(IRepository<User> repository,IRepository<UserLogin> repository1)
+        public LoginServices(IRepository<User> repository,IRepository<UserLogin> repository1)
         {
             this.repository = repository;
             this.repository1 = repository1;
