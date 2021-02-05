@@ -15,6 +15,7 @@ namespace TravellingCore.Dto.Sign_in
         public string Password { get; set; }
         [Required(ErrorMessage = "you must enter this field ")]
         public string Re_Password { get; set; }
+        [Required(ErrorMessage = "you must enter this field ")]
         public string Phone_Number { get; set; }
     }
 }

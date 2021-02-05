@@ -48,11 +48,12 @@ namespace TravellingEF.ContextRepository
             this.dBContext.Add<T>(input);  
         }
 
-        public Task Save()
+        public  Task Save()
         {
             try
             {
-                return dBContext.SaveChangesAsync();
+                 return dBContext.SaveChangesAsync();
+               
             }
             catch
             {

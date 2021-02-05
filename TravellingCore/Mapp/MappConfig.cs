@@ -22,13 +22,13 @@ namespace TravellingCore.Mapp
                 .ForMember(o => o.Password, x => x.MapFrom(p => p.Password))
                 .ForMember(o => o.Re_Password, x => x.MapFrom(p => p.Re_Password))
                 .ForMember(o => o.Phone_Number, x => x.MapFrom(p => p.Phone_Number));
-            CreateMap<Turist_Place, NameOutputDTO>();
-            CreateMap<Turist_Place, NewInputDTO>()
+            CreateMap<TuristPlace, NameOutputDTO>();
+            CreateMap<TuristPlace, NewInputDTO>()
                 .ForMember(x => x.Turist_Place_Name, y => y.MapFrom(z => z.Name));
-            CreateMap<Turist_Place, CityOutputDTO>();
-            CreateMap<Turist_Place, AtrOutputDTO>();
-            CreateMap<Turist_Place, CountryOutPutDto>();
-            CreateMap<Turist_Place, PlaceOutputDto>();
+            CreateMap<TuristPlace, CityOutputDTO>();
+            CreateMap<TuristPlace, AtrOutputDTO>();
+            CreateMap<TuristPlace, CountryOutPutDto>();
+            CreateMap<TuristPlace, PlaceOutputDto>();
         }
     }
 }

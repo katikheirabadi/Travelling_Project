@@ -11,7 +11,7 @@ using TravellingCore.Dto.SearchByAtr;
 using TravellingCore.Dto.searchByCity;
 using TravellingCore.Dto.SearchByCountry;
 using TravellingCore.Dto.SearchByName;
-using TravellingCore.Dto.SearchByVisted;
+
 using TravellingCore.Dto.TPlace;
 using TravellingCore.Model;
 
@@ -20,9 +20,9 @@ namespace TravellingCore.ModelsServiceRepository.Models.Methods
     public class Turist_PLace_Service
     {
         private readonly IMapper mapper;
-        private readonly IRepository<Turist_Place> repository;
+        private readonly IRepository<TuristPlace> repository;
         
-        public Turist_PLace_Service(IRepository<Turist_Place> repository, IMapper mapper)
+        public Turist_PLace_Service(IRepository<TuristPlace> repository, IMapper mapper)
         {
             this.mapper = mapper;
             this.repository = repository;
@@ -32,22 +32,22 @@ namespace TravellingCore.ModelsServiceRepository.Models.Methods
             return repository.Delete(id);
         }
 
-        public Task<Turist_Place> Get(int id)
+        public Task<TuristPlace> Get(int id)
         {
             return repository.Get(id);
         }
 
-        public Task<List<Turist_Place>> GetAll()
+        public Task<List<TuristPlace>> GetAll()
         {
             return repository.GetAll();
         }
 
-        public IQueryable<Turist_Place> GetQuery()
+        public IQueryable<TuristPlace> GetQuery()
         {
             return repository.GetQuery();
         }
 
-        public void Insert(Turist_Place item)
+        public void Insert(TuristPlace item)
         {
             repository.Insert(item);
         }
@@ -57,7 +57,7 @@ namespace TravellingCore.ModelsServiceRepository.Models.Methods
             return repository.Save();
         }
 
-        public string Update(Turist_Place item)
+        public string Update(TuristPlace item)
         {
             return repository.Update(item);
         }
@@ -89,16 +89,7 @@ namespace TravellingCore.ModelsServiceRepository.Models.Methods
                 Turism_Places = finallcity
             };
         }
-        public async Task<VisitedListOutputDTO> SearchbyVisited()
-        {
-            var place1 = await repository.GetAll();
-            var mcity = place1.Select(x =>place1.Max()).ToList();
-            var finallplace = mcity.Select(x => mapper.Map<VisitedOutputDTO>(x)).ToList();
-            return new VisitedListOutputDTO()
-            {
-                Turism_Places = finallplace
-            };
-        }
+     
         public async Task<AtrListOutputDTO> SearchByAttraction(string atr)
         {
             var myAtr = await repository.GetAll();
@@ -116,11 +107,12 @@ namespace TravellingCore.ModelsServiceRepository.Models.Methods
             var Reasult = MyPlaces.Select(x => mapper.Map<CountryOutPutDto>(x)).ToList();
             return new CountryListOutPutDto() { Places = Reasult };
         }
-        //private int AverageRate(Rate rate)
-        //{
-        //    var result = repository.GetQuery().Include(p => p.Rates).ThenInclude()
+      /*  private int AverageRate()
+        {
+            var result = repository.GetQuery().Include(p => p.Rates).Select(x => new { avg = x.Rates.Average(y => y.RateInt) , name = x.Name , city = x.CityName }).ToList().OrderByDescending(x => x.avg);
 
-        //}
+
+        }*/
         public async Task<PlaceOutputDto> Get(string Nameplace)
         {
             var places = await repository.GetAll();

@@ -5,7 +5,7 @@ using TravellingCore.ContextRepositoryInterface;
 
 namespace TravellingCore.Model
 {
-    public class Turist_Place : IEntity
+    public class TuristPlace : IEntity
     {
         public int id { get; set; }
         public string Name { get; set; }

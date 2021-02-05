@@ -36,16 +36,9 @@ namespace TravellingCore.ServiceRepository.LoginService
 
             var loginusers = await repository1.GetAll();
             var userlogin = loginusers.FirstOrDefault(lu => lu.userid == loginuser.userid);
-            if (userlogin != null)
-            {
-                repository1.Update(loginuser);
-                await repository.Save();
-            }
-            else
-            {
-                repository1.Insert(loginuser);
-                await repository1.Save();
-            }
+           repository1.Insert(loginuser);
+           await repository1.Save();
+            
             
             return $"Wellcome to your accont with code {loginuser.Token}";
             

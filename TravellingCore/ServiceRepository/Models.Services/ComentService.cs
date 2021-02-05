@@ -13,8 +13,8 @@ namespace TravellingCore.ModelsServiceRepository.Models.Methods
     {
         private readonly IRepository<Comment> repository;
         private readonly IRepository<UserLogin> repository1;
-        private readonly IRepository<Turist_Place> repository2;
-        public ComentService(IRepository<Comment> repository,IRepository<UserLogin> repository1,IRepository<Turist_Place> repository2)
+        private readonly IRepository<TuristPlace> repository2;
+        public ComentService(IRepository<Comment> repository,IRepository<UserLogin> repository1,IRepository<TuristPlace> repository2)
         {
             this.repository = repository;
             this.repository1 = repository1;

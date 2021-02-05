@@ -41,7 +41,7 @@ namespace Travelling
             services.AddDbContext<TravellingDBContext>(o => { o.UseSqlServer(Configuration.GetConnectionString("TravellConection")); });
             services.AddTransient<IRepository<User>, Repository<User>>();
             services.AddTransient<IRepository<Comment>, Repository<Comment>>();
-            services.AddTransient<IRepository<Turist_Place>, Repository<Turist_Place>>();
+            services.AddTransient<IRepository<TuristPlace>, Repository<TuristPlace>>();
             services.AddTransient<IRepository<Rate>, Repository<Rate>>();
             services.AddTransient<IRepository<UserLogin>, Repository<UserLogin>>();
             services.AddTransient<SigninService>();
@@ -49,6 +49,7 @@ namespace Travelling
             services.AddTransient<ComentService>();
             services.AddTransient<RateServicr>();
             services.AddTransient<Turist_PLace_Service>();
+          
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

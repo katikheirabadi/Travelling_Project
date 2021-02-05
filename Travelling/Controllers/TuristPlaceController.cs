@@ -58,7 +58,7 @@ namespace Travelling.Controllers
             }
         }
         [HttpPost]
-        public async Task<IActionResult> DBCreate(Turist_Place place)
+        public async Task<IActionResult> DBCreate(TuristPlace place)
         {
             try
             {
@@ -114,7 +114,7 @@ namespace Travelling.Controllers
             }
         }
         [HttpGet]
-        public async Task<IActionResult> DBUpdatePlace(Turist_Place place)
+        public async Task<IActionResult> DBUpdatePlace(TuristPlace place)
         {
             try
             {

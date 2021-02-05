@@ -13,9 +13,9 @@ namespace TravellingCore.ModelsServiceRepository.Models.Methods
     {
         private readonly IRepository<Rate> repository;
         private readonly IRepository<UserLogin> repository1;
-        private readonly IRepository<Turist_Place> repository2;
+        private readonly IRepository<TuristPlace> repository2;
 
-        public RateServicr(IRepository<Rate> repository,IRepository<UserLogin> repository1,IRepository<Turist_Place> repository2)
+        public RateServicr(IRepository<Rate> repository,IRepository<UserLogin> repository1,IRepository<TuristPlace> repository2)
         {
             this.repository = repository;
             this.repository1 = repository1;

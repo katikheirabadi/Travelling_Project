@@ -45,12 +45,12 @@ namespace Travelling.Controllers
                 return NotFound();
             return Ok(city);
         }
-        [HttpGet]
-        public async Task<IActionResult> SearchbyVisted()
-        {
-            var place = await turist.SearchbyVisited();
-            return (IActionResult)place;
-        }
+      //  [HttpGet]
+        //public async Task<IActionResult> SearchbyVisted()
+        //{
+        //    //var place = await turist.SearchbyVisited();
+        //    //return (IActionResult)place;
+        //}
         public async Task<IActionResult> SearchByAttraction([FromQuery] string attraction)
         {
             var atr = await turist.SearchByAttraction(attraction);
