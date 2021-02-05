@@ -35,7 +35,7 @@ namespace Travelling.Extention
         private static void AddServices(IServiceCollection services)
         {
             services.AddTransient<ISigninService, SigninService>();
-            //services.AddTransient<ILoginServicecs, LoginServices>();
+           services.AddTransient<ILoginServicecs, LoginServices>();
             services.AddTransient<ICommentService, ComentService>();
             services.AddTransient<IRateService, RateServicr>();
             services.AddTransient<ITuristPlaceService, TuristPlaceService>();

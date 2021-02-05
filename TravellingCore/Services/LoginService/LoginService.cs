@@ -6,15 +6,17 @@ using TravellingCore.ContextRepositoryInterface;
 using TravellingCore.Dto.LogIn;
 using TravellingCore.Model;
 using System.Linq;
+using TravellingCore.Services.LoginService;
 
 namespace TravellingCore.ServiceRepository.LoginService
 {
-    public class LoginServices
+    public class LoginServices: ILoginServicecs
     {
         private readonly IRepository<User> repository;
         private readonly IRepository<UserLogin> repository1;
 
-        public LoginServices(IRepository<User> repository,IRepository<UserLogin> repository1)
+        public LoginServices(IRepository<User> repository,
+                             IRepository<UserLogin> repository1)
         {
             this.repository = repository;
             this.repository1 = repository1;
@@ -34,8 +36,7 @@ namespace TravellingCore.ServiceRepository.LoginService
                 ExpireDate = DateTime.Now.AddDays(1)
             };
 
-            var loginusers = await repository1.GetAll();
-            var userlogin = loginusers.FirstOrDefault(lu => lu.UserId == loginuser.UserId);
+          
            repository1.Insert(loginuser);
            await repository1.Save();
             
@@ -43,5 +44,6 @@ namespace TravellingCore.ServiceRepository.LoginService
             return $"Wellcome to your accont with code {loginuser.Token}";
             
         }
+        
     }
 }
