@@ -12,7 +12,7 @@ namespace TravellingCore.Model
         public int UserId { get; set; }
         public int TuristPlaceId { get; set; }
         public DateTime RecordDate { get; set; }
-        public User user { get; set; }
-        public TuristPlace Tp_ { get; set; }
+        public User User { get; set; }
+        public TuristPlace TuristPlace { get; set; }
     }
 }

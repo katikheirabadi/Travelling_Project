@@ -14,5 +14,8 @@ namespace TravellingCore.Model
         public string RePassword { get; set; }
         public string PhoneNumber { get; set; }
         public List<Comment> Comments { get; set; }
+        public Favorite Favorite { get; set; }
+        public List<Rate> Rates { get; set; }
+        public List<UserLogin> UserLogins { get; set; }
     }
 }

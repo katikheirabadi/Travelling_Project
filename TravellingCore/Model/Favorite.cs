@@ -12,5 +12,7 @@ namespace TravellingCore.Model
         public int CountryId { get; set; }
         public int UserId { get; set; }
         public Category Category { get; set; }
+        public Country Country { get; set; }
+        public User User { get; set; }
     }
 }

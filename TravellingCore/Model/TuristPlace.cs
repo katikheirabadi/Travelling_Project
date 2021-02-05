@@ -18,5 +18,6 @@ namespace TravellingCore.Model
         public List<Rate> Rates { get; set; }
         public TuristPlaceCategory TuristPlaceCategory { get; set; }
         public City City { get; set; }
+        public Country Country { get; set; }
     }
 }
