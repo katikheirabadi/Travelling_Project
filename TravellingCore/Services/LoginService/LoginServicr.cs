@@ -23,19 +23,19 @@ namespace TravellingCore.ServiceRepository.LoginService
         public async Task<string> AddLogin(LoginInputDto login)
         {
             var users = await repository.GetAll();
-            var find_user = users.FirstOrDefault(u => u.Password == login.Password && u.Username == login.Username);
+            var find_user = users.FirstOrDefault(u => u.Password == login.Password && u.UserName == login.Username);
             if (find_user == null)
                 return "Not Found Any User with this Information...";
             var loginuser = new UserLogin()
             {
-                userid = find_user.id,
+                UserId = find_user.Id,
                 LoginDate = DateTime.Now,
                 Token = Guid.NewGuid().ToString(),
                 ExpireDate = DateTime.Now.AddDays(1)
             };
 
             var loginusers = await repository1.GetAll();
-            var userlogin = loginusers.FirstOrDefault(lu => lu.userid == loginuser.userid);
+            var userlogin = loginusers.FirstOrDefault(lu => lu.UserId == loginuser.UserId);
            repository1.Insert(loginuser);
            await repository1.Save();
             

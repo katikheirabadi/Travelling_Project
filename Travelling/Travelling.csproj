@@ -15,9 +15,5 @@
     <ProjectReference Include="..\TravellingEF\TravellingEF.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Extention\" />
-  </ItemGroup>
-
 
 </Project>

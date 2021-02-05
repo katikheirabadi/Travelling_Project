@@ -60,8 +60,8 @@ namespace TravellingCore.ModelsServiceRepository.Models.Methods
             {
                 RecordDate = DateTime.Now,
                 Text = coment.comment,
-                userid = user.userid,
-                TP_id = place.id
+                UserId = user.UserId,
+                TuristPlaceId = place.Id
             }) ;
            
             return "we add your coment .";

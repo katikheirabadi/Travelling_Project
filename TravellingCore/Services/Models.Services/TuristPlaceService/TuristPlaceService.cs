@@ -84,18 +84,18 @@ namespace TravellingCore.ModelsServiceRepository.Models.Methods
         public async Task<CityListOutputDTO> SearchbyCity(string city)
         {
             var myCity = await TuristPlaceRepository.GetAll();
-            var newCity = myCity.Where(x => x.CityName == city).ToList();
-            var finallcity = newCity.Select(x => mapper.Map<CityOutputDTO>(x)).ToList();
+          //  var newCity = myCity.Where(x => x.C == city).ToList();
+          //  var finallcity = newCity.Select(x => mapper.Map<CityOutputDTO>(x)).ToList();
             return new CityListOutputDTO()
             {
-                Turism_Places = finallcity
+               // Turism_Places = finallcity
             };
         }
      
         public async Task<AtrListOutputDTO> SearchByAttraction(string atr)
         {
             var myAtr = await TuristPlaceRepository.GetAll();
-            var newAtr = myAtr.Where(x => x.Atrraction == atr).ToList();
+            var newAtr = myAtr.Where(x => x.Category == atr).ToList();
             var finallAtr = newAtr.Select(x => mapper.Map<AtrOutputDTO>(x)).ToList();
             return new AtrListOutputDTO()
             {
@@ -105,9 +105,10 @@ namespace TravellingCore.ModelsServiceRepository.Models.Methods
         public async Task<CountryListOutPutDto> SearchByCountry(string Name)
         {
             var Places = await TuristPlaceRepository.GetAll();
-            var MyPlaces = Places.Where(x => x.CountryName == Name).ToList();
+            //taghir mikone
+            var MyPlaces = Places.Where(x => x.Name == Name).ToList();
             var Reasult = MyPlaces.Select(x => mapper.Map<CountryOutPutDto>(x)).ToList();
-            return new CountryListOutPutDto() { Places = Reasult };
+           return new CountryListOutPutDto() { Places = Reasult };
         }
       /*  private int AverageRate()
         {

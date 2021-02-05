@@ -8,29 +8,30 @@ using TravellingCore.ContextRepositoryInterface;
 using TravellingCore.Dto.Sign_in;
 using TravellingCore.Model;
 using System.Linq;
+using TravellingCore.Services.SigninServicefoulder;
 
 namespace TravellingCore.ModelsServiceRepository.SigninRepository
 {
-    public class SigninService 
+    public class SigninService : ISigninService
     {
-        private readonly IRepository<User> repository;
+        private readonly IRepository<User> SigninRepository;
         private readonly IMapper mapper;
 
-        public SigninService(IRepository<User> repository, IMapper mapper)
+        public SigninService(IRepository<User> SigninRepository, IMapper mapper)
         {
-            this.repository = repository;
+            this.SigninRepository = SigninRepository;
             this.mapper = mapper;
         }
         public async Task<string> Signin(SigninInputDTO signin)
         {
             var usersignin = mapper.Map<User>(signin);
-            if (usersignin.Password != usersignin.Re_Password)
+            if (usersignin.Password != usersignin.RePassword)
                 return "Re_Pasword is not Correct";
-            var Users = await repository.GetAll();
-            if (Users.FirstOrDefault(u => u.Username == usersignin.Username) != null)
+            var Users = await SigninRepository.GetAll();
+            if (Users.FirstOrDefault(u => u.UserName == usersignin.UserName) != null)
                 return "Accont whit this username exist...";
-            repository.Insert(usersignin);
-            await repository.Save();
+            SigninRepository.Insert(usersignin);
+            await SigninRepository.Save();
             return $"Wellcome {usersignin.FullName}";
         }
     }

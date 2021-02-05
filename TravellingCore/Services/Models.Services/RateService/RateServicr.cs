@@ -60,9 +60,9 @@ namespace TravellingCore.ModelsServiceRepository.Models.Methods
             RateRepository.Insert(new Rate()
             {
                 RecordDate = DateTime.Now,
-                RateInt = rate.Rate,
-                Tp_id = place1.id,
-                userid = user.userid
+                UserRate = rate.Rate,
+                TuristPlaceId = place1.Id,
+                UserId = user.UserId
             }) ;
            
             return "we add your Rate .";

@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using TravellingCore.Model;
 using TravellingCore.ModelsServiceRepository.Models.Methods;
+using TravellingCore.Services.Models.Services.CommentServise;
 
 namespace Travelling.Controllers
 {
@@ -24,7 +25,7 @@ namespace Travelling.Controllers
         {
             try
             {
-                service.Insert2(coment);
+                service.Insert(coment);
                 await service.Save();
                 return Ok( "your comment Add");
             }
