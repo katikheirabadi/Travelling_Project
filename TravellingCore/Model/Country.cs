@@ -10,7 +10,6 @@ namespace TravellingCore.Model
         public int Id { get; set; }
         public string Name { get; set; }
         public List<City> Cities { get; set; }
-        public List<Favorite> Favorites { get; set; }
         public List<TuristPlace> TuristPlaces { get; set; }
     }
 }

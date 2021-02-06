@@ -48,9 +48,11 @@ namespace TravellingCore.ModelsServiceRepository.Models.Methods
             var user = users.FirstOrDefault(u => u.Token == Token);
             if (user == null)
                 return "We don't have any Login-user with this Token ";
+
             TimeSpan time = user.ExpireDate.Date - DateTime.Now.Date;
             if (time.TotalMilliseconds < 0)
                 return "your accont has expierd and you must log in again";
+
             var places =  TuristPlaceRepository.GetQuery();
             var place = places.FirstOrDefault(p => p.Name==(coment.Turist_Place));
             if (place == null)

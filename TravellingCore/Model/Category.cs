@@ -9,7 +9,6 @@ namespace TravellingCore.Model
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public TuristPlaceCategory TuristPlaceCategory { get; set; }
-        public List<Favorite> Favorites { get; set; }
+        public List<TuristPlaceCategory> TuristPlaceCategory { get; set; }
     }
 }
