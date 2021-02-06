@@ -16,7 +16,6 @@ namespace TravellingEF.DataBase
         public DbSet<Country> Countries { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<City> Cities { get; set; }
-        public DbSet<Favorite> Favorites { get; set; }
         public DbSet<UserLogin> UserLogins { get; set; }
 
         public TravellingDBContext()
@@ -36,7 +35,6 @@ namespace TravellingEF.DataBase
             modelBuilder.Entity<Category>(b => b.ToTable("Category"));
             modelBuilder.Entity<City>(b => b.ToTable("City"));
             modelBuilder.Entity<Country>(b => b.ToTable("Country"));
-            modelBuilder.Entity<Favorite>(b => b.ToTable("Favorite"));
             modelBuilder.Entity<TuristPlaceCategory>(b => b.ToTable("TuristPlaceCategory"));
             modelBuilder.Entity<UserLogin>(b => b.ToTable("UserLogin"));
 

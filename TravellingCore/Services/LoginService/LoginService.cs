@@ -7,27 +7,25 @@ using TravellingCore.Dto.LogIn;
 using TravellingCore.Model;
 using System.Linq;
 using TravellingCore.Services.LoginService;
+using TravellingCore.Dto.LogIn.UpdateUserLogin;
 
 namespace TravellingCore.ServiceRepository.LoginService
 {
     public class LoginServices: ILoginServicecs
     {
-        private readonly IRepository<User> repository;
-        private readonly IRepository<UserLogin> repository1;
+        private readonly IRepository<User> Userrepository;
+        private readonly IRepository<UserLogin> UserLoginRepository;
 
-        public LoginServices(IRepository<User> repository,
-                             IRepository<UserLogin> repository1)
+        public LoginServices(IRepository<User> Userrepository,
+                             IRepository<UserLogin> UserLoginRepository)
         {
-            this.repository = repository;
-            this.repository1 = repository1;
+            this.Userrepository = Userrepository;
+            this.UserLoginRepository = UserLoginRepository;
         }
 
         public async Task<string> AddLogin(LoginInputDto login)
         {
-            var users = await repository.GetAll();
-            var finduser = users.FirstOrDefault(u => u.Password == login.Password && u.UserName == login.Username);
-            if (finduser == null)
-                return "Not Found Any User with this Information...";
+            var finduser =await FindUser(login);
             var loginuser = new UserLogin()
             {
                 UserId = finduser.Id,
@@ -35,15 +33,25 @@ namespace TravellingCore.ServiceRepository.LoginService
                 Token = Guid.NewGuid().ToString(),
                 ExpireDate = DateTime.Now.AddDays(1)
             };
-
-          
-           repository1.Insert(loginuser);
-           await repository1.Save();
-            
-            
-            return $"Wellcome to your accont with code {loginuser.Token}";
+           UserLoginRepository.Insert(loginuser);
+           await UserLoginRepository.Save();
+           return $"Wellcome to your accont";
             
         }
+        private async Task<User> FindUser(LoginInputDto login)
+        {
+            var users = await Userrepository.GetAll();
+            var finduser = users.FirstOrDefault(u => u.Password == login.Password && u.UserName == login.Username);
+            if (finduser != null)
+                return finduser;
+            throw new Exception("Not Found");
+        }
+
+        //public async Task<string> UpdateUserLogin(UpdateUserLoginInputDto update , string Token)
+        //{
+
+
+        //}
         
     }
 }
