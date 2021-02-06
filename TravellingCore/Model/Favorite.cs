@@ -8,11 +8,9 @@ namespace TravellingCore.Model
     public class Favorite : IEntity
     {
         public int Id { get; set; }
-        public int CategoryId { get; set; }
-        public int CountryId { get; set; }
+        public int CategoryName { get; set; }
+        public int CountryName { get; set; }
         public int UserId { get; set; }
-        public Category Category { get; set; }
-        public Country Country { get; set; }
         public User User { get; set; }
     }
 }
