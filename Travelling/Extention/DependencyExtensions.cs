@@ -31,6 +31,11 @@ namespace Travelling.Extention
             services.AddTransient<IRepository<TuristPlace>, Repository<TuristPlace>>();
             services.AddTransient<IRepository<Rate>, Repository<Rate>>();
             services.AddTransient<IRepository<UserLogin>, Repository<UserLogin>>();
+            services.AddTransient<IRepository<Country>, Repository<Country>>();
+            services.AddTransient<IRepository<City>, Repository<City>>();
+            services.AddTransient<IRepository<Favorite>, Repository<Favorite>>();
+            services.AddTransient<IRepository<TuristPlaceCategory>, Repository<TuristPlaceCategory>>();
+            services.AddTransient<IRepository<Category>, Repository<Category>>();
         }
         private static void AddServices(IServiceCollection services)
         {
