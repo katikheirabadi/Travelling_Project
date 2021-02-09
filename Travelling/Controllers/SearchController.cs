@@ -6,10 +6,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TravellingCore.ContextRepositoryInterface;
-using TravellingCore.Dto.SearchByName;
+using TravellingCore.Dto._ُSearchByCategory;
+using TravellingCore.Dto.SearchByCountry;
+using TravellingCore.Dto.SearchByTuristPlaceName;
 using TravellingCore.Model;
 using TravellingCore.ModelsServiceRepository.Models.Methods;
+using TravellingCore.Services.Models.Services.SearchServise;
 using TravellingCore.Services.Models.Services.TuristPlaceService;
+
 
 namespace Travelling.Controllers
 {
@@ -17,31 +21,22 @@ namespace Travelling.Controllers
     [ApiController]
     public class SearchController : ControllerBase
     {
-        private readonly ITuristPlaceService turistService;
-        public SearchController(ITuristPlaceService turist)
+        private readonly ISearchservise searchService;
+        public SearchController(ISearchservise searchservise)
         {
-            this.turistService = turist;
+            this.searchService = searchservise;
         }
         [HttpGet]
-        public async Task<IActionResult> SearchbyName([FromQuery] string Name)
+        public async Task<IActionResult> SearchbyName([FromBody] TuristPlaceInputDto turistPlace)
         {
-            var place = await turistService.SearchByName(Name);
-            if (place == null)
-                return NotFound();
+            var place = await searchService.SearchByName(turistPlace);
             return Ok(place);
         }
-        [HttpGet]
-        public async Task<IActionResult> NewPlaces([FromQuery] int size)
-        {
-            var example = await turistService.NewPlaces(size);
-            if (example == null)
-                return NotFound();
-            return Ok(example);
-        }
+        
         [HttpGet]
         public async Task<IActionResult> SearchbyCity([FromQuery]string city_name)
         {
-            var city = await turistService.SearchbyCity(city_name);
+            var city = await searchService.SearchbyCity(city_name);
             if (city == null)
                 return NotFound();
             return Ok(city);
@@ -52,19 +47,15 @@ namespace Travelling.Controllers
         //    //var place = await turist.SearchbyVisited();
         //    //return (IActionResult)place;
         //}
-        public async Task<IActionResult> SearchByAttraction([FromQuery] string attraction)
+        public async  Task<IActionResult> SearchByCategory([FromBody] CategoryInputDto category)
         {
-            var atr = await turistService.SearchByAttraction(attraction);
-            if (atr == null)
-                return NotFound();
+            var atr = await searchService.SearchByCategory(category);
             return Ok(atr);
         }
         [HttpGet]
-        public async Task<IActionResult> SearchByCountryName([FromQuery] string Country)
+        public async Task<IActionResult> SearchByCountryName([FromBody] CountryInputDto country)
         {
-            var Places = await turistService.SearchByCountry(Country);
-            if (Places == null)
-                return NotFound();
+            var Places = await searchService.SearchByCountry(country);
             return Ok(Places);
         }
     }

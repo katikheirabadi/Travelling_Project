@@ -6,10 +6,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using TravellingCore.Dto.Coment;
 using TravellingCore.Dto.Rate;
+using TravellingCore.Dto.SearchByTuristPlaceName;
+using TravellingCore.Dto.Visit;
 using TravellingCore.Model;
 using TravellingCore.ModelsServiceRepository.Models.Methods;
 using TravellingCore.Services.Models.Services.CommentServise;
 using TravellingCore.Services.Models.Services.RateService;
+using TravellingCore.Services.Models.Services.SearchServise;
 using TravellingCore.Services.Models.Services.TuristPlaceService;
 
 namespace Travelling.Controllers
@@ -18,55 +21,53 @@ namespace Travelling.Controllers
     [ApiController]
     public class TuristPlaceController : ControllerBase
     {
-        private readonly ICommentService coment;
-        private readonly IRateService rate;
-        private readonly ITuristPlaceService service;
+        private readonly ICommentService commentService;
+        private readonly IRateService rateService;
+        private readonly ITuristPlaceService turistPlaceService;
+        private readonly ISearchservise searchServise; 
 
-        public TuristPlaceController(ICommentService coment, IRateService rate, ITuristPlaceService _Service)
+        public TuristPlaceController(ICommentService commentService
+                                    ,IRateService rateService
+                                    ,ITuristPlaceService turistPlaceService
+                                    , ISearchservise searchServise)
         {
-            this.coment = coment;
-            this.rate = rate;
-            service = _Service;
+            this.commentService = commentService;
+            this.rateService = rateService;
+            this.turistPlaceService = turistPlaceService;
+            this.searchServise = searchServise;
         }
 
         [HttpPost]
         public async Task<IActionResult> AddComent([FromBody] ComentInsertDto coment, [FromHeader] string Token)
         {
-            var result = await this.coment.AddComment(coment, Token);
+            var result = await this.commentService.AddComment(coment, Token);
             if (result != "we add your coment .")
                 return BadRequest(result);
-            await this.coment.Save();
+            await this.commentService.Save();
             return Ok(result);
         }
         [HttpPost]
         public async Task<IActionResult> AddRate([FromBody] RateInputDto dto, [FromHeader] string Token)
         {
-            var result = await this.rate.AddRate(dto, Token);
+            var result = await this.rateService.AddRate(dto, Token);
             if (result != "we add your Rate .")
                 return BadRequest(result);
-            await this.rate.Save();
+            await this.rateService.Save();
             return Ok(result);
         }
         [HttpGet]
-        public async Task<IActionResult> ShowPlace([FromBody] string Name)
+        public  IActionResult ShowPlace([FromBody] TuristPlaceInputDto turistPlace)
         {
-            try
-            {
-                var result = service.ShoPlaceByName(Name);
-                return Ok(result);
-            }
-            catch(Exception e)
-            {
-                return NotFound(e.Message);
-            }
+            var result = searchServise.SearchByName(turistPlace);
+            return Ok(result);
         }
         [HttpPost]
         public async Task<IActionResult> DBCreate(TuristPlace place)
         {
             try
             {
-                service.Insert(place);
-                await service.Save();
+                turistPlaceService.Insert(place);
+                await turistPlaceService.Save();
                 place.Visit = 0;
                 return Ok(place.Name + "Add");
             }
@@ -80,7 +81,7 @@ namespace Travelling.Controllers
         {
             try
             {
-                var result = await service.Get(id);
+                var result = await turistPlaceService.Get(id);
                 return Ok(result);
             }
             catch
@@ -94,7 +95,7 @@ namespace Travelling.Controllers
         {
             try
             {
-                var result = await service.GetAll();
+                var result = await turistPlaceService.GetAll();
                 return Ok(result);
             }
             catch
@@ -107,8 +108,8 @@ namespace Travelling.Controllers
         {
             try
             {
-                var result = service.Delete(id);
-                await service.Save();
+                var result = turistPlaceService.Delete(id);
+                await turistPlaceService.Save();
                 return Ok(result);
             }
             catch (Exception e)
@@ -121,8 +122,8 @@ namespace Travelling.Controllers
         {
             try
             {
-                var result = service.Update(place);
-                await service.Save();
+                var result = turistPlaceService.Update(place);
+                await turistPlaceService.Save();
                 return Ok(result);
             }
             catch(Exception e)
@@ -132,7 +133,33 @@ namespace Travelling.Controllers
                 return BadRequest("your update have exeption ...");
             }
         }
-
+        [HttpGet]
+        public async Task<IActionResult> NewPlaces([FromQuery] int size)
+        {
+            var example = await turistPlaceService.NewPlaces(size);
+            if (example == null)
+                return NotFound();
+            return Ok(example);
+        }
+        [HttpGet]
+        public async Task<IActionResult> View([FromBody] VisitInputDto turistPlace)
+        {
+            var reasult = await turistPlaceService.View(turistPlace);
+            return Ok(reasult);
+        }
+        [HttpGet]
+        public async Task<IActionResult> ShowVisit([FromQuery] int size)
+        {
+            var reasult = await turistPlaceService.ShowVisit(size);
+            return Ok(reasult);
+        }
+        [HttpGet]
+        public async Task<IActionResult> ShoePopular([FromQuery] int size)
+        {
+            var reasult = await turistPlaceService.ShowPopular(size);
+            return Ok(reasult);
+        }
+            
     }
 
 }

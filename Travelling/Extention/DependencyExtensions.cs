@@ -11,6 +11,7 @@ using TravellingCore.ServiceRepository.LoginService;
 using TravellingCore.Services.LoginService;
 using TravellingCore.Services.Models.Services.CommentServise;
 using TravellingCore.Services.Models.Services.RateService;
+using TravellingCore.Services.Models.Services.SearchServise;
 using TravellingCore.Services.Models.Services.TuristPlaceService;
 using TravellingCore.Services.SigninServicefoulder;
 using TravellingEF.ContextRepository;
@@ -39,10 +40,11 @@ namespace Travelling.Extention
         private static void AddServices(IServiceCollection services)
         {
             services.AddTransient<ISigninService, SigninService>();
-           services.AddTransient<ILoginServicecs, LoginServices>();
+            services.AddTransient<ILoginServicecs, LoginServices>();
             services.AddTransient<ICommentService, ComentService>();
             services.AddTransient<IRateService, RateServicr>();
             services.AddTransient<ITuristPlaceService, TuristPlaceService>();
+            services.AddTransient<ISearchservise, SearchServise>();
         }
     }
 }
