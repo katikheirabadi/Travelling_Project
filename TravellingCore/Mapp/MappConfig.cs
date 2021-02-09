@@ -1,12 +1,15 @@
 ﻿using AutoMapper;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using TravellingCore.Dto._ُSearchByCategory;
 using TravellingCore.Dto.NewPlace;
 using TravellingCore.Dto.Popular;
 using TravellingCore.Dto.searchByCity;
 using TravellingCore.Dto.SearchByCountry;
+using TravellingCore.Dto.SearchByFilter;
+using TravellingCore.Dto.SearchByName;
 using TravellingCore.Dto.SearchByTuristPlaceName;
 using TravellingCore.Dto.Sign_in;
 using TravellingCore.Dto.View;

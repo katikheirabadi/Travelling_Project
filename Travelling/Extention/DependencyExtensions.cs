@@ -10,8 +10,9 @@ using TravellingCore.ModelsServiceRepository.SigninRepository;
 using TravellingCore.ServiceRepository.LoginService;
 using TravellingCore.Services.LoginService;
 using TravellingCore.Services.Models.Services.CommentServise;
+using TravellingCore.Services.Models.Services.CompareService;
 using TravellingCore.Services.Models.Services.RateService;
-using TravellingCore.Services.Models.Services.SearchServise;
+using TravellingCore.Services.Models.Services.SerachByFilterService;
 using TravellingCore.Services.Models.Services.TuristPlaceService;
 using TravellingCore.Services.SigninServicefoulder;
 using TravellingEF.ContextRepository;
@@ -44,7 +45,8 @@ namespace Travelling.Extention
             services.AddTransient<ICommentService, ComentService>();
             services.AddTransient<IRateService, RateServicr>();
             services.AddTransient<ITuristPlaceService, TuristPlaceService>();
-            services.AddTransient<ISearchservise, SearchServise>();
+            services.AddTransient<ICompareService, CompareService>();
+            services.AddTransient<IFilterService, FilterService>();
         }
     }
 }
