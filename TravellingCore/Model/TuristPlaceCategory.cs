@@ -9,7 +9,7 @@ namespace TravellingCore.Model
     {
         public int Id { get; set; }
         public int TuristPlaceId { get; set; }
-        public int CaregoryId { get; set; }
+        public int CategoryId { get; set; }
         public TuristPlace TuristPlaces { get; set; }
         public Category Categories { get; set; }
     }

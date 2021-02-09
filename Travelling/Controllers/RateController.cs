@@ -4,6 +4,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using TravellingCore.Dto.Rate;
+using TravellingCore.Dto.Rate.DeleteRate;
+using TravellingCore.Dto.Rate.GetPlaceRates;
+using TravellingCore.Dto.Rate.GetRate;
+using TravellingCore.Dto.Rate.UpdateRate;
 using TravellingCore.Model;
 using TravellingCore.ModelsServiceRepository.Models.Methods;
 using TravellingCore.Services.Models.Services.RateService;
@@ -14,82 +19,68 @@ namespace Travelling.Controllers
     [ApiController]
     public class RateController : ControllerBase
     {
-        private readonly IRateService service;
+        private readonly IRateService RateServise;
 
-        public RateController(IRateService service)
+        public RateController(IRateService RateServise)
         {
-            this.service = service;
+            this.RateServise = RateServise;
         }
         [HttpPost]
-        public async Task<IActionResult> DBCreate(Rate Rate)
+        public async Task<IActionResult> AddRate([FromBody]RateInputDto rate,[FromHeader]string Token)
         {
-            try
+            if(!ModelState.IsValid)
             {
-                service.Insert(Rate);
-                await service.Save();
-                return Ok( "your rate Add");
+                return BadRequest();
             }
-            catch (Exception e)
-            {
-                return BadRequest(e.Message);
-            }
+            var result = await RateServise.AddRate(rate, Token);
+            return Ok(result);
         }
         [HttpGet]
-        public async Task<IActionResult> DBGetPlace(int id)
+        public async Task<IActionResult> GetRate([FromBody]GetrateInputDto getinput)
         {
-            try
+            if (!ModelState.IsValid)
             {
-                var result = await service.Get(id);
-                return Ok(result);
+                return BadRequest();
             }
-            catch
-            {
-                return BadRequest("we don't have this id....");
-
-            }
+            var result = await RateServise.GetRate(getinput);
+            return Ok(result);
         }
         [HttpGet]
-        public async Task<IActionResult> DBGetAllPlaces()
+        public async Task<IActionResult> GetAllRates()
         {
-            try
+            var result = await RateServise.GetAllRate();
+            return Ok(result); 
+        }
+        [HttpGet]
+        public async Task<IActionResult> GetAllRatesOfPlace([FromBody]GetPlaceRatesInputDto getplaceinput)
+        {
+            if (!ModelState.IsValid)
             {
-                var result = await service.GetAll();
-                return Ok(result);
+                return BadRequest();
             }
-            catch
-            {
-                return BadRequest("you have exception..");
-            }
+            var result = await RateServise.GetAllRatesOfPlace(getplaceinput);
+            return Ok(result);
+            
         }
         [HttpDelete]
-        public async Task<IActionResult> DBDeletePlace(int id)
+        public async Task<IActionResult> DeleteRate([FromBody]DeleterateInputDto deleterateinput)
         {
-            try
+            if (!ModelState.IsValid)
             {
-                var result = service.Delete(id);
-                await service.Save();
-                return Ok(result);
+                return BadRequest();
             }
-            catch (Exception e)
-            {
-                return BadRequest(e.Message);
-            }
+            var result = await RateServise.DeleteRate(deleterateinput);
+            return Ok(result);
         }
         [HttpGet]
-        public async Task<IActionResult> DBUpdatePlace(Rate rate)
+        public async Task<IActionResult> UpdateRate([FromBody]UpdateRateInputDto updateinput)
         {
-            try
+            if (!ModelState.IsValid)
             {
-                var result = service.Update(rate);
-                await service.Save();
-                return Ok(result);
+                return BadRequest();
             }
-            catch (Exception e)
-            {
-                if (e.Message == "you have Exception please check...")
-                    return BadRequest(e.Message);
-                return BadRequest("your update have exeption ...");
-            }
+            var result = await RateServise.UpdateRate(updateinput);
+            return Ok(result);
         }
     }
 }

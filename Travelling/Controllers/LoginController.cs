@@ -5,30 +5,48 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TravellingCore.Dto.LogIn;
+using TravellingCore.Dto.LogIn.UpdateUserLogin;
 using TravellingCore.ServiceRepository.LoginService;
+using TravellingCore.Services.LoginService;
 
 namespace Travelling.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     [ApiController]
     public class LoginController : ControllerBase
     {
-        private readonly LoginServices login;
+        private readonly ILoginServicecs LoginService;
 
-        public LoginController(LoginServices login)
+        public LoginController(ILoginServicecs login)
         {
-            this.login = login;
+            this.LoginService = login;
         }
         [HttpPost]
-        public async Task<IActionResult> Add(LoginInputDto loginitem)
+        public async Task<IActionResult> AddLogin(LoginInputDto loginitem)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest();
             }
-            var result =await login.AddLogin(loginitem);
-            if (result == "Not Found Any User with this Information...")
-                return NotFound("Not Found Any User with this Information...");
+            var result =await LoginService.AddLogin(loginitem);
+            return Ok(result);
+        }
+        [HttpGet]
+        public async Task<IActionResult> ShowUserLogin([FromHeader] string Token)
+        {
+            var result = await LoginService.ShowUserLogin(Token);
+            return Ok(result);
+        }
+        [HttpGet]
+        public async Task<IActionResult> ShowAll()
+        {
+            var result = await LoginService.ShowAllUserLogin();
+            return Ok(result);
+        }
+        [HttpPut]
+        public async Task<IActionResult> UpdateUserLogin([FromBody]UpdateUserLoginInputDto update, [FromHeader]string Token)
+        {
+            var result = await LoginService.UpdateUserLogin(update, Token);
             return Ok(result);
         }
     }

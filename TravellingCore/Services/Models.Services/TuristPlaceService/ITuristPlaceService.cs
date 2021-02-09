@@ -9,24 +9,19 @@ using TravellingCore.Dto.searchByCity;
 using TravellingCore.Dto.SearchByCountry;
 using TravellingCore.Dto.SearchByName;
 using TravellingCore.Dto.TPlace;
+using TravellingCore.Dto.TuristPlace.AddPlace;
+using TravellingCore.Dto.TuristPlace.GetPlace;
 using TravellingCore.Model;
 
 namespace TravellingCore.Services.Models.Services.TuristPlaceService
 {
    public interface ITuristPlaceService
     {
-        public Task<NameOutputDTO> SearchByName(string Name);
+        public Task<string> AddTuristPlace(AddPlaceInputDto addinput);
+        public  Task<GetPlaceOutputDto> GetPlace(GetPlaceInput getinput);
+        public Task<List<GetPlaceOutputDto>> GetAllPlaces();
         public  Task<NewListInputDTO> NewPlaces(int size);
-        public Task<CityListOutputDTO> SearchbyCity(string city);
-        public Task<AtrListOutputDTO> SearchByAttraction(string atr);
-        public Task<CountryListOutPutDto> SearchByCountry(string Name);
-        public  Task<PlaceOutputDto> ShoPlaceByName(string Nameplace);
-        public string Delete(int id);
-        public Task<TuristPlace> Get(int id);
-        public Task<List<TuristPlace>> GetAll();
-        public IQueryable<TuristPlace> GetQuery();
-        public Task Save();
-        public string Update(TuristPlace item);
-        public void Insert(TuristPlace item);
-    }
+    
+    }   
+      
 }

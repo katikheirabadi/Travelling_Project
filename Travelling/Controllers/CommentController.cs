@@ -4,6 +4,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using TravellingCore.Dto.Coment;
+using TravellingCore.Dto.Coment.DeleteComment;
+using TravellingCore.Dto.Coment.GetComment;
+using TravellingCore.Dto.Coment.GetPlaceComment;
+using TravellingCore.Dto.Coment.UpdateComment;
 using TravellingCore.Model;
 using TravellingCore.ModelsServiceRepository.Models.Methods;
 using TravellingCore.Services.Models.Services.CommentServise;
@@ -14,83 +19,67 @@ namespace Travelling.Controllers
     [ApiController]
     public class CommentController : ControllerBase
     {
-        private readonly ICommentService service;
+        private readonly ICommentService CommentServise;
 
-        public CommentController(ICommentService service)
+        public CommentController(ICommentService CommentServise)
         {
-            this.service = service;
+            this.CommentServise = CommentServise;
         }
         [HttpPost]
-        public async Task<IActionResult> DBCreate(Comment coment)
+        public async Task<IActionResult> CreateComment([FromBody]ComentInsertDto coment,[FromHeader] string Token)
         {
-            try
+            if (!ModelState.IsValid)
             {
-                service.Insert(coment);
-                await service.Save();
-                return Ok( "your comment Add");
+                return BadRequest();
             }
-
-            catch (Exception e)
-            {
-                return BadRequest(e.Message);
-            }
+            var result = await CommentServise.AddComment(coment, Token);
+            return Ok(result);
         }
         [HttpGet]
-        public async Task<IActionResult> DBGetPlace(int id)
+        public async Task<IActionResult> ShowAllComments()
         {
-            try
-            {
-                var result = await service.Get(id);
-                return Ok(result);
-            }
-            catch
-            {
-                return BadRequest("we don't have this id....");
-
-            }
+            var result =await CommentServise.ShowAllComments();
+            return Ok(result);
         }
         [HttpGet]
-        public async Task<IActionResult> DBGetAllPlaces()
+        public async Task<IActionResult> ShowPlaceComments([FromBody] GetPlaceCommentsInputDto getinput)
         {
-            try
+            if (!ModelState.IsValid)
             {
-                var result = await service.GetAll();
-                return Ok(result);
+                return BadRequest();
             }
-            catch
+            var result = await CommentServise.ShowPlaceComments(getinput);
+            return Ok(result);
+        }
+        [HttpGet]
+        public async Task<IActionResult> ShowComment([FromBody]GetCommentInputDto getinput)
+        {
+            if (!ModelState.IsValid)
             {
-                return BadRequest("you have exception..");
+                return BadRequest();
             }
+            var result = await CommentServise.GetComment(getinput);
+            return Ok(result);
         }
         [HttpDelete]
-        public async Task<IActionResult> DBDeletePlace(int id)
+        public async Task<IActionResult> DeleteComment([FromBody]DeleteCommentInputDto deleteinput)
         {
-            try
+            if (!ModelState.IsValid)
             {
-                var result = service.Delete(id);
-                await service.Save();
-                return Ok(result);
+                return BadRequest();
             }
-            catch (Exception e)
-            {
-                return BadRequest(e.Message);
-            }
+            var result =await CommentServise.DeleteComment(deleteinput);
+            return Ok(result);
         }
-        [HttpGet]
-        public async Task<IActionResult> DBUpdatePlace(Comment comment)
+        [HttpPut]
+        public async Task<IActionResult> UpdateComment([FromBody]UpdateCommentInputdto updateinput)
         {
-            try
+            if (!ModelState.IsValid)
             {
-                var result = service.Update(comment);
-                await service.Save();
-                return Ok(result);
+                return BadRequest();
             }
-            catch (Exception e)
-            {
-                if (e.Message == "you have Exception please check...")
-                    return BadRequest(e.Message);
-                return BadRequest("your update have exeption ...");
-            }
+            var result = await CommentServise.UpdateComment(updateinput);
+            return Ok(result);
         }
     }
 }

@@ -4,6 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TravellingCore.Dto.Rate;
+using TravellingCore.Dto.Rate.DeleteRate;
+using TravellingCore.Dto.Rate.GetPlaceRates;
+using TravellingCore.Dto.Rate.GetRate;
+using TravellingCore.Dto.Rate.UpdateRate;
 using TravellingCore.Model;
 
 namespace TravellingCore.Services.Models.Services.RateService
@@ -11,12 +15,10 @@ namespace TravellingCore.Services.Models.Services.RateService
     public interface IRateService
     {
         public Task<string> AddRate(RateInputDto rate, string Token);
-        public string Delete(int id);
-        public Task<Rate> Get(int id);
-        public Task<List<Rate>> GetAll();
-        public IQueryable<Rate> GetQuery();
-        public Task Save();
-        public string Update(Rate item);
-        public void Insert(Rate item);
+        public Task<GetRateOutputDto> GetRate(GetrateInputDto getinput);
+        public Task<List<GetRateOutputDto>> GetAllRate();
+        public Task<List<GetPlaceRatesOutputDto>> GetAllRatesOfPlace(GetPlaceRatesInputDto getplaceinput);
+        public Task<string> DeleteRate(DeleterateInputDto deleterateinput);
+        public Task<string> UpdateRate(UpdateRateInputDto updateinput);
     }
 }

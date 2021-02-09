@@ -13,6 +13,9 @@ using TravellingCore.Dto.SearchByCountry;
 using TravellingCore.Dto.SearchByName;
 
 using TravellingCore.Dto.TPlace;
+using TravellingCore.Dto.TuristPlace.AddPlace;
+using TravellingCore.Dto.TuristPlace.GetPlace;
+using TravellingCore.Exceptions;
 using TravellingCore.Model;
 using TravellingCore.Services.Models.Services;
 using TravellingCore.Services.Models.Services.TuristPlaceService;
@@ -22,54 +25,51 @@ namespace TravellingCore.ModelsServiceRepository.Models.Methods
     public class TuristPlaceService :  ITuristPlaceService
     {
         private readonly IMapper mapper;
+        private readonly IRepository<Country> CountryRepository;
+        private readonly IRepository<City> CityRepository;
+        private readonly IRepository<TuristPlaceCategory> TuristPlaceCategoryrepository;
         private readonly IRepository<TuristPlace> TuristPlaceRepository;
         
-        public TuristPlaceService(IRepository<TuristPlace> TuristPlaceRepository, IMapper mapper)
+        public TuristPlaceService(IRepository<TuristPlace> TuristPlaceRepository
+                                , IMapper mapper
+                                , IRepository<Country> CountryRepository
+                                , IRepository<City> CityRepository
+                                , IRepository<TuristPlaceCategory> TuristPlaceCategoryrepository)
         {
             this.mapper = mapper;
+            this.CountryRepository = CountryRepository;
+            this.CityRepository = CityRepository;
+            this.TuristPlaceCategoryrepository = TuristPlaceCategoryrepository;
             this.TuristPlaceRepository = TuristPlaceRepository;
         }
-        public  string Delete(int id)
-        {
-            return TuristPlaceRepository.Delete(id);
-        }
 
-        public Task<TuristPlace> Get(int id)
+        private async Task<Country> FindCountry(string country)
         {
-            return TuristPlaceRepository.Get(id);
+            var countries = await CountryRepository.GetAll();
+            var findcountry = countries.Find(c => c.Name == country);
+            if (findcountry == null)
+                throw new KeyNotFoundException("not found this country");
+            return findcountry;
         }
+        private async Task<City> FindCity(string city)
+        {
+            var Cities = await CityRepository.GetAll();
+            if (Cities == null)
+                throw new KeyNotFoundException("Not Found any City");
+            var findcity = Cities.FirstOrDefault(c => c.Name == city);
+            if (findcity == null)
+                throw new KeyNotFoundException("Not Found This city");
+            return findcity;
 
-        public Task<List<TuristPlace>> GetAll()
-        {
-            return TuristPlaceRepository.GetAll();
         }
-
-        public IQueryable<TuristPlace> GetQuery()
+        private async Task<TuristPlace> Findplace(string place)
         {
-            return TuristPlaceRepository.GetQuery();
+            var places = await TuristPlaceRepository.GetAll();
+            var findplace = places.Find(p => p.Name == place);
+            if (findplace == null)
+                throw new KeyNotFoundException("Not found any place with this name");
+            return findplace;
         }
-
-        public void Insert(TuristPlace item)
-        {
-            TuristPlaceRepository.Insert(item);
-        }
-
-        public Task Save()
-        {
-            return TuristPlaceRepository.Save();
-        }
-
-        public string Update(TuristPlace item)
-        {
-            return TuristPlaceRepository.Update(item);
-        }
-        public async Task<NameOutputDTO> SearchByName(string Name)
-        {
-            var place = await TuristPlaceRepository.GetAll();
-            var placeName = place.FirstOrDefault(x => x.Name == Name);
-            return mapper.Map<NameOutputDTO>(placeName);
-        }
-        
         public async Task<NewListInputDTO> NewPlaces(int size)
         {
             var AllPlace = await TuristPlaceRepository.GetAll();
@@ -81,52 +81,74 @@ namespace TravellingCore.ModelsServiceRepository.Models.Methods
                 Turism_Places = finall.ToList()
             };
         }
-        public async Task<CityListOutputDTO> SearchbyCity(string city)
-        {
-            var myCity = await TuristPlaceRepository.GetAll();
-          //  var newCity = myCity.Where(x => x.C == city).ToList();
-          //  var finallcity = newCity.Select(x => mapper.Map<CityOutputDTO>(x)).ToList();
-            return new CityListOutputDTO()
-            {
-               // Turism_Places = finallcity
-            };
-        }
-     
-        public async Task<AtrListOutputDTO> SearchByAttraction(string atr)
-        {
-            //var myAtr = await TuristPlaceRepository.GetAll();
-            //var newAtr = myAtr.Where(x => x.Category == atr).ToList();
-            //var finallAtr = newAtr.Select(x => mapper.Map<AtrOutputDTO>(x)).ToList();
-            return new AtrListOutputDTO()
-            {
-            //    places = finallAtr
-            };
-        }
-        public async Task<CountryListOutPutDto> SearchByCountry(string Name)
-        {
-            var Places = await TuristPlaceRepository.GetAll();
-            //taghir mikone
-            var MyPlaces = Places.Where(x => x.Name == Name).ToList();
-            var Reasult = MyPlaces.Select(x => mapper.Map<CountryOutPutDto>(x)).ToList();
-           return new CountryListOutPutDto() { Places = Reasult };
-        }
-      /*  private int AverageRate()
-        {
-            var result = repository.GetQuery().Include(p => p.Rates).Select(x => new { avg = x.Rates.Average(y => y.RateInt) , name = x.Name , city = x.CityName }).ToList().OrderByDescending(x => x.avg);
-
-
-        }*/
-        public async Task<PlaceOutputDto> ShoPlaceByName(string Nameplace)
+        private async Task IsRepited(TuristPlace place)
         {
             var places = await TuristPlaceRepository.GetAll();
-            var place = places.FirstOrDefault(p => p.Name == Nameplace);
-            if (place == null)
-                throw new Exception("we don't have this place...");
-            place.Visit++;
-            return mapper.Map<PlaceOutputDto>(place);
+            var repit = places.Find(p => p.Name == place.Name);
+            if (repit != null)
+                throw new ReapitException("this place already exist");
+        }
+
+        public async Task<string> AddTuristPlace(AddPlaceInputDto addinput)
+        {
+            var findcity = await FindCity(addinput.CityName);
+            var findcountry = await FindCountry(addinput.Country);
+
+            var cityofcountry = CityRepository.GetQuery().Include(c => c.Country)
+                                                          .FirstOrDefault(c => c.Country.Name == findcountry.Name &&
+                                                                              c.Name == findcity.Name);
+            if (cityofcountry == null)
+                throw new KeyNotFoundException("this city is not in this country");
+
+            var newplace = new TuristPlace()
+            {
+                Name = addinput.Name,
+                CityId = findcity.Id,
+                CountryId = findcity.Country.Id,
+                Description = addinput.Description,
+                Visit=0
+            };
+
+            await IsRepited(newplace);
+
+            TuristPlaceRepository.Insert(newplace);
+            await TuristPlaceRepository.Save();
+
+            return "we add your place";
 
         }
-     
+        public async Task<GetPlaceOutputDto> GetPlace(GetPlaceInput getinput)
+        {
+             var findplace = await Findplace(getinput.Name);
+             var ShowPlace = TuristPlaceCategoryrepository.GetQuery().Include(t => t.Categories)
+                                                                    .Include(t => t.TuristPlaces)
+                                                                    .ThenInclude(p => p.Country)
+                                                                    .Include(p => p.TuristPlaces)
+                                                                    .ThenInclude(p => p.City)
+                                                                    .Include(p => p.TuristPlaces)
+                                                                    .ThenInclude(p => p.Comments)
+                                                                    .Include(p => p.TuristPlaces)
+                                                                    .ThenInclude(p => p.Rates)
+                                                                    .Where(tp => tp.TuristPlaces.Name == findplace.Name)
+                                                                    .Select(p => mapper.Map<GetPlaceOutputDto>(p)).FirstOrDefault();
+            return ShowPlace;
+        }
+        public Task<List<GetPlaceOutputDto>> GetAllPlaces()
+        {
+            var places =  TuristPlaceCategoryrepository.GetQuery().Include(t => t.Categories)
+                                                                   .Include(t => t.TuristPlaces)
+                                                                   .ThenInclude(p => p.Country)
+                                                                   .Include(p => p.TuristPlaces)
+                                                                   .ThenInclude(p => p.City)
+                                                                   .Include(p => p.TuristPlaces)
+                                                                   .ThenInclude(p => p.Comments)
+                                                                   .Include(p => p.TuristPlaces)
+                                                                   .ThenInclude(p => p.Rates)
+                                                                   .Select(p=>p.TuristPlaces)
+                                                                   .Select(p => mapper.Map<GetPlaceOutputDto>(p)).ToListAsync();
+            return places;
+        } 
+
         
     }
 }

@@ -22,10 +22,10 @@ namespace TravellingEF.ContextRepository
             var item = dBContext.Set<T>().FirstOrDefault(T => T.Id == id);
             if (item != null)
                {
-                   dBContext.Remove(id);
-                return"item deleted.... ";
+                   dBContext.Remove(item);
+                  return"item deleted.... ";
                };
-               throw new Exception("Not found");
+               throw new KeyNotFoundException("Not found");
         }
 
         public  Task<T> Get(int id)
