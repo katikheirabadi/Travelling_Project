@@ -21,6 +21,9 @@ namespace Travelling.Controllers
         [HttpGet]
         public async Task<IActionResult> CompareAttraction([FromBody] CompareInputDTO compareInputDTO)
         {
+            if (!ModelState.IsValid)
+                return BadRequest();
+
             var result = await compareService.CompareAttraction(compareInputDTO.FirstAttraction, compareInputDTO.SecondAttraction);
             return Ok(result);
         }

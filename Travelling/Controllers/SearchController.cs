@@ -7,6 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using TravellingCore.ContextRepositoryInterface;
 using TravellingCore.Dto._ُSearchByCategory;
+using TravellingCore.Dto.searchByCity;
 using TravellingCore.Dto.SearchByCountry;
 using TravellingCore.Dto.SearchByFilter;
 using TravellingCore.Dto.SearchByTuristPlaceName;
@@ -30,34 +31,46 @@ namespace Travelling.Controllers
         [HttpGet]
         public async Task<IActionResult> SearchbyName([FromBody] TuristPlaceInputDto turistPlace)
         {
+            if (!ModelState.IsValid)
+                return BadRequest();
+            
             var place = await searchService.SearchByName(turistPlace);
             return Ok(place);
         }
         
         [HttpGet]
-        public async Task<IActionResult> SearchbyCity([FromQuery]string city_name)
+        public async Task<IActionResult> SearchbyCity([FromBody] CityNameInputDTO citynameinputdto)
         {
-            var city = await searchService.SearchbyCity(city_name);
-            if (city == null)
-                return NotFound();
+            if (!ModelState.IsValid)
+                return BadRequest();
+
+            var city = await searchService.SearchByCity(citynameinputdto);
+            
             return Ok(city);
         }
         [HttpGet]
         public async Task<IActionResult> SearchByCountryName([FromBody] CountryInputDto country)
         {
+            if (!ModelState.IsValid)
+                return BadRequest();
             var Places = await searchService.SearchByCountry(country);
             return Ok(Places);
         }
         public async  Task<IActionResult> SearchByCategory([FromBody] CategoryInputDto category)
         {
-            var atr = await searchService.SearchByCategory(category);
-            return Ok(atr);
+            if (!ModelState.IsValid)
+                return BadRequest();
+            var reasult = await searchService.SearchByCategory(category);
+            return Ok(reasult);
         }
-        [HttpGet]
-        public FilterOutputDTO SearchByFilter([FromBody] FilterInputDTO filterInputDTO)
-        {
-            return searchService.SearchByFilter(filterInputDTO);
-        }
+        //[HttpGet]
+        //public async Task<IActionResult> SearchByFilter([FromBody] FilterInputDTO filterInputDTO)
+        //{
+        //    if (!ModelState.IsValid)
+        //        return BadRequest();
+        //    var reasult = await searchService.SearchByFilter(filterInputDTO);
+        //    return Ok(reasult);
+        //}
         
     }
 }

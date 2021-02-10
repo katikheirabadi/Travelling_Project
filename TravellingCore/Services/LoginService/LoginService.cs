@@ -47,45 +47,5 @@ namespace TravellingCore.ServiceRepository.LoginService
             throw new Exception("Not Found");
         }
 
-        //public async Task<string> UpdateUserLogin(UpdateUserLoginInputDto update , string Token)
-        //{
-
-
-        //}
-
-
-        //Recomend by Faverits
-
-        private async Task<LoginServices> FindUserLogin(string Token)
-        {
-            var finduser = await UserLoginRepository.GetAll().find(x => x.Token == Token)
-            if (finduser == null)
-                throw new KeyNotFoundException("Not Found");
-            return finduser;
-        }
-
-        private void IsExpired(UserLogin user)
-        {
-            var TimeSpan = DateTime.Now - user.ExpireDate;
-            if (TimeSpan = 0)
-                throw new Exception("Expire");
-        }
-
-
-        public async Task<List<OutputDTO>> RecomendByFaverits(string Token)
-        {
-            var finduser = await FindUserLogin(Token);
-            await IsExpired(finduser);
-             var findsignuser = UserLoginRepository.GetQuery().Include(u => u.User)
-                .FirstorDefult(u => u.id == finduser).Select(u => u.User).FirstorDefult();
-            if(findsignuser.faveritCountry !=null)
-            {
-                var places = Token.Repository.GetQuery().Include(x => x.Country)
-                    .Select(x => x.Country.Name == findsignuser.faveritCountry).ToList();
-            }
-            var places.Select(prop => AutoMapper.Mapper<DTO>).ToList();
-            return places;
-        }
-
     }
 }

@@ -30,33 +30,35 @@ namespace TravellingCore.Services.Models.Services.SearchServise
             this.TuristPlaceRepository = TuristPlaceRepository;
             this.TuristPlaceCategoryRepository = TuristPlaceCategoryRepository;
         }
-        public FilterOutputDTO SearchByFilter(FilterInputDTO filterInputDTO)
-        {
-            var first = TuristPlaceRepository.GetQuery()
-                                             .Include(x => x.Country)
-                                             .ThenInclude(x => x.TuristPlaces)
-                                             .Where(y => y.Country.Name
-                                             .Contains(filterInputDTO.Country));
+        //public  Task<FilterOutputDTO> SearchByFilter(FilterInputDTO filterInputDTO)
+        //{
+        //    var first = TuristPlaceRepository.GetQuery()
+        //                                     .Include(x => x.Country)
+        //                                     .ThenInclude(x => x.TuristPlaces)
+        //                                     .Where(y => y.Country.Name
+        //                                     .Contains(filterInputDTO.Country));
 
-            var second = first.Include(x => x.City)
-                              .ThenInclude(x => x.TuristPlaces)
-                              .Where(x => x.City.Name.Contains(filterInputDTO.City));
+        //    var second = first.Include(x => x.City)
+        //                      .ThenInclude(x => x.TuristPlaces)
+        //                      .Where(x => x.City.Name.Contains(filterInputDTO.City));
 
-            var third = TuristPlaceCategoryRepository.GetQuery()
-                                                     .Include(x => x.Categories)
-                                                     .Include(x => x.TuristPlaces)
-                                                     .Where(x => x.Categories.Name
-                                                     .Contains(filterInputDTO.Category))
-                                                     .Select(x => x.TuristPlaces);
+        //    var third = TuristPlaceCategoryRepository.GetQuery()
+        //                                             .Include(x => x.Categories)
+        //                                             .Include(x => x.TuristPlaces)
+        //                                             .Where(x => x.Categories.Name
+        //                                             .Contains(filterInputDTO.Category))
+        //                                             .Select(x => x.TuristPlaces)
+        //                                             .ToList();
+                                                     
 
-            var finall = (from a in first join b in second on a.Id equals b.Id select b).ToList();
-            var result = mapper.Map<List<FilterOutputDetailDTO>>(finall);
+        //    var finall =  (from a in first join b in second on a.Id equals b.Id select b).ToListAsync();
+        //    var result = mapper.Map<List<FilterOutputDetailDTO>>(finall);
 
-            return new FilterOutputDTO()
-            {
-                Places = result.ToArray()
-            };
-        }
+        //    return new FilterOutputDTO()
+        //    {
+        //        Places = result.ToArray()
+        //    };
+        //}
         public Task<List<CategoryOutputDto>> SearchByCategory(CategoryInputDto category)
         {
             var CategoryPlaces = TuristPlaceCategoryRepository.GetQuery()
@@ -84,15 +86,19 @@ namespace TravellingCore.Services.Models.Services.SearchServise
             return CountryPlaces;
 
         }
-        public async Task<CityListOutputDTO> SearchbyCity(string city)
+        public Task<List<CityPlaceOutputDTO>> SearchByCity(CityNameInputDTO citynameinputdto)
         {
-            var myCity = await TuristPlaceRepository.GetAll();
-            //  var newCity = myCity.Where(x => x.C == city).ToList();
-            //  var finallcity = newCity.Select(x => mapper.Map<CityOutputDTO>(x)).ToList();
-            return new CityListOutputDTO()
-            {
-                // Turism_Places = finallcity
-            };
+            var result = TuristPlaceRepository.GetQuery()
+                                              .Include(p => p.City)
+                                              .Where(p => p.City.Name == citynameinputdto.CityName)
+                                              .Select(p => new CityPlaceOutputDTO()
+                                              {
+                                                  Name = p.Name
+                                              ,
+                                                  Description = p.Description
+                                              })
+                                              .ToListAsync();
+            return result;
         }
         public async Task<TuristPlaceOutputDto> SearchByName(TuristPlaceInputDto turistPlace)
         {

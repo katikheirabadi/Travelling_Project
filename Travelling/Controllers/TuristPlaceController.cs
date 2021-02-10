@@ -37,101 +37,11 @@ namespace Travelling.Controllers
             this.searchServise = searchServise;
         }
 
-        [HttpPost]
-        public async Task<IActionResult> AddComent([FromBody] ComentInsertDto coment, [FromHeader] string Token)
-        {
-            var result = await this.commentService.AddComment(coment, Token);
-            if (result != "we add your coment .")
-                return BadRequest(result);
-            await this.commentService.Save();
-            return Ok(result);
-        }
-        [HttpPost]
-        public async Task<IActionResult> AddRate([FromBody] RateInputDto dto, [FromHeader] string Token)
-        {
-            var result = await this.rateService.AddRate(dto, Token);
-            if (result != "we add your Rate .")
-                return BadRequest(result);
-            await this.rateService.Save();
-            return Ok(result);
-        }
         [HttpGet]
         public  IActionResult ShowPlace([FromBody] TuristPlaceInputDto turistPlace)
         {
             var result = searchServise.SearchByName(turistPlace);
             return Ok(result);
-        }
-        [HttpPost]
-        public async Task<IActionResult> DBCreate(TuristPlace place)
-        {
-            try
-            {
-                turistPlaceService.Insert(place);
-                await turistPlaceService.Save();
-                place.Visit = 0;
-                return Ok(place.Name + "Add");
-            }
-            catch (Exception e)
-            {
-                return BadRequest(e.Message);
-            }
-        }
-        [HttpGet]
-        public async Task<IActionResult> DBGetPlace(int id)
-        {
-            try
-            {
-                var result = await turistPlaceService.Get(id);
-                return Ok(result);
-            }
-            catch
-            {
-                return BadRequest("we don't have this id....");
-
-            }
-        }
-        [HttpGet]
-        public async Task<IActionResult> DBGetAllPlaces()
-        {
-            try
-            {
-                var result = await turistPlaceService.GetAll();
-                return Ok(result);
-            }
-            catch
-            {
-                return BadRequest("you have exception..");
-            }
-        }
-        [HttpDelete]
-        public async Task<IActionResult> DBDeletePlace(int id)
-        {
-            try
-            {
-                var result = turistPlaceService.Delete(id);
-                await turistPlaceService.Save();
-                return Ok(result);
-            }
-            catch (Exception e)
-            {
-                return BadRequest(e.Message);
-            }
-        }
-        [HttpGet]
-        public async Task<IActionResult> DBUpdatePlace(TuristPlace place)
-        {
-            try
-            {
-                var result = turistPlaceService.Update(place);
-                await turistPlaceService.Save();
-                return Ok(result);
-            }
-            catch(Exception e)
-            {
-                if (e.Message == "you have Exception please check...")
-                    return BadRequest(e.Message);
-                return BadRequest("your update have exeption ...");
-            }
         }
         [HttpGet]
         public async Task<IActionResult> NewPlaces([FromQuery] int size)

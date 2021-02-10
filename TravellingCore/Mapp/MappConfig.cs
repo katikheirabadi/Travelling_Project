@@ -31,7 +31,7 @@ namespace TravellingCore.Mapp
             CreateMap<TuristPlace, NewInputDTO>()
                 .ForMember(x => x.Turist_Place_Name, y => y.MapFrom(z => z.Name));
 
-            CreateMap<TuristPlace, CityOutputDTO>();
+            CreateMap<TuristPlace, CityPlaceOutputDTO>();
 
             CreateMap<TuristPlace, CountryOutPutDto>();
 
