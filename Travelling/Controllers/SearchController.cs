@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using TravellingCore.ContextRepositoryInterface;
 using TravellingCore.Dto._ُSearchByCategory;
 using TravellingCore.Dto.SearchByCountry;
+using TravellingCore.Dto.SearchByFilter;
 using TravellingCore.Dto.SearchByTuristPlaceName;
 using TravellingCore.Model;
 using TravellingCore.ModelsServiceRepository.Models.Methods;
@@ -41,22 +42,22 @@ namespace Travelling.Controllers
                 return NotFound();
             return Ok(city);
         }
-      //  [HttpGet]
-        //public async Task<IActionResult> SearchbyVisted()
-        //{
-        //    //var place = await turist.SearchbyVisited();
-        //    //return (IActionResult)place;
-        //}
-        public async  Task<IActionResult> SearchByCategory([FromBody] CategoryInputDto category)
-        {
-            var atr = await searchService.SearchByCategory(category);
-            return Ok(atr);
-        }
         [HttpGet]
         public async Task<IActionResult> SearchByCountryName([FromBody] CountryInputDto country)
         {
             var Places = await searchService.SearchByCountry(country);
             return Ok(Places);
         }
+        public async  Task<IActionResult> SearchByCategory([FromBody] CategoryInputDto category)
+        {
+            var atr = await searchService.SearchByCategory(category);
+            return Ok(atr);
+        }
+        [HttpGet]
+        public FilterOutputDTO SearchByFilter([FromBody] FilterInputDTO filterInputDTO)
+        {
+            return searchService.SearchByFilter(filterInputDTO);
+        }
+        
     }
 }

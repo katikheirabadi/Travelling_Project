@@ -9,6 +9,7 @@ using TravellingCore.ContextRepositoryInterface;
 using TravellingCore.Dto._ُSearchByCategory;
 using TravellingCore.Dto.searchByCity;
 using TravellingCore.Dto.SearchByCountry;
+using TravellingCore.Dto.SearchByFilter;
 using TravellingCore.Dto.SearchByTuristPlaceName;
 using TravellingCore.Model;
 
@@ -28,6 +29,33 @@ namespace TravellingCore.Services.Models.Services.SearchServise
             this.mapper = mapper;
             this.TuristPlaceRepository = TuristPlaceRepository;
             this.TuristPlaceCategoryRepository = TuristPlaceCategoryRepository;
+        }
+        public FilterOutputDTO SearchByFilter(FilterInputDTO filterInputDTO)
+        {
+            var first = TuristPlaceRepository.GetQuery()
+                                             .Include(x => x.Country)
+                                             .ThenInclude(x => x.TuristPlaces)
+                                             .Where(y => y.Country.Name
+                                             .Contains(filterInputDTO.Country));
+
+            var second = first.Include(x => x.City)
+                              .ThenInclude(x => x.TuristPlaces)
+                              .Where(x => x.City.Name.Contains(filterInputDTO.City));
+
+            var third = TuristPlaceCategoryRepository.GetQuery()
+                                                     .Include(x => x.Categories)
+                                                     .Include(x => x.TuristPlaces)
+                                                     .Where(x => x.Categories.Name
+                                                     .Contains(filterInputDTO.Category))
+                                                     .Select(x => x.TuristPlaces);
+
+            var finall = (from a in first join b in second on a.Id equals b.Id select b).ToList();
+            var result = mapper.Map<List<FilterOutputDetailDTO>>(finall);
+
+            return new FilterOutputDTO()
+            {
+                Places = result.ToArray()
+            };
         }
         public Task<List<CategoryOutputDto>> SearchByCategory(CategoryInputDto category)
         {

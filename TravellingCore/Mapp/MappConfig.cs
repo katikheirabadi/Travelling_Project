@@ -9,7 +9,7 @@ using TravellingCore.Dto.Popular;
 using TravellingCore.Dto.searchByCity;
 using TravellingCore.Dto.SearchByCountry;
 using TravellingCore.Dto.SearchByFilter;
-using TravellingCore.Dto.SearchByName;
+
 using TravellingCore.Dto.SearchByTuristPlaceName;
 using TravellingCore.Dto.Sign_in;
 using TravellingCore.Dto.View;

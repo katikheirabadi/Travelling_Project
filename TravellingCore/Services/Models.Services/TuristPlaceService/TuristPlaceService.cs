@@ -86,12 +86,6 @@ namespace TravellingCore.ModelsServiceRepository.Models.Methods
                 Turism_Places = finall.ToList()
             };
         }
-      /*  private int AverageRate()
-        {
-            var result = repository.GetQuery().Include(p => p.Rates).Select(x => new { avg = x.Rates.Average(y => y.RateInt) , name = x.Name , city = x.CityName }).ToList().OrderByDescending(x => x.avg);
-
-
-        }*/
         public async Task<VisitOutputDto> View (VisitInputDto turistPlace)
         {
             var findplace =  await FindPlace(turistPlace.TuristPlaceName);
@@ -115,7 +109,7 @@ namespace TravellingCore.ModelsServiceRepository.Models.Methods
                              .Take(size)
                              .ToList();
         }
-        public async Task<List<PopularOutputDto>> ShowPopular(int size)
+        public  Task<List<PopularOutputDto>> ShowPopular(int size)
         {
             return TuristPlaceRepository.GetQuery()
                                                .Include(x => x.Rates)
@@ -126,8 +120,7 @@ namespace TravellingCore.ModelsServiceRepository.Models.Methods
                                                 })
                                                .OrderByDescending(z => z.Rate)
                                                .Take(size)
-                                               .ToList();
-            
+                                               .ToListAsync();
         }
         
     }
