@@ -63,7 +63,8 @@ namespace TravellingCore.Mapp
 
             CreateMap<Comment, GetPlacecommentsOutputDto>()
                 .ForMember(o => o.Text, x => x.MapFrom(o => o.Text))
-                .ForMember(o => o.RecordTime, x => x.MapFrom(o => o.RecordDate));
+                .ForMember(o => o.RecordTime, x => x.MapFrom(o => o.RecordDate))
+                .ForMember(o => o.UserName, x => x.MapFrom(o => o.User.UserName));
 
             CreateMap<Comment, GetCoomentOutputDto>()
                 .ForMember(o => o.Text, x => x.MapFrom(o => o.Text))

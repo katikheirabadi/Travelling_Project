@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TravellingCore.ContextRepositoryInterface;
+using TravellingCore.Exceptions;
 using TravellingEF.DataBase;
 
 namespace TravellingEF.ContextRepository
@@ -53,15 +54,15 @@ namespace TravellingEF.ContextRepository
 
         public  Task Save()
         {
-            try
-            {
-                 return dBContext.SaveChangesAsync();
-               
-            }
-            catch
-            {
-                throw new Exception("you have Exception please check...");
-            }
+            var result = dBContext.SaveChangesAsync();
+            if (result.Id == 106)
+                throw new DependencyException("Have dependency you can't delete");
+            return result;
+        }
+
+        private Exception DependencyException()
+        {
+            throw new NotImplementedException();
         }
 
         public string Update(T input)

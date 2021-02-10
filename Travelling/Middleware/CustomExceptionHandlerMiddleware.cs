@@ -37,6 +37,9 @@ namespace Travelling.Middleware
                     case RePaswordException e:
                         response.StatusCode = (int)HttpStatusCode.BadRequest;
                         break;
+                    case DependencyException e:
+                        response.StatusCode = (int)HttpStatusCode.BadRequest;
+                        break;
                     case ExpiredException e:
                         response.StatusCode = (int)HttpStatusCode.BadRequest;
                         break;

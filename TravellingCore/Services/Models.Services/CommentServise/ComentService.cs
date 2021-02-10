@@ -101,6 +101,7 @@ namespace TravellingCore.ModelsServiceRepository.Models.Methods
         }
         public Task<List<GetPlacecommentsOutputDto>> ShowPlaceComments(GetPlaceCommentsInputDto getinput)
         {
+            FindPlace(getinput.TuristPlaceName);
             var comments = CommentRepository.GetQuery().Include(c => c.User)
                                                         .Include(c => c.TuristPlace)
                                                         .Where(c => c.TuristPlace.Name == getinput.TuristPlaceName)
@@ -133,6 +134,9 @@ namespace TravellingCore.ModelsServiceRepository.Models.Methods
         public async Task<GetCoomentOutputDto> GetComment(GetCommentInputDto getinput)
         {
             var findcomment = await FindComment(getinput.CommentId);
+            findcomment = CommentRepository.GetQuery().Include(c => c.TuristPlace)
+                                                      .Include(c => c.User)
+                                                      .FirstOrDefault(c => c.Id == findcomment.Id);
             return mapper.Map<GetCoomentOutputDto>(findcomment);
         }
 

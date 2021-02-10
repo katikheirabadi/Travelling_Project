@@ -14,7 +14,9 @@ using TravellingCore.Dto.SearchByName;
 
 using TravellingCore.Dto.TPlace;
 using TravellingCore.Dto.TuristPlace.AddPlace;
+using TravellingCore.Dto.TuristPlace.DeletePlace;
 using TravellingCore.Dto.TuristPlace.GetPlace;
+using TravellingCore.Dto.TuristPlace.UpdatePlace;
 using TravellingCore.Exceptions;
 using TravellingCore.Model;
 using TravellingCore.Services.Models.Services;
@@ -70,17 +72,6 @@ namespace TravellingCore.ModelsServiceRepository.Models.Methods
                 throw new KeyNotFoundException("Not found any place with this name");
             return findplace;
         }
-        public async Task<NewListInputDTO> NewPlaces(int size)
-        {
-            var AllPlace = await TuristPlaceRepository.GetAll();
-            var ReversePlace = AllPlace.AsQueryable().Reverse();
-            var newPlace = ReversePlace.Take(size).ToList();
-            var finall = mapper.Map<List<NewInputDTO>>(newPlace);
-            return new NewListInputDTO()
-            {
-                Turism_Places = finall.ToList()
-            };
-        }
         private async Task IsRepited(TuristPlace place)
         {
             var places = await TuristPlaceRepository.GetAll();
@@ -120,35 +111,55 @@ namespace TravellingCore.ModelsServiceRepository.Models.Methods
         public async Task<GetPlaceOutputDto> GetPlace(GetPlaceInput getinput)
         {
              var findplace = await Findplace(getinput.Name);
-             var ShowPlace = TuristPlaceCategoryrepository.GetQuery().Include(t => t.Categories)
-                                                                    .Include(t => t.TuristPlaces)
-                                                                    .ThenInclude(p => p.Country)
-                                                                    .Include(p => p.TuristPlaces)
-                                                                    .ThenInclude(p => p.City)
-                                                                    .Include(p => p.TuristPlaces)
-                                                                    .ThenInclude(p => p.Comments)
-                                                                    .Include(p => p.TuristPlaces)
-                                                                    .ThenInclude(p => p.Rates)
-                                                                    .Where(tp => tp.TuristPlaces.Name == findplace.Name)
+             var ShowPlace = TuristPlaceRepository.GetQuery().Include(t => t.TuristPlaceCategory)
+                                                                    .Include(p => p.Country)
+                                                                    .Include(p => p.City)
+                                                                    .Include(p => p.Comments)
+                                                                    .Include(p => p.Rates)
+                                                                    .Where(tp => tp.Name == findplace.Name)
                                                                     .Select(p => mapper.Map<GetPlaceOutputDto>(p)).FirstOrDefault();
             return ShowPlace;
         }
         public Task<List<GetPlaceOutputDto>> GetAllPlaces()
         {
-            var places =  TuristPlaceCategoryrepository.GetQuery().Include(t => t.Categories)
-                                                                   .Include(t => t.TuristPlaces)
-                                                                   .ThenInclude(p => p.Country)
-                                                                   .Include(p => p.TuristPlaces)
-                                                                   .ThenInclude(p => p.City)
-                                                                   .Include(p => p.TuristPlaces)
-                                                                   .ThenInclude(p => p.Comments)
-                                                                   .Include(p => p.TuristPlaces)
-                                                                   .ThenInclude(p => p.Rates)
-                                                                   .Select(p=>p.TuristPlaces)
+            var places = TuristPlaceRepository.GetQuery().Include(t => t.TuristPlaceCategory)
+                                                                   .Include(p => p.Country)
+                                                                   .Include(p => p.City)
+                                                                   .Include(p => p.Comments)
+                                                                   .Include(p => p.Rates)
                                                                    .Select(p => mapper.Map<GetPlaceOutputDto>(p)).ToListAsync();
             return places;
         } 
+        public async Task<string> DeletePlace(DeletePlaceInputDto deleteinput)
+        {
+            var findplace = await Findplace(deleteinput.Place);
 
+            var result = TuristPlaceRepository.Delete(findplace.Id);
+            await TuristPlaceRepository.Save();
+
+            return result;
+        }
+        public async Task<string> UpdatePlace(UpdatePlaceInputDto updateinput)
+        {
+            var findplace = await Findplace(updateinput.Place);
+            findplace.Description = updateinput.NewDescription;
+
+            var result = TuristPlaceRepository.Update(findplace);
+            await TuristPlaceRepository.Save();
+
+            return result;
+        }
+        public async Task<NewListInputDTO> NewPlaces(int size)
+        {
+            var AllPlace = await TuristPlaceRepository.GetAll();
+            var ReversePlace = AllPlace.AsQueryable().Reverse();
+            var newPlace = ReversePlace.Take(size).ToList();
+            var finall = mapper.Map<List<NewInputDTO>>(newPlace);
+            return new NewListInputDTO()
+            {
+                Turism_Places = finall.ToList()
+            };
+        }
         
     }
 }

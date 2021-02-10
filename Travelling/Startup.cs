@@ -14,6 +14,7 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using Travelling.Extention;
+using Travelling.Middleware;
 using TravellingCore.ContextRepositoryInterface;
 using TravellingCore.Mapp;
 using TravellingCore.Model;
@@ -58,6 +59,7 @@ namespace Travelling
             app.UseRouting();
 
             app.UseAuthorization();
+            app.UseMiddleware<CustomExceptionHandlerMiddleware>();
 
             app.UseEndpoints(endpoints =>
             {

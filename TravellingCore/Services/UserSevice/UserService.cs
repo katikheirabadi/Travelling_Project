@@ -32,7 +32,7 @@ namespace TravellingCore.ModelsServiceRepository.SigninRepository
             var usersignin = mapper.Map<User>(signin);
             if (usersignin.Password == usersignin.RePassword)
                 return usersignin;
-            throw new RePaswordException("Re-Pass not correct");
+            throw new DependencyException("Re-Pass not correct");
         }
         private async Task IsExistUser(User user)
         {
@@ -83,8 +83,9 @@ namespace TravellingCore.ModelsServiceRepository.SigninRepository
         public async Task<string> UpdateUser(UpdateUserOutputDto updateinput)
         {
             var user =  await FindUser(updateinput.Username);
-            var enduser = ChangeUserToUpdate(user, updateinput);
-            var result = UserRepository.Update(enduser);
+            user =  ChangeUserToUpdate(user, updateinput);
+           
+            var result = UserRepository.Update(user);
             await UserRepository.Save();
             return result;
 
