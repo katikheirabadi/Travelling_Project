@@ -81,15 +81,13 @@ namespace TravellingCore.ModelsServiceRepository.Models.Methods
                 Turism_Places = finall.ToList()
             };
         }
-        public async Task<CityListOutputDTO> SearchbyCity(string city)
+        public List<CityPlaceOutputDTO> SearchByCity (CityNameInputDTO citynameinputdto)
         {
-            var myCity = await TuristPlaceRepository.GetAll();
-          //  var newCity = myCity.Where(x => x.C == city).ToList();
-          //  var finallcity = newCity.Select(x => mapper.Map<CityOutputDTO>(x)).ToList();
-            return new CityListOutputDTO()
-            {
-               // Turism_Places = finallcity
-            };
+           var result = TuristPlaceRepository.GetQuery().Include(p => p.City)
+                .Where(p => p.City.Name == citynameinputdto.CityName)
+                .Select(p => new CityPlaceOutputDTO() { Name = p.Name, Description = p.Description })
+                .ToList();
+            return result;
         }
      
         public async Task<AtrListOutputDTO> SearchByAttraction(string atr)
