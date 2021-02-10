@@ -35,16 +35,14 @@ namespace Travelling.Controllers
     
         [HttpPost]
         public async Task<IActionResult> Create([FromBody]AddPlaceInputDto addinput)
-        [HttpGet]
-        public  IActionResult ShowPlace([FromBody] TuristPlaceInputDto turistPlace)
         {
-            var result = searchServise.SearchByName(turistPlace);
             if (!ModelState.IsValid)
             {
                 return BadRequest();
             }
             var result = await TuristPlaceService.AddTuristPlace(addinput);
             return Ok(result);
+
         }
         [HttpGet]
         public async Task<IActionResult> GetPlace([FromBody]GetPlaceInput getinput)
@@ -92,22 +90,24 @@ namespace Travelling.Controllers
             var result = await TuristPlaceService.UpdatePlace(updateinput);
             return Ok(result);
         }
-    }
-
- }
+        [HttpGet]
         public async Task<IActionResult> ShowVisit([FromQuery] int size)
         {
-            var reasult = await turistPlaceService.ShowVisit(size);
+            var reasult = await TuristPlaceService.ShowVisit(size);
             return Ok(reasult);
         }
         [HttpGet]
         public async Task<IActionResult> ShoePopular([FromQuery] int size)
         {
-            var reasult = await turistPlaceService.ShowPopular(size);
+            var reasult = await TuristPlaceService.ShowPopular(size);
             return Ok(reasult);
         }
-            
     }
+
+ }
+       
+            
+    
 
 
 

@@ -14,7 +14,7 @@ using TravellingCore.Dto.LogIn.ShowUserLogin;
 using TravellingCore.Dto.NewPlace;
 using TravellingCore.Dto.Rate.GetPlaceRates;
 using TravellingCore.Dto.Rate.GetRate;
-using TravellingCore.Dto.SearchByAtr;
+
 using TravellingCore.Dto.Popular;
 using TravellingCore.Dto.searchByCity;
 using TravellingCore.Dto.SearchByCountry;
@@ -22,7 +22,7 @@ using TravellingCore.Dto.SearchByFilter;
 
 using TravellingCore.Dto.SearchByTuristPlaceName;
 using TravellingCore.Dto.Sign_in;
-using TravellingCore.Dto.TPlace;
+
 using TravellingCore.Dto.TuristPlace.GetPlace;
 using TravellingCore.Dto.User.GetUser;
 using TravellingCore.Dto.View;
@@ -43,22 +43,13 @@ namespace TravellingCore.Mapp
                 .ForMember(o => o.FavoriteCountry, x => x.MapFrom(p => p.FavoriteCountry))
                 .ForMember(o => o.FavoriteCategory, x => x.MapFrom(p => p.FavoriteCategory));
 
-            CreateMap<TuristPlace, NameOutputDTO>();
-                .ForMember(o => o.PhoneNumber, x => x.MapFrom(p => p.Phone_Number));
-
-            CreateMap<TuristPlace, NewInputDTO>()
-                .ForMember(x => x.Turist_Place_Name, y => y.MapFrom(z => z.Name));
-
-            CreateMap<TuristPlace, CityOutputDTO>();
-
-            CreateMap<TuristPlace, AtrOutputDTO>();
-
+           
 
             CreateMap<TuristPlace, CityPlaceOutputDTO>();
 
             CreateMap<TuristPlace, CountryOutPutDto>();
 
-            CreateMap<TuristPlace, PlaceOutputDto>();
+          
 
             CreateMap<UserLogin, ShowUserLoginOutputDto>();
 

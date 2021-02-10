@@ -10,9 +10,6 @@ using TravellingCore.Dto.NewPlace;
 using TravellingCore.Dto.Popular;
 using TravellingCore.Dto.searchByCity;
 using TravellingCore.Dto.SearchByCountry;
-using TravellingCore.Dto.SearchByName;
-
-using TravellingCore.Dto.TPlace;
 using TravellingCore.Dto.TuristPlace.AddPlace;
 using TravellingCore.Dto.TuristPlace.DeletePlace;
 using TravellingCore.Dto.TuristPlace.GetPlace;
@@ -44,7 +41,7 @@ namespace TravellingCore.ModelsServiceRepository.Models.Methods
             this.CityRepository = CityRepository;
             this.TuristPlaceCategoryrepository = TuristPlaceCategoryrepository;
             this.TuristPlaceRepository = TuristPlaceRepository;
-            this.TuristPlaceCategoryRepository = TuristPlaceCategoryRepository;
+            this.TuristPlaceCategoryrepository = TuristPlaceCategoryrepository;
         }
 
         private async Task<Country> FindCountry(string country)
@@ -164,7 +161,7 @@ namespace TravellingCore.ModelsServiceRepository.Models.Methods
         }
         public async Task<VisitOutputDto> View (VisitInputDto turistPlace)
         {
-            var findplace =  await FindPlace(turistPlace.TuristPlaceName);
+            var findplace =  await Findplace(turistPlace.TuristPlaceName);
             var reasult = TuristPlaceRepository.GetQuery()
                                                .Include(x => x.City)
                                                .Include(y => y.Country)

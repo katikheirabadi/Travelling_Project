@@ -63,14 +63,14 @@ namespace Travelling.Controllers
             var reasult = await searchService.SearchByCategory(category);
             return Ok(reasult);
         }
-        //[HttpGet]
-        //public async Task<IActionResult> SearchByFilter([FromBody] FilterInputDTO filterInputDTO)
-        //{
-        //    if (!ModelState.IsValid)
-        //        return BadRequest();
-        //    var reasult = await searchService.SearchByFilter(filterInputDTO);
-        //    return Ok(reasult);
-        //}
-        
+        [HttpGet]
+        public async Task<IActionResult> SearchByFilter([FromBody] FilterInputDTO filterInputDTO)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest();
+            var reasult = await searchService.SearchByFilter(filterInputDTO);
+            return Ok(reasult);
+        }
+
     }
 }

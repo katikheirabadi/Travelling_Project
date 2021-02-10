@@ -9,8 +9,6 @@ using TravellingCore.Dto.searchByCity;
 using TravellingCore.Dto.View;
 using TravellingCore.Dto.Visit;
 using TravellingCore.Dto.SearchByCountry;
-using TravellingCore.Dto.SearchByName;
-using TravellingCore.Dto.TPlace;
 using TravellingCore.Dto.TuristPlace.AddPlace;
 using TravellingCore.Dto.TuristPlace.DeletePlace;
 using TravellingCore.Dto.TuristPlace.GetPlace;
@@ -28,5 +26,7 @@ namespace TravellingCore.Services.Models.Services.TuristPlaceService
         public Task<VisitOutputDto> View(VisitInputDto turistPlace);
         public Task<List<ViewOutputDto>> ShowVisit(int size);
         public Task<List<PopularOutputDto>> ShowPopular(int size);
+        public Task<string> DeletePlace(DeletePlaceInputDto deleteinput);
+        public Task<string> UpdatePlace(UpdatePlaceInputDto updateinput);
     }
 }
