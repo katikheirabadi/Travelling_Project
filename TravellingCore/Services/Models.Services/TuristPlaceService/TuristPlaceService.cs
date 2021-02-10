@@ -19,7 +19,7 @@ using TravellingCore.Services.Models.Services.TuristPlaceService;
 
 namespace TravellingCore.ModelsServiceRepository.Models.Methods
 {
-    public class TuristPlaceService : IModelServicees<TuristPlace> , ITuristPlaceService
+    public class TuristPlaceService :  ITuristPlaceService
     {
         private readonly IMapper mapper;
         private readonly IRepository<TuristPlace> TuristPlaceRepository;
@@ -92,12 +92,12 @@ namespace TravellingCore.ModelsServiceRepository.Models.Methods
      
         public async Task<AtrListOutputDTO> SearchByAttraction(string atr)
         {
-            var myAtr = await TuristPlaceRepository.GetAll();
-            var newAtr = myAtr.Where(x => x.Category == atr).ToList();
-            var finallAtr = newAtr.Select(x => mapper.Map<AtrOutputDTO>(x)).ToList();
+            //var myAtr = await TuristPlaceRepository.GetAll();
+            //var newAtr = myAtr.Where(x => x.Category == atr).ToList();
+            //var finallAtr = newAtr.Select(x => mapper.Map<AtrOutputDTO>(x)).ToList();
             return new AtrListOutputDTO()
             {
-                places = finallAtr
+            //    places = finallAtr
             };
         }
         public async Task<CountryListOutPutDto> SearchByCountry(string Name)

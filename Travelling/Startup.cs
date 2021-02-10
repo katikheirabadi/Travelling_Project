@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
+using Travelling.Extention;
 using TravellingCore.ContextRepositoryInterface;
 using TravellingCore.Mapp;
 using TravellingCore.Model;
@@ -39,12 +40,8 @@ namespace Travelling
             services.AddControllers();
             services.AddAutoMapper(Assembly.GetAssembly(typeof(MappConfig)));
             services.AddDbContext<TravellingDBContext>(o => { o.UseSqlServer(Configuration.GetConnectionString("TravellConection")); });
-           
-            services.AddTransient<SigninService>();
-            services.AddTransient<LoginServicr>();
-            services.AddTransient<ComentService>();
-            services.AddTransient<RateServicr>();
-            services.AddTransient<TuristPlaceService>();
+            services.AddDependency();
+          // services.AddSwaggerGen(c=>c.SwaggerDoc() )
           
         }
 

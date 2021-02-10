@@ -1,11 +1,13 @@
 ﻿using AutoMapper;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using TravellingCore.Dto.NewPlace;
 using TravellingCore.Dto.SearchByAtr;
 using TravellingCore.Dto.searchByCity;
 using TravellingCore.Dto.SearchByCountry;
+using TravellingCore.Dto.SearchByFilter;
 using TravellingCore.Dto.SearchByName;
 using TravellingCore.Dto.Sign_in;
 using TravellingCore.Dto.TPlace;
@@ -18,10 +20,10 @@ namespace TravellingCore.Mapp
         public MappConfig()
         {
             CreateMap<SigninInputDTO, User>().ForMember(o=> o.FullName , x=> x.MapFrom( p=> p.FullName))
-                .ForMember(o => o.Username, x => x.MapFrom(p => p.Username))
+                .ForMember(o => o.UserName, x => x.MapFrom(p => p.Username))
                 .ForMember(o => o.Password, x => x.MapFrom(p => p.Password))
-                .ForMember(o => o.Re_Password, x => x.MapFrom(p => p.Re_Password))
-                .ForMember(o => o.Phone_Number, x => x.MapFrom(p => p.Phone_Number));
+                .ForMember(o => o.RePassword, x => x.MapFrom(p => p.Re_Password))
+                .ForMember(o => o.PhoneNumber, x => x.MapFrom(p => p.Phone_Number));
             CreateMap<TuristPlace, NameOutputDTO>();
             CreateMap<TuristPlace, NewInputDTO>()
                 .ForMember(x => x.Turist_Place_Name, y => y.MapFrom(z => z.Name));
@@ -29,6 +31,11 @@ namespace TravellingCore.Mapp
             CreateMap<TuristPlace, AtrOutputDTO>();
             CreateMap<TuristPlace, CountryOutPutDto>();
             CreateMap<TuristPlace, PlaceOutputDto>();
+            CreateMap<TuristPlace, FilterOutputDetailDTO>()
+                .ForMember(x => x.TuristPlaceName, y => y.MapFrom(z => z.Name))
+                .ForMember(x => x.Country, y => y.MapFrom(z => z.Country.Name))
+                .ForMember(x => x.City, y => y.MapFrom(z => z.City.Name))
+                .ForMember(w => w.Category, x => x.MapFrom(y => y.TuristPlaceCategory.Select(z => z.Categories.Name)));
         }
     }
 }

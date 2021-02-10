@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using TravellingCore.Dto.Sign_in;
 using TravellingCore.ModelsServiceRepository.SigninRepository;
+using TravellingCore.Services.SigninServicefoulder;
 
 namespace Travelling.Controllers
 {
@@ -13,9 +14,9 @@ namespace Travelling.Controllers
     [ApiController]
     public class SignInController : ControllerBase
     {
-        private readonly SigninService signin;
+        private readonly ISigninService signin;
 
-        public SignInController(SigninService signin)
+        public SignInController(ISigninService signin)
         {
             this.signin = signin;
         }

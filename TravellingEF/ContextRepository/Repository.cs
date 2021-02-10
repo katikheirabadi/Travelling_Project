@@ -23,14 +23,17 @@ namespace TravellingEF.ContextRepository
             if (item != null)
                {
                    dBContext.Remove(id);
-                return $"item with id = {id} deleted.... ";
+                return"item deleted.... ";
                };
                throw new Exception("Not found");
         }
 
         public  Task<T> Get(int id)
         {
-            return this.dBContext.Set<T>().FirstOrDefaultAsync(x => x.Id == id); 
+            var item = this.dBContext.Set<T>().FirstOrDefaultAsync(x => x.Id == id);
+            if (item != null)
+                return item;
+            throw new Exception("Not Found");
         }
 
         public Task<List<T>> GetAll()
@@ -64,7 +67,7 @@ namespace TravellingEF.ContextRepository
         public string Update(T input)
         {
             this.dBContext.Update(input);
-            return $"Item with id = {input.Id } updated... ";
+            return "Item  updated... ";
         }
     }
 }

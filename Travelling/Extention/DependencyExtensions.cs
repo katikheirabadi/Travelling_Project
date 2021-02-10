@@ -10,7 +10,9 @@ using TravellingCore.ModelsServiceRepository.SigninRepository;
 using TravellingCore.ServiceRepository.LoginService;
 using TravellingCore.Services.LoginService;
 using TravellingCore.Services.Models.Services.CommentServise;
+using TravellingCore.Services.Models.Services.CompareService;
 using TravellingCore.Services.Models.Services.RateService;
+using TravellingCore.Services.Models.Services.SerachByFilterService;
 using TravellingCore.Services.Models.Services.TuristPlaceService;
 using TravellingCore.Services.SigninServicefoulder;
 using TravellingEF.ContextRepository;
@@ -31,14 +33,20 @@ namespace Travelling.Extention
             services.AddTransient<IRepository<TuristPlace>, Repository<TuristPlace>>();
             services.AddTransient<IRepository<Rate>, Repository<Rate>>();
             services.AddTransient<IRepository<UserLogin>, Repository<UserLogin>>();
+            services.AddTransient<IRepository<Country>, Repository<Country>>();
+            services.AddTransient<IRepository<City>, Repository<City>>();
+            services.AddTransient<IRepository<TuristPlaceCategory>, Repository<TuristPlaceCategory>>();
+            services.AddTransient<IRepository<Category>, Repository<Category>>();
         }
         private static void AddServices(IServiceCollection services)
         {
             services.AddTransient<ISigninService, SigninService>();
-           // services.AddTransient<ILoginServicecs, LoginServicr>();
+           services.AddTransient<ILoginServicecs, LoginServices>();
             services.AddTransient<ICommentService, ComentService>();
             services.AddTransient<IRateService, RateServicr>();
             services.AddTransient<ITuristPlaceService, TuristPlaceService>();
+            services.AddTransient<ICompareService, CompareService>();
+            services.AddTransient<IFilterService, FilterService>();
         }
     }
 }

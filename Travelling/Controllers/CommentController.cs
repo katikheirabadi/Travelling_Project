@@ -14,9 +14,9 @@ namespace Travelling.Controllers
     [ApiController]
     public class CommentController : ControllerBase
     {
-        private readonly ComentService service;
+        private readonly ICommentService service;
 
-        public CommentController(ComentService service)
+        public CommentController(ICommentService service)
         {
             this.service = service;
         }
