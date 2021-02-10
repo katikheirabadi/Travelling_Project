@@ -4,8 +4,8 @@ using System.Text;
 
 namespace TravellingCore.Dto.searchByCity
 {
-    public class CityListOutputDTO
+    public class CityNameInputDTO
     {
-        public List<CityOutputDTO> Turism_Places { get; set; }
+        public string CityName { get; set; }
     }
 }

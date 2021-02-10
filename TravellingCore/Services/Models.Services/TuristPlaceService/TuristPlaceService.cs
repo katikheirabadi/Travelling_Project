@@ -86,6 +86,7 @@ namespace TravellingCore.ModelsServiceRepository.Models.Methods
                 Turism_Places = finall.ToList()
             };
         }
+        public List<CityPlaceOutputDTO> SearchByCity (CityNameInputDTO citynameinputdto)
         public async Task<VisitOutputDto> View (VisitInputDto turistPlace)
         {
             var findplace =  await FindPlace(turistPlace.TuristPlaceName);
@@ -100,6 +101,22 @@ namespace TravellingCore.ModelsServiceRepository.Models.Methods
 
             return mapper.Map<VisitOutputDto>(reasult);                                     
                                                
+           var result = TuristPlaceRepository.GetQuery().Include(p => p.City)
+                .Where(p => p.City.Name == citynameinputdto.CityName)
+                .Select(p => new CityPlaceOutputDTO() { Name = p.Name, Description = p.Description })
+                .ToList();
+            return result;
+        }
+     
+        public async Task<AtrListOutputDTO> SearchByAttraction(string atr)
+        {
+            //var myAtr = await TuristPlaceRepository.GetAll();
+            //var newAtr = myAtr.Where(x => x.Category == atr).ToList();
+            //var finallAtr = newAtr.Select(x => mapper.Map<AtrOutputDTO>(x)).ToList();
+            return new AtrListOutputDTO()
+            {
+            //    places = finallAtr
+            };
         }
         public async Task<List<ViewOutputDto>> ShowVisit(int size)
         {
