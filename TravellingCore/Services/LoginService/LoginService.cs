@@ -11,7 +11,7 @@ using TravellingCore.Dto.LogIn.UpdateUserLogin;
 
 namespace TravellingCore.ServiceRepository.LoginService
 {
-    public class LoginServices: ILoginServicecs
+    public class LoginServices : ILoginServicecs
     {
         private readonly IRepository<User> Userrepository;
         private readonly IRepository<UserLogin> UserLoginRepository;
@@ -25,7 +25,7 @@ namespace TravellingCore.ServiceRepository.LoginService
 
         public async Task<string> AddLogin(LoginInputDto login)
         {
-            var finduser =await FindUser(login);
+            var finduser = await FindUser(login);
             var loginuser = new UserLogin()
             {
                 UserId = finduser.Id,
@@ -33,10 +33,10 @@ namespace TravellingCore.ServiceRepository.LoginService
                 Token = Guid.NewGuid().ToString(),
                 ExpireDate = DateTime.Now.AddDays(1)
             };
-           UserLoginRepository.Insert(loginuser);
-           await UserLoginRepository.Save();
-           return $"Wellcome to your accont";
-            
+            UserLoginRepository.Insert(loginuser);
+            await UserLoginRepository.Save();
+            return $"Wellcome to your accont";
+
         }
         private async Task<User> FindUser(LoginInputDto login)
         {
@@ -52,6 +52,40 @@ namespace TravellingCore.ServiceRepository.LoginService
 
 
         //}
-        
+
+
+        //Recomend by Faverits
+
+        private async Task<LoginServices> FindUserLogin(string Token)
+        {
+            var finduser = await UserLoginRepository.GetAll().find(x => x.Token == Token)
+            if (finduser == null)
+                throw new KeyNotFoundException("Not Found");
+            return finduser;
+        }
+
+        private void IsExpired(UserLogin user)
+        {
+            var TimeSpan = DateTime.Now - user.ExpireDate;
+            if (TimeSpan = 0)
+                throw new Exception("Expire");
+        }
+
+
+        public async Task<List<OutputDTO>> RecomendByFaverits(string Token)
+        {
+            var finduser = await FindUserLogin(Token);
+            await IsExpired(finduser);
+             var findsignuser = UserLoginRepository.GetQuery().Include(u => u.User)
+                .FirstorDefult(u => u.id == finduser).Select(u => u.User).FirstorDefult();
+            if(findsignuser.faveritCountry !=null)
+            {
+                var places = Token.Repository.GetQuery().Include(x => x.Country)
+                    .Select(x => x.Country.Name == findsignuser.faveritCountry).ToList();
+            }
+            var places.Select(prop => AutoMapper.Mapper<DTO>).ToList();
+            return places;
+        }
+
     }
 }
