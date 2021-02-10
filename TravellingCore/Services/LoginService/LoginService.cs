@@ -13,7 +13,7 @@ using AutoMapper;
 
 namespace TravellingCore.ServiceRepository.LoginService
 {
-    public class LoginServices: ILoginServicecs
+    public class LoginServices : ILoginServicecs
     {
         private readonly IRepository<User> Userrepository;
         private readonly IRepository<UserLogin> UserLoginRepository;
@@ -30,7 +30,7 @@ namespace TravellingCore.ServiceRepository.LoginService
 
         public async Task<string> AddLogin(LoginInputDto login)
         {
-            var finduser =await FindUser(login);
+            var finduser = await FindUser(login);
             var loginuser = new UserLogin()
             {
                 UserId = finduser.Id,
@@ -38,10 +38,10 @@ namespace TravellingCore.ServiceRepository.LoginService
                 Token = Guid.NewGuid().ToString(),
                 ExpireDate = DateTime.Now.AddDays(1)
             };
-           UserLoginRepository.Insert(loginuser);
-           await UserLoginRepository.Save();
-           return $"Wellcome to your accont";
-            
+            UserLoginRepository.Insert(loginuser);
+            await UserLoginRepository.Save();
+            return $"Wellcome to your accont";
+
         }
         public async Task<string> UpdateUserLogin(UpdateUserLoginInputDto update, string Token)
         {

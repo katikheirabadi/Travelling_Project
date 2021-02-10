@@ -13,8 +13,10 @@ using TravellingCore.Services.Models.Services.CategoryServise;
 using TravellingCore.Services.Models.Services.CityService;
 using TravellingCore.Services.Models.Services.CommentServise;
 using TravellingCore.Services.Models.Services.CountryService;
+using TravellingCore.Services.Models.Services.CompareService;
 using TravellingCore.Services.Models.Services.RateService;
 using TravellingCore.Services.Models.Services.TuristPlaceCategoryServise;
+using TravellingCore.Services.Models.Services.SearchServise;
 using TravellingCore.Services.Models.Services.TuristPlaceService;
 using TravellingCore.Services.SigninServicefoulder;
 using TravellingEF.ContextRepository;
@@ -42,11 +44,15 @@ namespace Travelling.Extention
         }
         private static void AddServices(IServiceCollection services)
         {
+            services.AddTransient<ISigninService, SigninService>();
+            services.AddTransient<ILoginServicecs, LoginServices>();
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<ILoginServicecs, LoginServices>();
             services.AddTransient<ICommentService, ComentService>();
             services.AddTransient<IRateService, RateService>();
             services.AddTransient<ITuristPlaceService, TuristPlaceService>();
+            services.AddTransient<ICompareService, CompareService>();
+            services.AddTransient<ISearchservise, SearchServise>();
             services.AddTransient<ICategoryServise,CategoryService>();
             services.AddTransient<ICityService, CityService>();
             services.AddTransient<ICountryService, CountryService>();

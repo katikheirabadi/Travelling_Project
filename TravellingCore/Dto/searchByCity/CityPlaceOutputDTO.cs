@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace TravellingCore.Dto.SearchByName
+namespace TravellingCore.Dto.searchByCity
 {
-    public class NameOutputDTO
+    public class CityPlaceOutputDTO
     {
-        public string Atrraction { get; set; }
+        public string Name { get; set; }
         public string Description { get; set; }
     }
 }

@@ -6,6 +6,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using TravellingCore.Dto.Coment;
 using TravellingCore.Dto.Rate;
+using TravellingCore.Dto.SearchByTuristPlaceName;
+using TravellingCore.Dto.Visit;
 using TravellingCore.Dto.TuristPlace.AddPlace;
 using TravellingCore.Dto.TuristPlace.DeletePlace;
 using TravellingCore.Dto.TuristPlace.GetPlace;
@@ -14,6 +16,7 @@ using TravellingCore.Model;
 using TravellingCore.ModelsServiceRepository.Models.Methods;
 using TravellingCore.Services.Models.Services.CommentServise;
 using TravellingCore.Services.Models.Services.RateService;
+using TravellingCore.Services.Models.Services.SearchServise;
 using TravellingCore.Services.Models.Services.TuristPlaceService;
 
 namespace Travelling.Controllers
@@ -32,7 +35,10 @@ namespace Travelling.Controllers
     
         [HttpPost]
         public async Task<IActionResult> Create([FromBody]AddPlaceInputDto addinput)
+        [HttpGet]
+        public  IActionResult ShowPlace([FromBody] TuristPlaceInputDto turistPlace)
         {
+            var result = searchServise.SearchByName(turistPlace);
             if (!ModelState.IsValid)
             {
                 return BadRequest();
@@ -89,6 +95,19 @@ namespace Travelling.Controllers
     }
 
  }
+        public async Task<IActionResult> ShowVisit([FromQuery] int size)
+        {
+            var reasult = await turistPlaceService.ShowVisit(size);
+            return Ok(reasult);
+        }
+        [HttpGet]
+        public async Task<IActionResult> ShoePopular([FromQuery] int size)
+        {
+            var reasult = await turistPlaceService.ShowPopular(size);
+            return Ok(reasult);
+        }
+            
+    }
 
 
 

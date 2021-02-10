@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using TravellingCore.Dto._ُSearchByCategory;
 using TravellingCore.Dto.Category.GetallPlaceCategory;
 using TravellingCore.Dto.Category.GetCategory;
 using TravellingCore.Dto.City.GetCity;
@@ -13,13 +15,18 @@ using TravellingCore.Dto.NewPlace;
 using TravellingCore.Dto.Rate.GetPlaceRates;
 using TravellingCore.Dto.Rate.GetRate;
 using TravellingCore.Dto.SearchByAtr;
+using TravellingCore.Dto.Popular;
 using TravellingCore.Dto.searchByCity;
 using TravellingCore.Dto.SearchByCountry;
-using TravellingCore.Dto.SearchByName;
+using TravellingCore.Dto.SearchByFilter;
+
+using TravellingCore.Dto.SearchByTuristPlaceName;
 using TravellingCore.Dto.Sign_in;
 using TravellingCore.Dto.TPlace;
 using TravellingCore.Dto.TuristPlace.GetPlace;
 using TravellingCore.Dto.User.GetUser;
+using TravellingCore.Dto.View;
+using TravellingCore.Dto.Visit;
 using TravellingCore.Model;
 
 namespace TravellingCore.Mapp
@@ -37,12 +44,17 @@ namespace TravellingCore.Mapp
                 .ForMember(o => o.FavoriteCategory, x => x.MapFrom(p => p.FavoriteCategory));
 
             CreateMap<TuristPlace, NameOutputDTO>();
+                .ForMember(o => o.PhoneNumber, x => x.MapFrom(p => p.Phone_Number));
+
             CreateMap<TuristPlace, NewInputDTO>()
                 .ForMember(x => x.Turist_Place_Name, y => y.MapFrom(z => z.Name));
 
             CreateMap<TuristPlace, CityOutputDTO>();
 
             CreateMap<TuristPlace, AtrOutputDTO>();
+
+
+            CreateMap<TuristPlace, CityPlaceOutputDTO>();
 
             CreateMap<TuristPlace, CountryOutPutDto>();
 
@@ -104,6 +116,33 @@ namespace TravellingCore.Mapp
                  .ForMember(o => o.Comments, x => x.MapFrom(o => o.Comments.Count))
                  .ForMember(o => o.Rates, x => x.MapFrom(o => o.Rates.Count))
                  .ForMember(o => o.Categories, x => x.MapFrom(o => o.TuristPlaceCategory.Count));
+
+            CreateMap<TuristPlace, CategoryOutputDto>()
+                .ForMember(o => o.TuristPlaceName , x => x.MapFrom(p => p.Name))
+                .ForMember(o => o.Description , x => x.MapFrom(p => p.Description));
+
+            CreateMap<TuristPlace, CountryOutPutDto>()
+                .ForMember(o => o.TuristPlaceName, x => x.MapFrom(p => p.Name))
+                .ForMember(o => o.CityOfCountry, x => x.MapFrom(p => p.City.Name))
+                .ForMember(o => o.Description , x => x.MapFrom(p => p.Description));
+
+            CreateMap<TuristPlace, TuristPlaceOutputDto>()
+                .ForMember(o => o.TuristPlaceName , x => x.MapFrom(p => p.Name))
+                .ForMember(o => o.CountryName , x => x.MapFrom(p => p.Country.Name))
+                .ForMember(o => o.CityName , x => x.MapFrom(p => p.City.Name))
+                .ForMember(o => o.Description , x => x.MapFrom(p => p.Description));
+
+            CreateMap<TuristPlace, VisitOutputDto>()
+                .ForMember(o => o.TuristPlaceName, x => x.MapFrom(p => p.Name))
+                .ForMember(o => o.CityName, x => x.MapFrom(p => p.City.Name))
+                .ForMember(o => o.CountryName, x => x.MapFrom(p => p.Country.Name));
+
+            CreateMap<TuristPlace, ViewOutputDto>()
+                .ForMember(o => o.TuristPlaceName, x => x.MapFrom(p => p.Name));
+
+            CreateMap<TuristPlace, PopularOutputDto>();
+
+
         }
     }
 }

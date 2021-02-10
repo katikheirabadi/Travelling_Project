@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 
-namespace TravellingCore.Dto.NewPlace
+namespace TravellingCore.Dto.Compare
 {
-    public class NewInputDTO
+    public class CompareInputDTO
     {
         [Required(ErrorMessage = "this field is empty")]
-        public string Atrraction { get; set; }
+        public string FirstAttraction { get; set; }
         [Required(ErrorMessage = "this field is empty")]
-        public string Turist_Place_Name { get; set; }
+        public string SecondAttraction { get; set; }
     }
 }

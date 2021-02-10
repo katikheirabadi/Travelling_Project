@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace TravellingCore.Dto.SearchByCountry
+namespace TravellingCore.Dto.SearchByTuristPlaceName
 {
-    public class CountryOutPutDto
+    public class TuristPlaceOutputDto
     {
         public string TuristPlaceName { get; set; }
-        public string CityOfCountry { get; set; }
+        public string CountryName { get; set; }
+        public string CityName { get; set; }
         public string Description { get; set; }
     }
-    
 }
