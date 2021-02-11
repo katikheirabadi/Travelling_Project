@@ -46,6 +46,10 @@ namespace Travelling.Controllers
         [HttpPut]
         public async Task<IActionResult> UpdateUserLogin([FromBody]UpdateUserLoginInputDto update, [FromHeader]string Token)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
             var result = await LoginService.UpdateUserLogin(update, Token);
             return Ok(result);
         }

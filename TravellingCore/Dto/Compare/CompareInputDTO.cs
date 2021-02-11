@@ -8,8 +8,8 @@ namespace TravellingCore.Dto.Compare
     public class CompareInputDTO
     {
         [Required(ErrorMessage = "this field is empty")]
-        public string FirstAttraction { get; set; }
+        public string FirstPlace { get; set; }
         [Required(ErrorMessage = "this field is empty")]
-        public string SecondAttraction { get; set; }
+        public string SecendPlace { get; set; }
     }
 }

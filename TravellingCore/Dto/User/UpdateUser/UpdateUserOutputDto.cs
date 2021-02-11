@@ -7,8 +7,8 @@ namespace TravellingCore.Dto.User.UpdateUser
 {
     public class UpdateUserOutputDto
     {
-        [Required]
-        [EmailAddress]
+        [Required(ErrorMessage = "this field is empty")]
+        [EmailAddress(ErrorMessage ="this is not emailadress")]
         public string Username { get; set; }
         public string FullName { get; set; }
         public string Pasword { get; set; }

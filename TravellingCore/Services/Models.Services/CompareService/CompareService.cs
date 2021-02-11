@@ -21,25 +21,30 @@ namespace TravellingCore.Services.Models.Services.CompareService
             this.turistPlace = turistPlace;
         }
 
-        // get avarage rate of attraction
-        double Attraction(string Attraction)
+        // get avarage rate of place
+        double Attraction(string Place)
         {
-            var firstAttractionId = turistPlace.GetQuery()
-                .FirstOrDefault(x => x.Name.Contains(Attraction)).Id;
+            var FirstPlace = turistPlace.GetQuery()
+               .FirstOrDefault(x => x.Name.Contains(Place));
+
+            if (FirstPlace == null)
+                throw new KeyNotFoundException("not found this place");
+
+            var FirstPlaceId = FirstPlace.Id;
 
             return rate.GetQuery()
-                .Where(y => y.TuristPlaceId == firstAttractionId)
+                .Where(y => y.TuristPlaceId == FirstPlaceId)
                 .Select(z => z.UserRate).Average();
         }
 
-        // compare attraction rate
-        public Task<string> CompareAttraction(string firstAttraction, string secondAttraction)
+        // compare place rate
+        public Task<string> CompareAttraction(string firstplace, string seccendplace)
         {
-            if (Attraction(firstAttraction) > Attraction(secondAttraction))
-                return Task.Run(() => { return $"{firstAttraction} محبوب تر از {secondAttraction} است"; });
+            if (Attraction(firstplace) > Attraction(seccendplace))
+                return Task.Run(() => { return $"{firstplace} محبوب تر از {seccendplace} است"; });
 
-            else if (Attraction(secondAttraction) > Attraction(firstAttraction))
-                return Task.Run(() => { return $"{secondAttraction} محبوب تر از {firstAttraction} است"; });
+            else if (Attraction(seccendplace) > Attraction(firstplace))
+                return Task.Run(() => { return $"{seccendplace} محبوب تر از {firstplace} است"; });
 
             else
                 return Task.Run(() => { return $"محبوبیت این دو مکان گردشگری برابر است"; });

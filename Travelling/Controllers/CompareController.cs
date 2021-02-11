@@ -24,7 +24,7 @@ namespace Travelling.Controllers
             if (!ModelState.IsValid)
                 return BadRequest();
 
-            var result = await compareService.CompareAttraction(compareInputDTO.FirstAttraction, compareInputDTO.SecondAttraction);
+            var result = await compareService.CompareAttraction(compareInputDTO.FirstPlace, compareInputDTO.SecendPlace);
             return Ok(result);
         }
     }

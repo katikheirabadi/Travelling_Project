@@ -78,7 +78,7 @@ namespace TravellingCore.ModelsServiceRepository.Models.Methods
         {
             var user = await FindUserLogin(Token);
             IsExpiresdToken(user,Token);
-            var place = FindPlace(coment.Turist_Place);
+            var place = FindPlace(coment.TuristPlace);
             CommentRepository.Insert(new Comment()
             {
                 RecordDate = DateTime.Now,

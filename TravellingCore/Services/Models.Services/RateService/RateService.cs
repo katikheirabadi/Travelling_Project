@@ -79,19 +79,27 @@ namespace TravellingCore.ModelsServiceRepository.Models.Methods
                 TuristPlaceId = place.Id,
                 UserId = user.UserId
             }) ;
-           
+            await RateRepository.Save();
+
+
             return "we add your Rate .";
           }
         public async Task<GetRateOutputDto> GetRate(GetrateInputDto getinput)
         {
             var findrate = await FindRate(getinput.RateId);
-            return mapper.Map<GetRateOutputDto>(findrate);
+            var endrate = RateRepository.GetQuery().Include(r => r.User)
+                                                    .Include(r => r.TuristPlace)
+                                                    .FirstOrDefault(r => r.Id == findrate.Id);
+            return mapper.Map<GetRateOutputDto>(endrate);
 
         }
         public async Task<List<GetRateOutputDto>> GetAllRate()
         {
             var rates = await RateRepository.GetAll();
-            return rates.Select(r => mapper.Map<GetRateOutputDto>(r)).ToList();
+            var endrates = RateRepository.GetQuery().Include(r => r.User)
+                                                   .Include(r => r.TuristPlace)
+                                                   .Select(r=> mapper.Map<GetRateOutputDto>(r)).ToList();
+            return endrates;
 
         }
         public  Task<List<GetPlaceRatesOutputDto>> GetAllRatesOfPlace(GetPlaceRatesInputDto getplaceinput)
@@ -109,7 +117,7 @@ namespace TravellingCore.ModelsServiceRepository.Models.Methods
         }
         public async Task<string> DeleteRate(DeleterateInputDto deleterateinput)
         {
-            var result = RateRepository.Delete(deleterateinput.RateInt);
+            var result = RateRepository.Delete(deleterateinput.RateId);
             await RateRepository.Save();
             return result;
         }

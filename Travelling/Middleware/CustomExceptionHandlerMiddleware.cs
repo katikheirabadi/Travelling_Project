@@ -45,6 +45,9 @@ namespace Travelling.Middleware
                         break;
                     case KeyNotFoundException e:                        
                         response.StatusCode = (int)HttpStatusCode.NotFound;
+                        break; 
+                    case ReapitException e:                        
+                        response.StatusCode = (int)HttpStatusCode.BadRequest;
                         break;
                     default:
                         response.StatusCode = (int)HttpStatusCode.InternalServerError;

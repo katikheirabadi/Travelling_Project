@@ -102,6 +102,16 @@ namespace Travelling.Controllers
             var reasult = await TuristPlaceService.ShowPopular(size);
             return Ok(reasult);
         }
+        [HttpGet]
+        public async Task<IActionResult> View([FromBody] VisitInputDto turistPlace)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+            var result = await TuristPlaceService.View(turistPlace);
+            return Ok(result);
+        }
     }
 
  }

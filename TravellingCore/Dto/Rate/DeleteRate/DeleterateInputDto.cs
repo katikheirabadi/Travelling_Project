@@ -8,6 +8,6 @@ namespace TravellingCore.Dto.Rate.DeleteRate
     public class DeleterateInputDto
     {
         [Required(ErrorMessage = "this field is empty")]
-        public int RateInt { get; set; }
+        public int RateId { get; set; }
     }
 }

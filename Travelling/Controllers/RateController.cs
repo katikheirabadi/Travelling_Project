@@ -72,7 +72,7 @@ namespace Travelling.Controllers
             var result = await RateServise.DeleteRate(deleterateinput);
             return Ok(result);
         }
-        [HttpGet]
+        [HttpPut]
         public async Task<IActionResult> UpdateRate([FromBody]UpdateRateInputDto updateinput)
         {
             if (!ModelState.IsValid)

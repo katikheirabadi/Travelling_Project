@@ -8,7 +8,7 @@ namespace TravellingCore.Dto.LogIn
     public class LoginInputDto
     {
         [Required(ErrorMessage = "you must enter this field ")]
-        [EmailAddress]
+        [EmailAddress(ErrorMessage ="it's not emailaddress")]
         public string Username { get; set; }
         [Required(ErrorMessage = "you must enter this field ")]
         public string Password { get; set; }

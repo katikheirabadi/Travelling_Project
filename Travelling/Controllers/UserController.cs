@@ -19,24 +19,29 @@ namespace Travelling.Controllers
     {
         private readonly IUserService UserService;
 
-        public UserController(IUserService signin)
+        public UserController(IUserService UserService)
         {
-            this.UserService = signin;
+            this.UserService = UserService;
         }
         [HttpPost]
-        public async Task<IActionResult> AddUser([FromBody]SigninInputDTO signin_item)
+        public async Task<IActionResult> AddUser([FromBody]SigninInputDTO signinitem)
         {
             if(!ModelState.IsValid)
             {
                 return BadRequest();
             }
-            var result =await UserService.AddUser(signin_item);
+            var result =await UserService.AddUser(signinitem);
             return Ok(result);
         }
         [HttpGet]
         public async Task<IActionResult> ShowUser([FromBody] GetUserInputDto getinput)
         {
-            return Ok(await UserService.ShowUser(getinput));
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+            var result = await UserService.ShowUser(getinput);
+            return Ok(result);
         }
         [HttpGet]
         public async Task<IActionResult> ShowAll()
@@ -47,12 +52,20 @@ namespace Travelling.Controllers
         [HttpDelete]
         public async Task<IActionResult> DeleteUser([FromBody]DeleteUseiInputDto deleteinput)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
             var result = await UserService.DeleteUser(deleteinput);
             return Ok(result);
         }
         [HttpPut]
         public async Task<IActionResult> UpdateUder([FromBody]UpdateUserOutputDto updateinput)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
             var result = await UserService.UpdateUser(updateinput);
             return Ok(result);
         }

@@ -10,6 +10,7 @@ namespace TravellingCore.Dto.Rate.UpdateRate
         [Required(ErrorMessage = "this field is empty")]
         public int RateId { get; set; }
         [Required(ErrorMessage = "this field is empty")]
+        [Range(0, 5)]
         public int Rate { get; set; }
     }
 }
