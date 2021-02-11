@@ -42,7 +42,7 @@ namespace Travelling
             services.AddAutoMapper(Assembly.GetAssembly(typeof(MappConfig)));
             services.AddDbContext<TravellingDBContext>(o => { o.UseSqlServer(Configuration.GetConnectionString("TravellConection")); });
             services.AddDependency();
-            services.AddSwaggerGen(c => c.SwaggerDoc("Travelling" , new Microsoft.OpenApi.Models.OpenApiInfo {Title = "Travelling" ,Version = "Travelling" }));
+          //  services.AddSwaggerGen(c => c.SwaggerDoc("Travelling" , new Microsoft.OpenApi.Models.OpenApiInfo {Title = "Travelling" ,Version = "Travelling" }));
           // services.AddSwaggerGen(c=>c.SwaggerDoc() )
           
         }
