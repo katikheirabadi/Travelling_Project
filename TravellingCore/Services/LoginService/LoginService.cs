@@ -40,7 +40,7 @@ namespace TravellingCore.ServiceRepository.LoginService
             };
             UserLoginRepository.Insert(loginuser);
             await UserLoginRepository.Save();
-            return $"Wellcome to your accont";
+            return loginuser.Token;
 
         }
         public async Task<string> UpdateUserLogin(UpdateUserLoginInputDto update, string Token)

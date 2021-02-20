@@ -65,9 +65,9 @@ namespace Travelling.Controllers
             return Ok(result);
         }
         [HttpGet]
-        public async Task<IActionResult> NewPlaces([FromQuery]int size)
+        public async Task<IActionResult> NewPlaces()
         {
-            var result = await TuristPlaceService.NewPlaces(size);
+            var result = await TuristPlaceService.NewPlaces();
             return Ok(result);
         }
         [HttpDelete]
@@ -91,15 +91,15 @@ namespace Travelling.Controllers
             return Ok(result);
         }
         [HttpGet]
-        public async Task<IActionResult> ShowVisit([FromQuery] int size)
+        public async Task<IActionResult> ShowVisit()
         {
-            var reasult = await TuristPlaceService.ShowVisit(size);
+            var reasult = await TuristPlaceService.ShowVisit();
             return Ok(reasult);
         }
         [HttpGet]
-        public async Task<IActionResult> ShoePopular([FromQuery] int size)
+        public async Task<IActionResult> ShoePopular()
         {
-            var reasult = await TuristPlaceService.ShowPopular(size);
+            var reasult = await TuristPlaceService.ShowPopular();
             return Ok(reasult);
         }
         [HttpGet]

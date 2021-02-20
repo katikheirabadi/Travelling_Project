@@ -20,6 +20,7 @@ using TravellingCore.Services.Models.Services.SearchServise;
 using TravellingCore.Services.Models.Services.TuristPlaceService;
 using TravellingCore.Services.SigninServicefoulder;
 using TravellingEF.ContextRepository;
+using TravellingCore.Services.FavoriteService;
 
 namespace Travelling.Extention
 {
@@ -57,6 +58,7 @@ namespace Travelling.Extention
             services.AddTransient<ICityService, CityService>();
             services.AddTransient<ICountryService, CountryService>();
             services.AddTransient<ITuristPlaceCategoryServise, TuristPlaceCategoryServise>();
+            services.AddTransient<IFavoriteService, FavorteService>();
         }
     }
 }

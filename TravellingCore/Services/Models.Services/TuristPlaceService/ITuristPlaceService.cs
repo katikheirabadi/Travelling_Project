@@ -22,10 +22,10 @@ namespace TravellingCore.Services.Models.Services.TuristPlaceService
         public Task<string> AddTuristPlace(AddPlaceInputDto addinput);
         public  Task<GetPlaceOutputDto> GetPlace(GetPlaceInput getinput);
         public Task<List<GetPlaceOutputDto>> GetAllPlaces();
-        public  Task<NewListInputDTO> NewPlaces(int size);
+        public  Task<NewListInputDTO> NewPlaces();
         public Task<VisitOutputDto> View(VisitInputDto turistPlace);
-        public Task<List<ViewOutputDto>> ShowVisit(int size);
-        public Task<List<PopularOutputDto>> ShowPopular(int size);
+        public Task<List<ViewOutputDto>> ShowVisit();
+        public Task<List<PopularOutputDto>> ShowPopular();
         public Task<string> DeletePlace(DeletePlaceInputDto deleteinput);
         public Task<string> UpdatePlace(UpdatePlaceInputDto updateinput);
     }

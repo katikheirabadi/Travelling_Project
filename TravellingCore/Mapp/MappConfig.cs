@@ -28,6 +28,7 @@ using TravellingCore.Dto.User.GetUser;
 using TravellingCore.Dto.View;
 using TravellingCore.Dto.Visit;
 using TravellingCore.Model;
+using TravellingCore.Dto.Favorites;
 
 namespace TravellingCore.Mapp
 {
@@ -137,6 +138,10 @@ namespace TravellingCore.Mapp
                .ForMember(o => o.TuristPlaceName, x => x.MapFrom(p => p.Name))
                .ForMember(o => o.Country, x => x.MapFrom(p => p.Country.Name))
                .ForMember(o => o.City, x => x.MapFrom(p => p.City.Name));
+
+            CreateMap<TuristPlace, FavoroteOutputDto>()
+                .ForMember(o => o.Description, x => x.MapFrom(o => o.Description))
+                .ForMember(o => o.TuristPlaceName, x => x.MapFrom(o => o.Name));
         }
     }
 }

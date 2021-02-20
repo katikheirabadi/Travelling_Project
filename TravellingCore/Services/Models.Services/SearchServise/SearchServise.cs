@@ -94,8 +94,7 @@ namespace TravellingCore.Services.Models.Services.SearchServise
                                               .Where(p => p.City.Name == citynameinputdto.CityName)
                                               .Select(p => new CityPlaceOutputDTO()
                                               {
-                                                  Name = p.Name
-                                              ,
+                                                  Name = p.Name,
                                                   Description = p.Description
                                               })
                                               .ToListAsync();

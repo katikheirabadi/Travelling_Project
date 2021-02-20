@@ -148,11 +148,11 @@ namespace TravellingCore.ModelsServiceRepository.Models.Methods
 
             return result;
         }
-        public async Task<NewListInputDTO> NewPlaces(int size)
+        public async Task<NewListInputDTO> NewPlaces()
         {
             var AllPlace = await TuristPlaceRepository.GetAll();
             var ReversePlace = AllPlace.AsQueryable().Reverse();
-            var newPlace = ReversePlace.Take(size).ToList();
+            var newPlace = ReversePlace.Take(4).ToList();
             var finall = mapper.Map<List<NewInputDTO>>(newPlace);
             return new NewListInputDTO()
                                        {
@@ -175,16 +175,15 @@ namespace TravellingCore.ModelsServiceRepository.Models.Methods
                                                
           
         }
-     
-        public async Task<List<ViewOutputDto>> ShowVisit(int size)
+        public async Task<List<ViewOutputDto>> ShowVisit()
         {
             var reasult = await TuristPlaceRepository.GetAll();
             return reasult.OrderByDescending(x => x.Visit)
                              .Select( p => mapper.Map<ViewOutputDto>(p))
-                             .Take(size)
+                             .Take(4)
                              .ToList();
         }
-        public  Task<List<PopularOutputDto>> ShowPopular(int size)
+        public  Task<List<PopularOutputDto>> ShowPopular()
         {
             return TuristPlaceRepository.GetQuery()
                                                .Include(x => x.Rates)
@@ -194,7 +193,7 @@ namespace TravellingCore.ModelsServiceRepository.Models.Methods
                                                ,Visit = x.Visit
                                                 })
                                                .OrderByDescending(z => z.Rate)
-                                               .Take(size)
+                                               .Take(4)
                                                .ToListAsync();
         }
         
