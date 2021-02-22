@@ -5,21 +5,32 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using TravellingCore.Dto.Popular;
+using TravellingCore.Dto.View;
+using TravellingCore.Services.Models.Services.TuristPlaceService;
 
 namespace Travellingfront.Pages
 {
     public class IndexModel : PageModel
     {
         private readonly ILogger<IndexModel> _logger;
+        private readonly ITuristPlaceService turistPlaceService;
 
-        public IndexModel(ILogger<IndexModel> logger)
+        [BindProperty]
+        public List<ViewOutputDto> VisitedList { get; set; }
+        [BindProperty]
+        public List<PopularOutputDto> PopularList { get; set; }
+        public IndexModel(ILogger<IndexModel> logger ,
+                         ITuristPlaceService turistPlaceService )
         {
             _logger = logger;
+            this.turistPlaceService = turistPlaceService;
         }
 
-        public void OnGet()
+        public async Task OnGet()
         {
-
+            VisitedList = await turistPlaceService.ShowVisit();
+            PopularList = await turistPlaceService.ShowPopular();
         }
     }
 }

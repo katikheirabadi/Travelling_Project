@@ -5,35 +5,60 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Travellingfront</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" />
+    @*<link rel="stylesheet" href="~/css/site.css" />*@
+    <link href="~/css/Home/Home.css" rel="stylesheet" />
+    <link href="~/css/fontawesome/all.min.css" rel="stylesheet" />
+    
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-md navbar-dark fixed-top" id="banner" style="background-color: rgba(0, 0, 0, 0.5);">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-page="/Index">Travellingfront</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
+                <div class="row">
+                    <button type="button" class="btn btn-light left-b">ثبت نام</button>
+                    <button type="button" class="btn btn-outline-light">ورود</button>
+                </div>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-                    <ul class="navbar-nav flex-grow-1">
+                <div class="collapse navbar-collapse" id="collapsibleNavbar">
+                    <ul class="navbar-nav ml-auto">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
+                            <a class="nav-link" href="#">درباره ما</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                                سایر کشور ها
+                            </a>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="#">ترکیه</a>
+                                <a class="dropdown-item" href="#">آمریکا</a>
+                                <a class="dropdown-item" href="#">انگلستان</a>
+                            </div>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
+                            <a class="nav-link" href="#">ایران</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                                جاذبه های گردشگری
+                            </a>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="#">پربازدیدترین ها</a>
+                                <a class="dropdown-item" href="#">محبوب ترین ها</a>
+                            </div>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">صفحه اصلی</a>
                         </li>
                     </ul>
                 </div>
             </div>
         </nav>
     </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
+    <main role="main" class="pb-3">
+        @RenderBody()
+    </main>
 
     <footer class="border-top footer text-muted">
         <div class="container">
