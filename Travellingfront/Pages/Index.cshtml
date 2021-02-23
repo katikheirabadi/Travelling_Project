@@ -57,8 +57,15 @@
                                 <div class="carousel-caption">
                                     <a href="#">
                                         <h3 class="myslider-title">@Model.PopularList[0].TuristPlaceName</h3>
-                                        <p style="text-align:center;color:aliceblue ">@Model.PopularList[0].Rate</p>
                                     </a>
+                                    @for (int i = 0; i < Convert.ToInt32(Model.PopularList[0].Rate); i++)
+                                    {
+                                        <span class="fa fa-star checked" style="color: darkorange"></span>
+                                    }
+                                    @if (Model.PopularList[0].Rate - 5 != 0)
+                                    {
+                                        <span class="fa fa-star"></span>
+                                    }
                                 </div>
                             </div>
                             @for (int i = 1; i < Model.PopularList.Count; i++)
@@ -68,8 +75,18 @@
                                     <div class="carousel-caption">
                                         <a href="#">
                                             <h3 class="myslider-title">@Model.PopularList[i].TuristPlaceName </h3>
-                                            <p style="text-align:center; color:aliceblue ">@Model.PopularList[i].Rate</p>
                                         </a>
+                                        @for (int k = 1; k < Model.PopularList.Count; k++)
+                                        {
+                                            @for (int j = 0; j < Convert.ToInt32(Model.PopularList[k].Rate); i++)
+                                            {
+                                                <span class="fa fa-star checked" style="color:darkorange"></span>
+                                            }
+                                            @if ( Model.PopularList[k].Rate - 5 < 0)
+                                            {
+                                                <span class="fa fa-star"></span>
+                                            }
+                                        }
                                     </div>
                                 </div>
 
