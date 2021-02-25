@@ -17,25 +17,9 @@
             </div>
         </div>
     </div>
-    
+
     <section id="about">
         <div class="container">
-
-
-
-            <div class="row" style="direction: rtl;">
-                <div class="col-xl-12">
-                    <h2 class="text-right" style="margin-bottom: 25px;">کجا میخوای بری ؟</h2>
-                    <form form class="example" action="/action_page.php">
-                        <button type="submit"><i class="fa fa-search"></i></button>
-                        <input type="text" placeholder="جستجو ..." name="search">
-
-                    </form>
-                </div>
-            </div>
-
-
-
             <div class="row first-row">
                 <div class="col-xl-6 text-center one-left">
                     <img src="~/TravellingFlatArt.jpg" alt="">
@@ -92,16 +76,17 @@
                                         <a href="#">
                                             <h3 class="myslider-title">@Model.PopularList[i].TuristPlaceName </h3>
                                         </a>
-                                        @for (int j = 0; j < Model.PopularList[i].Rate; j++)
+                                        @for (int k = 1; k < Model.PopularList.Count; k++)
                                         {
-                                            <span class="fa fa-star checked" style="color:darkorange"></span>
+                                            @for (int j = 0; j < Convert.ToInt32(Model.PopularList[k].Rate); i++)
+                                            {
+                                                <span class="fa fa-star checked" style="color:darkorange"></span>
+                                            }
+                                            @if (Model.PopularList[k].Rate - 5 < 0)
+                                            {
+                                                <span class="fa fa-star"></span>
+                                            }
                                         }
-                                        @while (Model.PopularList[i].Rate - 5 < 0)
-                                        {
-                                            <span class="fa fa-star"></span>
-                                            Model.PopularList[i].Rate++;
-                                        }
-
                                     </div>
                                 </div>
 
@@ -182,77 +167,6 @@
                     </div>
                 </div>
             </div>
-
-            <div id="accordion" class="text-right" style="margin-top: 100px;">
-                <div class="card">
-                    <div class="card-header" id="headingOne">
-                        <h5 class="mb-0">
-                            <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت
-                            </button>
-                        </h5>
-                    </div>
-
-                    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
-                        <div class="card-body">
-                            لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان
-                            گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و
-                            برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می
-                            باشد. کتابهای زیادی در شصت و سه درصد گذشته، حال و آینده شناخت فراوان جامعه و
-                            متخصصان را می طلبد تا با نرم افزارها شناخت بیشتری را برای طراحان رایانه ای علی
-                            الخصوص طراحان خلاقی و فرهنگ پیشرو در زبان فارسی ایجاد کرد.
-                            لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان
-                            گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و
-                            برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد.
-                        </div>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-header" id="headingTwo">
-                        <h5 class="mb-0">
-                            <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت
-                            </button>
-                        </h5>
-                    </div>
-                    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
-                        <div class="card-body">
-                            لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان
-                            گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و
-                            برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می
-                            باشد. کتابهای زیادی در شصت و سه درصد گذشته، حال و آینده شناخت فراوان جامعه و
-                            متخصصان را می طلبد تا با نرم افزارها شناخت بیشتری را برای طراحان رایانه ای علی
-                            الخصوص طراحان خلاقی و فرهنگ پیشرو در زبان فارسی ایجاد کرد.
-                            لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان
-                            گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و
-                            برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد.
-                        </div>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-header" id="headingThree">
-                        <h5 class="mb-0">
-                            <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت
-                            </button>
-                        </h5>
-                    </div>
-                    <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
-                        <div class="card-body">
-                            لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان
-                            گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و
-                            برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می
-                            باشد. کتابهای زیادی در شصت و سه درصد گذشته، حال و آینده شناخت فراوان جامعه و
-                            متخصصان را می طلبد تا با نرم افزارها شناخت بیشتری را برای طراحان رایانه ای علی
-                            الخصوص طراحان خلاقی و فرهنگ پیشرو در زبان فارسی ایجاد کرد.
-                            لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان
-                            گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و
-                            برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد.
-                        </div>
-                    </div>
-                </div>
-            </div>
-
 
         </div>
     </section>
