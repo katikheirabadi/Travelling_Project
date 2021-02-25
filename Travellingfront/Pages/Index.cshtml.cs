@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using TravellingCore.Dto.NewPlace;
 using TravellingCore.Dto.Popular;
 using TravellingCore.Dto.View;
 using TravellingCore.Services.Models.Services.TuristPlaceService;
@@ -20,6 +21,7 @@ namespace Travellingfront.Pages
         public List<ViewOutputDto> VisitedList { get; set; }
         [BindProperty]
         public List<PopularOutputDto> PopularList { get; set; }
+       
         public IndexModel(ILogger<IndexModel> logger ,
                          ITuristPlaceService turistPlaceService )
         {
@@ -31,6 +33,7 @@ namespace Travellingfront.Pages
         {
             VisitedList = await turistPlaceService.ShowVisit();
             PopularList = await turistPlaceService.ShowPopular();
+           
         }
     }
 }
