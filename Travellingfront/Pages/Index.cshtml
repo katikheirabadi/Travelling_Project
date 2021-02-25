@@ -20,6 +20,22 @@
     
     <section id="about">
         <div class="container">
+
+
+
+            <div class="row" style="direction: rtl;">
+                <div class="col-xl-12">
+                    <h2 class="text-right" style="margin-bottom: 25px;">کجا میخوای بری ؟</h2>
+                    <form form class="example" action="/action_page.php">
+                        <button type="submit"><i class="fa fa-search"></i></button>
+                        <input type="text" placeholder="جستجو ..." name="search">
+
+                    </form>
+                </div>
+            </div>
+
+
+
             <div class="row first-row">
                 <div class="col-xl-6 text-center one-left">
                     <img src="~/TravellingFlatArt.jpg" alt="">
@@ -50,7 +66,7 @@
                             {
                                 <li data-target="#demo" data-slide-to="0"></li>
                             }
-                       </ul>
+                        </ul>
                         <div class="carousel-inner">
                             <div class="carousel-item active">
                                 <img src="~/pasargad.jpg" alt="china">
@@ -82,7 +98,7 @@
                                             {
                                                 <span class="fa fa-star checked" style="color:darkorange"></span>
                                             }
-                                            @if ( Model.PopularList[k].Rate - 5 < 0)
+                                            @if (Model.PopularList[k].Rate - 5 < 0)
                                             {
                                                 <span class="fa fa-star"></span>
                                             }
