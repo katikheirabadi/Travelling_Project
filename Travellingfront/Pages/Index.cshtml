@@ -4,7 +4,7 @@
     ViewData["Title"] = "Home page";
 }
 <div class="text-center">
-    <div class="banner">
+    <div class="banner ">
         <div class="container">
             <div class="banner-text">
                 <div class="banner-heading">
@@ -20,6 +20,17 @@
 
     <section id="about">
         <div class="container">
+            <div class="row" style="direction: rtl;">
+                <div class="col-xl-12">
+                    <h2 class="text-right" style="margin-bottom: 25px;">کجا میخوای بری ؟</h2>
+                    <form form class="example" action="/action_page.php">
+                        <button type="submit"><i class="fa fa-search"></i></button>
+                        <input type="text" placeholder="جستجو ..." name="search">
+
+                    </form>
+                </div>
+            </div>
+            <br>
             <div class="row first-row">
                 <div class="col-xl-6 text-center one-left">
                     <img src="~/TravellingFlatArt.jpg" alt="">
@@ -76,17 +87,17 @@
                                         <a href="#">
                                             <h3 class="myslider-title">@Model.PopularList[i].TuristPlaceName </h3>
                                         </a>
-                                        @for (int k = 1; k < Model.PopularList.Count; k++)
+
+                                        @for (int j = 0; j < Convert.ToInt32(Model.PopularList[i].Rate); j++)
                                         {
-                                            @for (int j = 0; j < Convert.ToInt32(Model.PopularList[k].Rate); i++)
-                                            {
-                                                <span class="fa fa-star checked" style="color:darkorange"></span>
-                                            }
-                                            @if (Model.PopularList[k].Rate - 5 < 0)
-                                            {
-                                                <span class="fa fa-star"></span>
-                                            }
+                                            <span class="fa fa-star checked" style="color:darkorange"></span>
                                         }
+                                        @while (Model.PopularList[i].Rate - 5 < 0)
+                                        {
+                                            <span class="fa fa-star"></span>
+                                            Model.PopularList[i].Rate++;
+                                        }
+
                                     </div>
                                 </div>
 
@@ -170,4 +181,9 @@
 
         </div>
     </section>
+
+  
+
+
+
 </div>
