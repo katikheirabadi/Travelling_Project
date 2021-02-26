@@ -21,7 +21,9 @@ namespace Travellingfront.Pages
         public List<ViewOutputDto> VisitedList { get; set; }
         [BindProperty]
         public List<PopularOutputDto> PopularList { get; set; }
-       
+        [BindProperty]
+        public NewListInputDTO Newplaces { get; set; }
+
         public IndexModel(ILogger<IndexModel> logger ,
                          ITuristPlaceService turistPlaceService )
         {
@@ -33,7 +35,7 @@ namespace Travellingfront.Pages
         {
             VisitedList = await turistPlaceService.ShowVisit();
             PopularList = await turistPlaceService.ShowPopular();
-           
+            Newplaces = await turistPlaceService.NewPlaces(); 
         }
     }
 }

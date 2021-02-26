@@ -191,11 +191,18 @@ namespace TravellingCore.ModelsServiceRepository.Models.Methods
                                                 Rate = x.Rates.Average(y => y.UserRate)
                                                ,TuristPlaceName = x.Name
                                                ,Visit = x.Visit
+                                               ,Id = x.Id
+                                               
                                                 })
                                                .OrderByDescending(z => z.Rate)
                                                .Take(4)
                                                .ToListAsync();
         }
-        
+
+        public async Task<GetPlaceOutputDto> GetByid(int id)
+        {
+            var results = await TuristPlaceRepository.GetAll();
+            return results.Where(p => p.Id == id).Select(p => mapper.Map<GetPlaceOutputDto>(p)).FirstOrDefault();
+        }
     }
 }

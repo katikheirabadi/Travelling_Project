@@ -1,0 +1,48 @@
+﻿@page
+@model Travellingfront.Pages.PlaceModel
+@{
+    ViewData["Title"] = "Place page";
+}
+<div class="text-center">
+
+    <div class="banner  ">
+        <div class="container">
+            <div class="banner-text">
+                <div class="banner-heading">
+                    خاطرات سفر خود را با ما شروع کنید
+                </div>
+                <div class="banner-sub-heading">
+                    با ما می‌توانید اطلاعات جامعی از مکان های گردشگری داخلی و خارجی بدست آورید و انتخاب راحتی داشته باشید
+                </div>
+                <button type="button" class="btn btn-light text-dark btn-banner">بزن بریم</button>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>
+                        نام مکان
+                    </th>
+                    <th>
+                        توضیحات
+                    </th>
+
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        @Model.getPlace.Name
+                    </td>
+                    <td>
+                        @Model.getPlace.Description
+                    </td>
+
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    
+</div>

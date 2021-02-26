@@ -142,6 +142,11 @@ namespace TravellingCore.Mapp
             CreateMap<TuristPlace, FavoroteOutputDto>()
                 .ForMember(o => o.Description, x => x.MapFrom(o => o.Description))
                 .ForMember(o => o.TuristPlaceName, x => x.MapFrom(o => o.Name));
+
+            CreateMap<TuristPlace,NewInputDTO>()
+                .ForMember(o => o.Description, x => x.MapFrom(o => o.Description))
+                .ForMember(o => o.TuristPlaceName, x => x.MapFrom(o => o.Name));
+
         }
     }
 }

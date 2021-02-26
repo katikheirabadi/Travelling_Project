@@ -1,0 +1,98 @@
+﻿@page
+@model Travellingfront.Pages.SigninModel
+@{
+    ViewData["Title"] = "Signin page";
+}
+<div class="text-center">
+
+    <div class="banner  ">
+        <div class="container">
+            <div class="banner-text">
+                <div class="banner-heading">
+                    خاطرات سفر خود را با ما شروع کنید
+                </div>
+                <div class="banner-sub-heading">
+                    با ما می‌توانید اطلاعات جامعی از مکان های گردشگری داخلی و خارجی بدست آورید و انتخاب راحتی داشته باشید
+                </div>
+                <button type="button" class="btn btn-light text-dark btn-banner">بزن بریم</button>
+            </div>
+        </div>
+    </div>
+    
+    <section>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3 col-sm-12">
+                </div>
+                <div class="col-md-6 col-sm-12">
+                    <form style="text-align: right;" method="post">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <br>
+                        <div class="form-group">
+                            <label asp-for="Signin.FullName"></label>
+                            <input type="text" class="form-control" asp-for="Signin.FullName" placeholder="نام و نام خوانوادگی" id="text" style="text-align: right;">
+                            <span asp-validation-for="Signin.FullName" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="Signin.Username"></label>
+                            <input type="email" class="form-control" asp-for="Signin.Username" placeholder="xxxx@example.com" id="email" style="text-align: right;">
+                            <span asp-validation-for="Signin.Username" class="text-danger"></span>
+
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="Signin.Password"></label>
+                            <input type="password" class="form-control" asp-for="Signin.Password" placeholder="رمز عبور خود را وارد کنید" id="pwd" style="text-align: right;">
+                            <span asp-validation-for="Signin.Password" class="text-danger"></span>
+
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="Signin.RePassword"></label>
+                            <input asp-for="Signin.RePassword" type="password" class="form-control" placeholder="رمز عبور خود را دوباره وارد کنید" id="pwd" style="text-align: right;">
+                            <span asp-validation-for="Signin.RePassword" class="text-danger"></span>
+
+                        </div>
+
+                        <div class="from-group">
+                            <label asp-for="Signin.PhoneNumber"></label>
+                            <input asp-for="Signin.PhoneNumber" type="text" class="form-control" placeholder="09********" id="text" style="text-align: right;">
+                            <span asp-validation-for="Signin.PhoneNumber" class="text-danger"></span>
+
+                        </div>
+
+                        <br>
+
+                        <label asp-for="Signin.FavoriteCountry" class="mr-sm-2" for="inlineFormCustomSelect">کشور مورد علاقه خود انتخاب کنید</label>
+                        <select class="custom-select mr-sm-2" id="inlineFormCustomSelect">
+                            
+                        </select>
+
+                        <br>
+                        <br>
+
+                        <label class="mr-sm-2" for="inlineFormCustomSelect">جاذبه گردشگری مورد علاقه خود انتخاب کنید</label>
+                        <select class="custom-select mr-sm-2" id="inlineFormCustomSelect">
+                            <option selected>Choose...</option>
+                            <option value="1">تاریخی</option>
+                            <option value="2">دینی</option>
+                            <option value="3">فرهنگی</option>
+                        </select>
+                        <br>
+                        <br>
+                        <button type="submit" class="btn" style="background-color:rgb(178, 143, 106); text-align: center;">ثبت نام</button>
+                        <br>
+                        <br>
+                    </form>
+                </div>
+                <div class="col-md-3 col-sm-12">
+                </div>
+            </div>
+        </div>
+    </section>
+
+</div>
+@section Scripts {
+@{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

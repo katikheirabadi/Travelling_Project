@@ -28,5 +28,6 @@ namespace TravellingCore.Services.Models.Services.TuristPlaceService
         public Task<List<PopularOutputDto>> ShowPopular();
         public Task<string> DeletePlace(DeletePlaceInputDto deleteinput);
         public Task<string> UpdatePlace(UpdatePlaceInputDto updateinput);
+        public Task<GetPlaceOutputDto> GetByid(int id);
     }
 }

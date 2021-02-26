@@ -1,4 +1,13 @@
-﻿body {
+﻿@font-face {
+    font-family: iranyekan;
+    font-style: normal;
+    font-weight: normal;
+    src: url('../fonts/eot/iranyekanwebregular.eot');
+    src: url("../fonts/eot/iranyekanwebregular.eot?#iefix") format('embedded-opentype'), url('../fonts/woff/iranyekanwebregular.woff') format('woff'), url('../fonts/ttf/iranyekanwebregular.ttf') format('truetype');
+}
+
+
+body {
     font-family: iranyekan;
     font-size: 16px;
 }
@@ -193,12 +202,10 @@ nav {
 }
 
 #mybutton {
-    position:  relative;
+    position: fixed;
     bottom: 10px;
     left: 10px;
 }
-
-
 
 form.example input[type=text] {
     padding: 10px;
@@ -230,7 +237,6 @@ form.example::after {
     clear: both;
     display: table;
 }
-
 
 .first-row {
     margin-bottom: 50px;
@@ -310,9 +316,11 @@ form.example::after {
 }
 
 
-.fa-search{
-    background-color:  blueviolet;
+.main-card {
+    height: 441px;
 }
-.footer {
+
+
+footer {
     margin-top: 100px;
 }

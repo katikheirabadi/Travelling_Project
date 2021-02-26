@@ -17,7 +17,7 @@
         <nav class="navbar navbar-expand-md navbar-dark fixed-top" id="banner" style="background-color: rgba(0, 0, 0, 0.5);">
             <div class="container">
                 <div class="row">
-                    <button type="button" class="btn btn-light left-b">ثبت نام</button>
+                    <button type="button" class="btn btn-light left-b" ><a asp-page="/Signin">ثبت نام</a></button>
                     <button type="button" class="btn btn-outline-light">ورود</button>
                 </div>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
@@ -51,7 +51,7 @@
                             </div>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">صفحه اصلی</a>
+                            <a class="nav-link" asp-page="/Index">صفحه اصلی</a>
                         </li>
                     </ul>
                 </div>
@@ -59,6 +59,7 @@
         </nav>
     </header>
     <main role="main" class="pb-3 ">
+
         @RenderBody()
     </main>
     <div id="mybutton">
