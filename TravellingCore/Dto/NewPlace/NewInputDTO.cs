@@ -12,6 +12,8 @@ namespace TravellingCore.Dto.NewPlace
         [Required(ErrorMessage = "this field is empty")]
         public string Description { get; set; }
         [Required(ErrorMessage = "this field is empty")]
-        public string TuristPlaceName { get; set; }
+        public string TuristPlaceName { get; set; } 
+        [Required(ErrorMessage = "this field is empty")]
+        public string Image { get; set; }
     }
 }

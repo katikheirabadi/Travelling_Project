@@ -14,15 +14,12 @@ using TravellingCore.Dto.LogIn.ShowUserLogin;
 using TravellingCore.Dto.NewPlace;
 using TravellingCore.Dto.Rate.GetPlaceRates;
 using TravellingCore.Dto.Rate.GetRate;
-
 using TravellingCore.Dto.Popular;
 using TravellingCore.Dto.searchByCity;
 using TravellingCore.Dto.SearchByCountry;
 using TravellingCore.Dto.SearchByFilter;
-
 using TravellingCore.Dto.SearchByTuristPlaceName;
 using TravellingCore.Dto.Sign_in;
-
 using TravellingCore.Dto.TuristPlace.GetPlace;
 using TravellingCore.Dto.User.GetUser;
 using TravellingCore.Dto.View;
@@ -128,7 +125,9 @@ namespace TravellingCore.Mapp
                 .ForMember(o => o.CountryName, x => x.MapFrom(p => p.Country.Name));
 
             CreateMap<TuristPlace, ViewOutputDto>()
-                .ForMember(o => o.TuristPlaceName, x => x.MapFrom(p => p.Name));
+                .ForMember(o => o.TuristPlaceName, x => x.MapFrom(p => p.Name))
+                .ForMember(o => o.Id, x => x.MapFrom(p => p.Id))
+                .ForMember(o => o.Image, x => x.MapFrom(p => p.Image));
 
             CreateMap<TuristPlace, PopularOutputDto>();
 
@@ -144,6 +143,7 @@ namespace TravellingCore.Mapp
             CreateMap<TuristPlace,NewInputDTO>()
                 .ForMember(o => o.Description, x => x.MapFrom(o => o.Description))
                 .ForMember(o => o.Id, x => x.MapFrom(o => o.Id))
+                .ForMember(o => o.Image, x => x.MapFrom(o => o.Image))
                 .ForMember(o => o.TuristPlaceName, x => x.MapFrom(o => o.Name));
 
 

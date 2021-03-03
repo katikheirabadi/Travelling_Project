@@ -6,7 +6,9 @@ namespace TravellingCore.Dto.View
 {
     public class ViewOutputDto
     {
+        public int Id { get; set; }
         public string TuristPlaceName { get; set; }
-        public int Visit { get; set; }
+        public string Image { get; set; }
+
     }
 }

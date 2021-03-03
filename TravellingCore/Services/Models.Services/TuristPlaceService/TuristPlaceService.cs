@@ -78,7 +78,9 @@ namespace TravellingCore.ModelsServiceRepository.Models.Methods
             if (repit != null)
                 throw new ReapitException("this place already exist");
         }
-
+        /*
+         make for postman
+         */
         public async Task<string> AddTuristPlace(AddPlaceInputDto addinput)
         {
             var findcity = await FindCity(addinput.CityName);
@@ -96,6 +98,7 @@ namespace TravellingCore.ModelsServiceRepository.Models.Methods
                 CityId = findcity.Id,
                 CountryId = findcity.Country.Id,
                 Description = addinput.Description,
+                Image = addinput.Image,
                 Visit=0
             };
 
@@ -159,6 +162,7 @@ namespace TravellingCore.ModelsServiceRepository.Models.Methods
                                           Turism_Places = finall.ToList()
                                        };
         }
+
         public async Task<VisitOutputDto> View (VisitInputDto turistPlace)
         {
             var findplace =  await Findplace(turistPlace.TuristPlaceName);
@@ -175,6 +179,7 @@ namespace TravellingCore.ModelsServiceRepository.Models.Methods
                                                
           
         }
+
         public async Task<List<ViewOutputDto>> ShowVisit()
         {
             var reasult = await TuristPlaceRepository.GetAll();
@@ -192,12 +197,15 @@ namespace TravellingCore.ModelsServiceRepository.Models.Methods
                                                ,TuristPlaceName = x.Name
                                                ,Visit = x.Visit
                                                ,Id = x.Id
-                                               
                                                 })
                                                .OrderByDescending(z => z.Rate)
                                                .Take(4)
                                                .ToListAsync();
         }
+
+        /*
+         make for razor
+         */
 
         public async Task<GetPlaceOutputDto> GetByid(int id)
         {
