@@ -12,6 +12,7 @@ using TravellingCore.Model;
 using AutoMapper;
 using TravellingCore.Dto.City.DeleteCity;
 using TravellingCore.Dto.City.GetCountryCities;
+using TravellingCore.Dto.City.GetCitybyId;
 
 namespace TravellingCore.Services.Models.Services.CityService
 {
@@ -59,6 +60,10 @@ namespace TravellingCore.Services.Models.Services.CityService
             if (FindCity != null)
                 throw new ReapitException("this City already Exict");
         }
+
+        /*
+         make for postman
+         */
         public async Task<string> Addcity(AddCityInputDto addinput)
         {
             var findCountry = await FindCountry(addinput.Country);
@@ -66,6 +71,7 @@ namespace TravellingCore.Services.Models.Services.CityService
 
             var newcity = new City()
             {
+                Image = addinput.Image,
                 Name = addinput.City,
                 CountryId = findCountry.Id
             };
@@ -75,7 +81,7 @@ namespace TravellingCore.Services.Models.Services.CityService
 
             return "We add your city..";
         }
-        public async Task<GetCityOutputDto> GetCity(GetCityInputDto getinput)
+        public async Task<GetCityOutputDto> GetCityByName(GetCityInputDto getinput)
         {
             var findcity = await FindCity(getinput.YourCity);
 
@@ -112,5 +118,28 @@ namespace TravellingCore.Services.Models.Services.CityService
             return result;
         }
 
+        /*
+         make for razor page
+         */
+        public Task<GetCityByIdOutputDto> GetcityById(int id)
+        {
+            var mycity = CityRepository.GetQuery().Include(c => c.TuristPlaces)
+                                                      .Where(c => c.Id == id).FirstOrDefault();
+
+            if (mycity==null)
+            {
+                throw new KeyNotFoundException("Not found any city with this id");
+            }
+
+            var result = new GetCityByIdOutputDto();
+            result.Name = mycity.Name;
+            result.Places = mycity.TuristPlaces.Select(p => new Place() { Id = p.Id,
+                                                                         Description = p.Description,
+                                                                         Image = p.Image,
+                                                                         Name = p.Name })
+                                                .ToList();
+            return Task.Run(()=>result);                                        
+                                                     
+        }
     }
 }

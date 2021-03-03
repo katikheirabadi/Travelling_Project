@@ -11,5 +11,7 @@ namespace TravellingCore.Dto.City.AddCity
         public string Country { get; set; }
         [Required(ErrorMessage = "this field is empty")]
         public string City { get; set; }
+        [Required(ErrorMessage = "this field is empty")]
+        public string Image { get; set; }
     }
 }

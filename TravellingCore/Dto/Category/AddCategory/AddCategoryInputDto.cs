@@ -9,5 +9,7 @@ namespace TravellingCore.Dto.Category.AddCategory
     {
         [Required(ErrorMessage ="this field is empty")]
         public string YourCategory { get; set; }
+        [Required(ErrorMessage ="this field is empty")]
+        public string Image { get; set; }
     }
 }

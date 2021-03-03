@@ -9,5 +9,7 @@ namespace TravellingCore.Dto.Country.AddCountry
     {
         [Required(ErrorMessage ="yhis field is empty")]
         public string YourCountry { get; set; }
+        [Required(ErrorMessage = "yhis field is empty")]
+        public string Image { get; set; }
     }
 }

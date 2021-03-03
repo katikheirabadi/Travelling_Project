@@ -12,6 +12,7 @@ using TravellingCore.Dto.Category.GetCategory;
 using Microsoft.EntityFrameworkCore;
 using TravellingCore.Dto.Category.DeleteCategory;
 using TravellingCore.Dto.Category.GetallPlaceCategory;
+using TravellingCore.Dto.Category.GetcategoryById;
 
 namespace TravellingCore.Services.Models.Services.CategoryServise
 {
@@ -32,6 +33,9 @@ namespace TravellingCore.Services.Models.Services.CategoryServise
             this.TuristplaceRepository = TuristplaceRepository;
             this.mapper = mapper;
         }
+        /*  
+         make for postman
+         */
         private async Task<Category> FindCategory(string category)
         {
             var categories = await CategoryRepoditory.GetAll();
@@ -54,18 +58,19 @@ namespace TravellingCore.Services.Models.Services.CategoryServise
             if (findplace == null)
                 throw new KeyNotFoundException("Not found any place with this name");
         }
+
         public async Task<string> AddCategory(AddCategoryInputDto addinput)
         {
             await IsReapited(addinput.YourCategory);
 
-            var newcategory = new Category() { Name = addinput.YourCategory };
+            var newcategory = new Category() { Name = addinput.YourCategory , Image = addinput.Image};
 
             CategoryRepoditory.Insert(newcategory);
             await CategoryRepoditory.Save();
 
             return "we add your category..";
         }
-        public async Task<GetCategoryOutputDto> GetCategory(GetCategoryInputDto getinput)
+        public async Task<GetCategoryOutputDto> GetCategoryByName(GetCategoryInputDto getinput)
         {
             var findcategory = await FindCategory(getinput.YourCategory);
             var result = CategoryRepoditory.GetQuery().Include(c => c.TuristPlaceCategory)
@@ -101,6 +106,34 @@ namespace TravellingCore.Services.Models.Services.CategoryServise
             if (categories == null)
                 throw new KeyNotFoundException("Not found category for this place");
             return categories;
+        }
+
+        /*
+         make for razer page
+         */
+        public async Task<GetCategoryByIdOutput> GetCategoryById(int id)
+        {
+            var categories = await CategoryRepoditory.GetAll();
+            var mycategory = categories.FirstOrDefault(c => c.Id == id);
+
+            if (mycategory==null)
+            {
+                throw new KeyNotFoundException("Not Found any category with this category");
+            }
+
+            var result = new GetCategoryByIdOutput();
+            result.Image = mycategory.Image;
+            result.Name = mycategory.Name;
+            result.Places = TuristPlaceCategory.GetQuery().Include(tc => tc.Categories)
+                                                          .Include(tc => tc.TuristPlaces)
+                                                          .Where(tc => tc.Categories.Id == id)
+                                                          .Select(tc => tc.TuristPlaces)
+                                                          .Select(p => new Place() { Id = p.Id, 
+                                                                                     Description = p.Description,
+                                                                                     Image = p.Image, 
+                                                                                     Name = p.Name })
+                                                          .ToList();
+            return result;
         }
     }
 }

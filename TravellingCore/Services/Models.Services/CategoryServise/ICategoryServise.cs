@@ -12,9 +12,10 @@ namespace TravellingCore.Services.Models.Services.CategoryServise
     public interface ICategoryServise
     {
         public Task<string> AddCategory(AddCategoryInputDto addinput);
-        public Task<GetCategoryOutputDto> GetCategory(GetCategoryInputDto getinput);
+        public Task<GetCategoryOutputDto> GetCategoryByName(GetCategoryInputDto getinput);
         public Task<List<GetCategoryOutputDto>> GetAllCategories();
         public Task<string> DeleteCategory(DeleteCategoryInputDto deleteinput);
         public Task<List<GetPlaceCategoryOutputDto>> GetPlaceCategory(GetPlaceCategoryInputDto getinput);
+        public Task<GetCategoryByIdOutput> GetCategoryById(int id);
     }
 }

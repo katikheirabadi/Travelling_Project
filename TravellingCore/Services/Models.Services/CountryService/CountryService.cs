@@ -40,10 +40,15 @@ namespace TravellingCore.Services.Models.Services.CountryService
                 throw new KeyNotFoundException("not found this country");
             return findcountry;
         }
+
+        /*
+         make for postman
+         */
         public async Task<string> AddCountry(AddCountryInputDto addinput)
         {
             var newcountry = new Country()
             {
+                Image = addinput.Image,
                 Name = addinput.YourCountry
             };
 
@@ -80,6 +85,10 @@ namespace TravellingCore.Services.Models.Services.CountryService
 
             return result;
         }
+        /*
+         make for razor page
+         */
+
 
     }
 }

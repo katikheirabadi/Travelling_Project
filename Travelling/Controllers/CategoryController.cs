@@ -39,7 +39,7 @@ namespace Travelling.Controllers
             {
                 return BadRequest();
             }
-            var result = await CategoryServise.GetCategory(getinput);
+            var result = await CategoryServise.GetCategoryByName(getinput);
             return Ok(result);
         }
         [HttpGet]

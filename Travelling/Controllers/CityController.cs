@@ -39,7 +39,7 @@ namespace Travelling.Controllers
             {
                 return BadRequest();
             }
-            var result = await CityService.GetCity(getinput);
+            var result = await CityService.GetCityByName(getinput);
             return Ok(result);
         }
         [HttpGet]

@@ -14,6 +14,7 @@ using System.Threading.Tasks;
 using TravellingCore.Mapp;
 using TravellingEF.DataBase;
 using Travellingfront.Extention;
+using Travellingfront.Middleware;
 
 namespace Travellingfront
 {
@@ -54,6 +55,7 @@ namespace Travellingfront
 
             app.UseRouting();
 
+            app.UseMiddleware<CustomExceptionHandlerMiddleware>();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
