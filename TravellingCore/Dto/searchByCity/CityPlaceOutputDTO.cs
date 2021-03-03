@@ -6,7 +6,6 @@ namespace TravellingCore.Dto.searchByCity
 {
     public class CityPlaceOutputDTO
     {
-        public string Name { get; set; }
-        public string Description { get; set; }
+        public int? TuristPlaceId { get; set; }
     }
 }

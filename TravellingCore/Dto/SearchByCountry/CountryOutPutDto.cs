@@ -6,9 +6,7 @@ namespace TravellingCore.Dto.SearchByCountry
 {
     public class CountryOutPutDto
     {
-        public string TuristPlaceName { get; set; }
-        public string CityOfCountry { get; set; }
-        public string Description { get; set; }
+       public int? TuristPlaceId { get; set; }
     }
     
 }

@@ -22,7 +22,7 @@ namespace TravellingCore.Dto.Sign_in
         public string RePassword { get; set; }
         [DisplayName("شماره همراه")]
         public string PhoneNumber { get; set; }
-        public string FavoriteCountry { get; set; }
-        public string FavoriteCategory { get; set; }
+        public int? FavoriteCountry { get; set; }
+        public int? FavoriteCategory { get; set; }
     }
 }
