@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using TravellingCore.Dto.Category.AddCategory;
 using TravellingCore.Dto.Category.DeleteCategory;
 using TravellingCore.Dto.Category.GetallPlaceCategory;
+using TravellingCore.Dto.Category.GetAllWithId;
 using TravellingCore.Dto.Category.GetCategory;
 
 namespace TravellingCore.Services.Models.Services.CategoryServise
@@ -17,5 +18,6 @@ namespace TravellingCore.Services.Models.Services.CategoryServise
         public Task<string> DeleteCategory(DeleteCategoryInputDto deleteinput);
         public Task<List<GetPlaceCategoryOutputDto>> GetPlaceCategory(GetPlaceCategoryInputDto getinput);
         public Task<GetCategoryByIdOutput> GetCategoryById(int id);
+        public Task<List<GetallCategoriesWithIdOutPutDto>> GetAll();
     }
 }

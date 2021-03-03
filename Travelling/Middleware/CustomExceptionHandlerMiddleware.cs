@@ -49,6 +49,9 @@ namespace Travelling.Middleware
                     case ReapitException e:                        
                         response.StatusCode = (int)HttpStatusCode.BadRequest;
                         break;
+                    case PassException e:                        
+                        response.StatusCode = (int)HttpStatusCode.BadRequest;
+                        break;
                     default:
                         response.StatusCode = (int)HttpStatusCode.InternalServerError;
                         break;
