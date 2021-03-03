@@ -10,6 +10,7 @@ using TravellingCore.Services.LoginService;
 using TravellingCore.Dto.LogIn.UpdateUserLogin;
 using TravellingCore.Dto.LogIn.ShowUserLogin;
 using AutoMapper;
+using TravellingCore.Exceptions;
 
 namespace TravellingCore.ServiceRepository.LoginService
 {
@@ -31,6 +32,7 @@ namespace TravellingCore.ServiceRepository.LoginService
         public async Task<string> AddLogin(LoginInputDto login)
         {
             var finduser = await FindUser(login);
+            CheckModel(login.Password, finduser);
             var loginuser = new UserLogin()
             {
                 UserId = finduser.Id,
@@ -65,10 +67,10 @@ namespace TravellingCore.ServiceRepository.LoginService
         private async Task<User> FindUser(LoginInputDto login)
         {
             var users = await Userrepository.GetAll();
-            var finduser = users.FirstOrDefault(u => u.Password == login.Password && u.UserName == login.Username);
+            var finduser = users.FirstOrDefault(u => u.UserName == login.Username);
             if (finduser != null)
                 return finduser;
-            throw new KeyNotFoundException("Not Found");
+            throw new KeyNotFoundException("کاربری با این ایمیل پیدا نشد");
         }
         private async Task<UserLogin> FindToken(string Token)
         {
@@ -76,7 +78,12 @@ namespace TravellingCore.ServiceRepository.LoginService
             var finduser = userlogins.FirstOrDefault(u => u.Token == Token);
             if (finduser != null)
                 return finduser;
-            throw new KeyNotFoundException("Not Found");
+            throw new KeyNotFoundException("یافت نشد Token کاربر ورودی با این");
+        }
+        private void CheckModel(string EnterPass , User user)
+        {
+            if (user.Password != EnterPass)
+                throw new PassException("پسورد غلط است");
         }
 
     }

@@ -32,22 +32,35 @@ namespace TravellingCore.ModelsServiceRepository.SigninRepository
             var usersignin = mapper.Map<User>(signin);
             if (usersignin.Password == usersignin.RePassword)
                 return usersignin;
-            throw new DependencyException("Re-Pass not correct");
+            throw new DependencyException("رمز اشتباه است");
         }
         private async Task IsExistUser(User user)
         {
             var Users = await UserRepository.GetAll();
             var finduser = Users.FirstOrDefault(u => u.UserName == user.UserName);
             if ( finduser!= null)
-                throw new ExistUserException("There is an accont with this username");
+                throw new ExistUserException("کاربر با این ایمیل قبلا ثبت شده");
         }
         private async Task<User> FindUser(string username)
         {
             var users = await UserRepository.GetAll();
             var findUser = users.FirstOrDefault(p => p.UserName == username);
             if (findUser == null)
-                throw new KeyNotFoundException("Not Found");
+                throw new KeyNotFoundException("کاربری با این مشخصات یافت نشد");
             return findUser;
+        }
+        private User ChangeUserToUpdate(User user, UpdateUserOutputDto updateinput)
+        {
+            if (updateinput.Pasword != null)
+            {
+                user.Password = updateinput.Pasword;
+                user.RePassword = user.Password;
+            }
+            if (updateinput.FullName != null)
+            {
+                user.FullName = updateinput.FullName;
+            }
+            return user;
         }
         public async Task<string> AddUser(SigninInputDTO signin)
         {
@@ -58,19 +71,6 @@ namespace TravellingCore.ModelsServiceRepository.SigninRepository
             await UserRepository.Save();
 
             return $"Wellcome {usersignin.FullName}";
-        }
-        private  User ChangeUserToUpdate(User user ,UpdateUserOutputDto updateinput)
-        {
-            if (updateinput.Pasword != null)
-            {
-                user.Password = updateinput.Pasword;
-                user.RePassword = user.Password;
-            }
-            if(updateinput.FullName!=null)
-            {
-                user.FullName = updateinput.FullName; 
-            }
-            return user;
         }
         public async Task<string> DeleteUser(DeleteUseiInputDto deleteinput)
         {

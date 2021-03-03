@@ -4,6 +4,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TravellingCore.Dto.Country.AddCountry;
 using TravellingCore.Dto.Country.DeleteCountry;
+using TravellingCore.Dto.Country.GetAllCountries;
 using TravellingCore.Dto.Country.GetCountry;
 
 namespace TravellingCore.Services.Models.Services.CountryService
@@ -14,5 +15,6 @@ namespace TravellingCore.Services.Models.Services.CountryService
         public Task<GetCountryOutputDto> GetCountry(GetCountryInputDto getinput);
         public Task<List<GetCountryOutputDto>> GetAllCountry();
         public  Task<string> DeleteCountry(DeleteCountryInputDto deleteinput);
+        public Task<List<GetAllcountries>> GetAll();
     }
 }

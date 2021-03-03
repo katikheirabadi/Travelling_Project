@@ -13,6 +13,7 @@ using Microsoft.EntityFrameworkCore;
 using TravellingCore.Dto.Category.DeleteCategory;
 using TravellingCore.Dto.Category.GetallPlaceCategory;
 using TravellingCore.Dto.Category.GetcategoryById;
+using TravellingCore.Dto.Category.GetAllWithId;
 
 namespace TravellingCore.Services.Models.Services.CategoryServise
 {
@@ -132,18 +133,35 @@ namespace TravellingCore.Services.Models.Services.CategoryServise
             var result = new GetCategoryByIdOutput();
             result.Image = mycategory.Image;
             result.Name = mycategory.Name;
-            result.Places = TuristPlaceCategory.GetQuery()
-                                               .Include(tc => tc.Categories)
-                                               .Include(tc => tc.TuristPlaces)
-                                               .Where(tc => tc.Categories.Id == id)
-                                               .Select(tc => tc.TuristPlaces)
-                                               .Select(p => new Place() { Id = p.Id, 
-                                                                           Description = p.Description,
-                                                                           Image = p.Image, 
-                                                                           Name = p.Name })
-                                               .ToList();
-
+            result.Places = TuristPlaceCategory.GetQuery().Include(tc => tc.Categories)
+                                                          .Include(tc => tc.TuristPlaces)
+                                                          .ThenInclude(p => p.Comments)
+                                                          .Where(tc => tc.Categories.Id == id)
+                                                          .Select(tc => tc.TuristPlaces)
+                                                          .Include(p => p.Rates)
+                                                          .Select(p => new Place()
+                                                          {
+                                                              AverageRates = p.Rates.Average(x => x.UserRate),
+                                                              CommentsNumber = p.Comments.Count,
+                                                              Name = p.Name,
+                                                              Image = p.Image,
+                                                              Description = p.Description,
+                                                              Visit = p.Visit,
+                                                              Id = p.Id
+                                                          })
+                                                          .ToList();
+            
             return result;
+        }
+        public async Task<List<GetallCategoriesWithIdOutPutDto>> GetAll()
+        {
+            var allcategories = await CategoryRepoditory.GetAll();
+            return allcategories.Select(c => new GetallCategoriesWithIdOutPutDto()
+                                                                                {
+                                                                                    Id = c.Id,
+                                                                                    Name = c.Name
+                                                                                })  
+                                .ToList();
         }
     }
 }

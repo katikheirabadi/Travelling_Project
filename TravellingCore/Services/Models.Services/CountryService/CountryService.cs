@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using TravellingCore.ContextRepositoryInterface;
 using TravellingCore.Dto.Country.AddCountry;
 using TravellingCore.Dto.Country.DeleteCountry;
+using TravellingCore.Dto.Country.GetAllCountries;
 using TravellingCore.Dto.Country.GetCountry;
 using TravellingCore.Exceptions;
 using TravellingCore.Model;
@@ -95,6 +96,11 @@ namespace TravellingCore.Services.Models.Services.CountryService
         /*
          make for razor page
          */
+        public async Task<List<GetAllcountries>> GetAll()
+        {
+           var countries = await CountryRepository.GetAll();
+            return countries.Select(c => new GetAllcountries() { Id = c.Id, Name = c.Name }).ToList();
+        }
 
 
     }

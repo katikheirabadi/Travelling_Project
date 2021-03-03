@@ -11,7 +11,7 @@
         <div class="container">
             <div class="banner-text">
                 <div class="banner-heading">
-                   ورود به حساب کاربری
+                    ورود به حساب کاربری
                 </div>
                 <div class="banner-sub-heading">
                     به حساب خود وارد شوید
@@ -23,20 +23,28 @@
         <div class="row">
             <div class="col-md-3"></div>
             <div class="col-md-6">
-                <form style="text-align: right;">
-                    
+                <form style="text-align: right;" method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     <br>
                     <div class="form-group">
-                        <label for="email">نام کاربری(ایمیل)</label>
-                        <input type="email" class="form-control" placeholder="xxxx@example.com" id="email" style="text-align: right;">
+                        <label for="email" asp-for="NewUserLogin.Username">نام کاربری(ایمیل)</label>
+                        <input type="email" class="form-control" asp-for="NewUserLogin.Username" placeholder="xxxx@example.com" id="email" style="text-align: right;">
+                        <span asp-validation-for="NewUserLogin.Username" class="text-danger"></span>
                     </div>
 
                     <div class="form-group">
-                        <label for="pwd">رمز عبور</label>
-                        <input type="password" class="form-control" placeholder="رمز عبور خود را وارد کنید" id="pwd" style="text-align: right;">
+                        <label for="pwd" asp-for="NewUserLogin.Password">رمز عبور</label>
+                        <input type="password" class="form-control" asp-for="NewUserLogin.Password" placeholder="رمز عبور خود را وارد کنید" id="pwd" style="text-align: right;">
+                        <span asp-validation-for="NewUserLogin.Password" class="text-danger"></span>
                     </div>
                     <br>
                     <button type="submit" class="btn" style="background-color:#17a2b8; text-align: center;">ثبت نام</button>
+                    @if (Model.State == false)
+                    {
+                        <div>
+                            <span class="text-danger">@ViewBag.Error</span>
+                        </div>
+                    }
                     <br>
                     <br>
                     <br>
@@ -46,3 +54,6 @@
         </div>
     </div>
 </div>
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
