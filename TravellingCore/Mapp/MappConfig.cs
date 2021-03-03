@@ -34,7 +34,8 @@ namespace TravellingCore.Mapp
         public MappConfig()
         {
             //mapp for user
-            CreateMap<SigninInputDTO, User>().ForMember(o=> o.FullName, x=> x.MapFrom( p=> p.FullName))
+            CreateMap<SigninInputDTO, User>()
+                .ForMember(o=> o.FullName, x=> x.MapFrom( p=> p.FullName))
                 .ForMember(o => o.UserName, x => x.MapFrom(p => p.Username))
                 .ForMember(o => o.Password, x => x.MapFrom(p => p.Password))
                 .ForMember(o => o.RePassword, x => x.MapFrom(p => p.RePassword))
@@ -104,20 +105,16 @@ namespace TravellingCore.Mapp
                  .ForMember(o => o.Categories, x => x.MapFrom(o => o.TuristPlaceCategory.Count));
 
             CreateMap<TuristPlace, CategoryOutputDto>()
-                .ForMember(o => o.TuristPlaceName , x => x.MapFrom(p => p.Name))
-                .ForMember(o => o.Description , x => x.MapFrom(p => p.Description));
+                .ForMember(o => o.TuristPlaceId, x => x.MapFrom(p => p.Id));
 
             CreateMap<TuristPlace, CountryOutPutDto>()
-                .ForMember(o => o.TuristPlaceName, x => x.MapFrom(p => p.Name))
-                .ForMember(o => o.CityOfCountry, x => x.MapFrom(p => p.City.Name))
-                .ForMember(o => o.Description , x => x.MapFrom(p => p.Description));
+                .ForMember(o => o.TuristPlaceId, x => x.MapFrom(p => p.Id));
+
 
 
             CreateMap<TuristPlace, TuristPlaceOutputDto>()
-                .ForMember(o => o.TuristPlaceName , x => x.MapFrom(p => p.Name))
-                .ForMember(o => o.CountryName , x => x.MapFrom(p => p.Country.Name))
-                .ForMember(o => o.CityName , x => x.MapFrom(p => p.City.Name))
-                .ForMember(o => o.Description , x => x.MapFrom(p => p.Description));
+                .ForMember(o => o.TuristPlaceId, x => x.MapFrom(p => p.Id));
+
 
             CreateMap<TuristPlace, VisitOutputDto>()
                 .ForMember(o => o.TuristPlaceName, x => x.MapFrom(p => p.Name))
@@ -137,8 +134,7 @@ namespace TravellingCore.Mapp
                .ForMember(o => o.City, x => x.MapFrom(p => p.City.Name));
 
             CreateMap<TuristPlace, FavoroteOutputDto>()
-                .ForMember(o => o.Description, x => x.MapFrom(o => o.Description))
-                .ForMember(o => o.TuristPlaceName, x => x.MapFrom(o => o.Name));
+                .ForMember(o => o.TuristPlaceId, x => x.MapFrom(p => p.Id));
 
             CreateMap<TuristPlace,NewInputDTO>()
                 .ForMember(o => o.Description, x => x.MapFrom(o => o.Description))

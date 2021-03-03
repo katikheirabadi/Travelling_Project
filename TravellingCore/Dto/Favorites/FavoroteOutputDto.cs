@@ -7,8 +7,7 @@ namespace TravellingCore.Dto.Favorites
 {
     public class FavoroteOutputDto
     {
-       public string TuristPlaceName { get; set; }
-       public string Description { get; set; }
+      public int? TuristPlaceId { get; set; }
 
     }
 }

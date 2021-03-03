@@ -65,11 +65,13 @@ namespace TravellingCore.Services.Models.Services.SearchServise
             var CategoryPlaces = TuristPlaceCategoryRepository.GetQuery()
                                                               .Include(x => x.Categories)
                                                               .Include(y => y.TuristPlaces)
-                                                              .Where(z => z.Categories.Name == category.CategoryName)
-                                                              .Select(p => p.TuristPlaces)
-                                                              .Select(p => mapper.Map<CategoryOutputDto>(p)).ToListAsync();
+                                                              .Where(z => z.Categories.Id == category.CategoryId)
+                                                              .Select(p => p.TuristPlaces.Id)
+                                                              .Select(p => mapper.Map<CategoryOutputDto>(p))
+                                                              .ToListAsync();
+
             if (CategoryPlaces == null)
-                throw new KeyNotFoundException("This Category Don't Have Any Places");
+                throw new KeyNotFoundException("برای این دسته بندی مکان توریستی وجود ندارد");
 
             return CategoryPlaces;
 
@@ -79,10 +81,12 @@ namespace TravellingCore.Services.Models.Services.SearchServise
             var CountryPlaces = TuristPlaceRepository.GetQuery()
                                                      .Include(x => x.Country)
                                                      .Include(o => o.City)
-                                                     .Where(y => y.Country.Name == country.CountryName)
-                                                     .Select(Z => mapper.Map<CountryOutPutDto>(Z)).ToListAsync();
+                                                     .Where(y => y.Country.Id == country.CountryId)
+                                                     .Select(Z => mapper.Map<CountryOutPutDto>(Z))
+                                                     .ToListAsync();
+
             if (CountryPlaces == null)
-                throw new KeyNotFoundException("This Country Don't have Any Places");
+                throw new KeyNotFoundException("برای این دسته بندی مکان توریستی وجود ندارد");
 
             return CountryPlaces;
 
@@ -91,11 +95,10 @@ namespace TravellingCore.Services.Models.Services.SearchServise
         {
             var result = TuristPlaceRepository.GetQuery()
                                               .Include(p => p.City)
-                                              .Where(p => p.City.Name == citynameinputdto.CityName)
+                                              .Where(p => p.City.Id == citynameinputdto.CityId)
                                               .Select(p => new CityPlaceOutputDTO()
                                               {
-                                                  Name = p.Name,
-                                                  Description = p.Description
+                                                  TuristPlaceId = p.Id
                                               })
                                               .ToListAsync();
             return result;
@@ -105,7 +108,7 @@ namespace TravellingCore.Services.Models.Services.SearchServise
             var place = await TuristPlaceRepository.GetQuery()
                                                    .Include(x => x.City)
                                                    .Include(y => y.Country)
-                                                   .FirstOrDefaultAsync(o => o.Name == turistPlace.TuristPlaceName);
+                                                   .FirstOrDefaultAsync(o => o.Id == turistPlace.TuristPlaceId);
             var Reasult = mapper.Map<TuristPlaceOutputDto>(place);
 
             if (place == null)

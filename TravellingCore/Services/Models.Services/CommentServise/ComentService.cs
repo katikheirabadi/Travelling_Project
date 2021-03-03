@@ -92,9 +92,12 @@ namespace TravellingCore.ModelsServiceRepository.Models.Methods
         }
         public Task<List<GetCommentOutputDto>> ShowAllComments()
         {
-            var comments = CommentRepository.GetQuery().Include(c => c.TuristPlace)
-                                                       .Include(c => c.User)
-                                                       .Select(c => mapper.Map<GetCommentOutputDto>(c)).ToListAsync();
+            var comments = CommentRepository.GetQuery()
+                                            .Include(c => c.TuristPlace)
+                                            .Include(c => c.User)
+                                            .Select(c => mapper.Map<GetCommentOutputDto>(c))
+                                            .ToListAsync();
+
             if (comments == null)
                 throw new KeyNotFoundException("Not Fount any Comment");
             return comments;
@@ -102,10 +105,13 @@ namespace TravellingCore.ModelsServiceRepository.Models.Methods
         public Task<List<GetPlacecommentsOutputDto>> ShowPlaceComments(GetPlaceCommentsInputDto getinput)
         {
             FindPlace(getinput.TuristPlaceName);
-            var comments = CommentRepository.GetQuery().Include(c => c.User)
-                                                        .Include(c => c.TuristPlace)
-                                                        .Where(c => c.TuristPlace.Name == getinput.TuristPlaceName)
-                                                        .Select(c => mapper.Map<GetPlacecommentsOutputDto>(c)).ToListAsync();
+            var comments = CommentRepository.GetQuery()
+                                            .Include(c => c.User)
+                                            .Include(c => c.TuristPlace)
+                                            .Where(c => c.TuristPlace.Name == getinput.TuristPlaceName)
+                                            .Select(c => mapper.Map<GetPlacecommentsOutputDto>(c))
+                                            .ToListAsync();
+
             if (comments == null)
                 throw new KeyNotFoundException("not found any comment");
             return comments;
@@ -134,9 +140,11 @@ namespace TravellingCore.ModelsServiceRepository.Models.Methods
         public async Task<GetCoomentOutputDto> GetComment(GetCommentInputDto getinput)
         {
             var findcomment = await FindComment(getinput.CommentId);
-            findcomment = CommentRepository.GetQuery().Include(c => c.TuristPlace)
-                                                      .Include(c => c.User)
-                                                      .FirstOrDefault(c => c.Id == findcomment.Id);
+            findcomment = CommentRepository.GetQuery()
+                                           .Include(c => c.TuristPlace)
+                                           .Include(c => c.User)
+                                           .FirstOrDefault(c => c.Id == findcomment.Id);
+
             return mapper.Map<GetCoomentOutputDto>(findcomment);
         }
 

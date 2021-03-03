@@ -8,6 +8,6 @@ namespace TravellingCore.Dto.SearchByCountry
     public class CountryInputDto
     {
         [Required(ErrorMessage = "this field is empty")]
-        public string CountryName { get; set; }
+        public int? CountryId { get; set; }
     }
 }

@@ -74,15 +74,20 @@ namespace TravellingCore.Services.Models.Services.CategoryServise
         public async Task<GetCategoryOutputDto> GetCategoryByName(GetCategoryInputDto getinput)
         {
             var findcategory = await FindCategory(getinput.YourCategory);
-            var result = CategoryRepoditory.GetQuery().Include(c => c.TuristPlaceCategory)
-                                                     .Where(c => c.Name == findcategory.Name)
-                                                     .Select(c => mapper.Map<GetCategoryOutputDto>(c)).FirstOrDefault();
+            var result = CategoryRepoditory.GetQuery()
+                                           .Include(c => c.TuristPlaceCategory)
+                                           .Where(c => c.Name == findcategory.Name)
+                                           .Select(c => mapper.Map<GetCategoryOutputDto>(c))
+                                           .FirstOrDefault();
+
             return result;
         }
         public Task<List<GetCategoryOutputDto>> GetAllCategories()
         {
-            var result = CategoryRepoditory.GetQuery().Include(c => c.TuristPlaceCategory)
-                                                      .Select(c => mapper.Map<GetCategoryOutputDto>(c)).ToListAsync();
+            var result = CategoryRepoditory.GetQuery()
+                                           .Include(c => c.TuristPlaceCategory)
+                                           .Select(c => mapper.Map<GetCategoryOutputDto>(c))
+                                           .ToListAsync();
             if (result == null)
                 throw new KeyNotFoundException("Not Found any category");
             return result;
@@ -99,11 +104,14 @@ namespace TravellingCore.Services.Models.Services.CategoryServise
         public async Task<List<GetPlaceCategoryOutputDto>> GetPlaceCategory(GetPlaceCategoryInputDto getinput)
         {
             await Findplace(getinput.PlaceName);
-            var categories = TuristPlaceCategory.GetQuery().Include(tc => tc.TuristPlaces)
-                                                           .Include(tc => tc.Categories)
-                                                           .Where(tc => tc.TuristPlaces.Name == getinput.PlaceName)
-                                                           .Select(tc => tc.Categories)
-                                                           .Select(c => mapper.Map<GetPlaceCategoryOutputDto>(c)).ToList();
+            var categories = TuristPlaceCategory.GetQuery()
+                                                .Include(tc => tc.TuristPlaces)
+                                                .Include(tc => tc.Categories)
+                                                .Where(tc => tc.TuristPlaces.Name == getinput.PlaceName)
+                                                .Select(tc => tc.Categories)
+                                                .Select(c => mapper.Map<GetPlaceCategoryOutputDto>(c))
+                                                .ToList();
+
             if (categories == null)
                 throw new KeyNotFoundException("Not found category for this place");
             return categories;

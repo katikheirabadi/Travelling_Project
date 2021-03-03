@@ -41,40 +41,47 @@ namespace TravellingCore.Services.FavoriteService
                 throw new ExpiredException("Yor Token Was Excpired");
 
         }
-        private List<string> GetFavorites(UserLogin userLogin)
+        private List<int?> GetFavorites(UserLogin userLogin)
         {
-            var favorites = UserLoginRepository.GetQuery().Include(u => u.user)
-                                                          .Where(u => u.Id == userLogin.Id).FirstOrDefault();
+            var favorites = UserLoginRepository.GetQuery()
+                                               .Include(u => u.user)
+                                               .Where(u => u.Id == userLogin.Id)
+                                               .FirstOrDefault();
 
             if (favorites.user.FavoriteCountry == null && favorites.user.FavoriteCategory == null)
                 throw new KeyNotFoundException("You don't have any favorites");
 
-            return new List<string>() { favorites.user.FavoriteCategory, favorites.user.FavoriteCountry };
+            return new List<int?>() { favorites.user.FavoriteCategory, favorites.user.FavoriteCountry };
                                                           
         }
         public async Task<List<FavoroteOutputDto>> ReccomendedByFavorite(string Token)
         {
-            var findyserlogin = await FindUserLogin(Token);
-            IsExpiresdToken(findyserlogin, Token);
+            var finduserlogin = await FindUserLogin(Token);
+            IsExpiresdToken(finduserlogin, Token);
 
-            var favorites = GetFavorites(findyserlogin);
+            var favorites = GetFavorites(finduserlogin);
 
-            var reccomended = new List<TuristPlace>();
+            var reccomended = new List<int>();
 
             if (favorites[0] != null)
             {
-                var result = TuristPlaceCategoryRepository.GetQuery().Include(p => p.TuristPlaces)
-                                                                     .Include(p => p.Categories)
-                                                                     .Where(p => p.Categories.Name == favorites[0])
-                                                                     .Select(p => p.TuristPlaces).ToList();
+                var result = TuristPlaceCategoryRepository.GetQuery()
+                                                          .Include(p => p.TuristPlaces)
+                                                          .Include(p => p.Categories)
+                                                          .Where(p => p.Categories.Id == favorites[0])
+                                                          .Select(p => p.TuristPlaces.Id)
+                                                          .ToList();
                 reccomended = result;
             }
             if (favorites[1] != null)
             {
-                var result = TuristPlaceCategoryRepository.GetQuery().Include(p => p.TuristPlaces)
-                                                                     .ThenInclude(p => p.Country)
-                                                                     .Where(p => p.TuristPlaces.Country.Name == favorites[1])
-                                                                     .Select(p => p.TuristPlaces).ToList();
+                var result = TuristPlaceCategoryRepository.GetQuery()
+                                                          .Include(p => p.TuristPlaces)
+                                                          .ThenInclude(p => p.Country)
+                                                          .Where(p => p.TuristPlaces.Country.Id == favorites[1])
+                                                          .Select(p => p.TuristPlaces.Id)
+                                                          .ToList();
+
                 reccomended = reccomended.Concat(result).ToList();
             }
 

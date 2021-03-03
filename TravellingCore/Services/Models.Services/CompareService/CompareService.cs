@@ -25,7 +25,7 @@ namespace TravellingCore.Services.Models.Services.CompareService
         double Attraction(string Place)
         {
             var FirstPlace = turistPlace.GetQuery()
-               .FirstOrDefault(x => x.Name.Contains(Place));
+                                        .FirstOrDefault(x => x.Name.Contains(Place));
 
             if (FirstPlace == null)
                 throw new KeyNotFoundException("not found this place");
@@ -33,8 +33,9 @@ namespace TravellingCore.Services.Models.Services.CompareService
             var FirstPlaceId = FirstPlace.Id;
 
             return rate.GetQuery()
-                .Where(y => y.TuristPlaceId == FirstPlaceId)
-                .Select(z => z.UserRate).Average();
+                       .Where(y => y.TuristPlaceId == FirstPlaceId)
+                       .Select(z => z.UserRate)
+                       .Average();
         }
 
         // compare place rate

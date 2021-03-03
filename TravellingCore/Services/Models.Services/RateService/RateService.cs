@@ -39,13 +39,16 @@ namespace TravellingCore.ModelsServiceRepository.Models.Methods
         {
             var users = await UserLoginRepository.GetAll();
             var user = users.FirstOrDefault(u => u.Token == Token);
+
             if (user == null)
                 throw new KeyNotFoundException("Not Found  Login-user with this Token ");
+
             return user;
         }
         private void IsExpired(UserLogin user)
         {
             TimeSpan time = user.ExpireDate.Date - DateTime.Now.Date;
+
             if (time.TotalMilliseconds <= 0)
                throw new ExpiredException("Token was expired"); 
         }
@@ -53,8 +56,10 @@ namespace TravellingCore.ModelsServiceRepository.Models.Methods
         {
             var places = TuristPlaceRepository.GetQuery();
             var findplace = places.FirstOrDefault(p => p.Name == place);
+
             if (findplace == null)
                 throw new KeyNotFoundException("Not found place with this name");
+
             return findplace;
         }
         private async Task<Rate> FindRate(int id)
@@ -64,6 +69,7 @@ namespace TravellingCore.ModelsServiceRepository.Models.Methods
 
             if (findrate == null)
                 throw new KeyNotFoundException("Not Found Rate with this id ");
+
             return findrate;
         }
         public async Task<string> AddRate(RateInputDto  rate , string Token)
@@ -87,29 +93,36 @@ namespace TravellingCore.ModelsServiceRepository.Models.Methods
         public async Task<GetRateOutputDto> GetRate(GetrateInputDto getinput)
         {
             var findrate = await FindRate(getinput.RateId);
-            var endrate = RateRepository.GetQuery().Include(r => r.User)
-                                                    .Include(r => r.TuristPlace)
-                                                    .FirstOrDefault(r => r.Id == findrate.Id);
+            var endrate = RateRepository.GetQuery()
+                                        .Include(r => r.User)
+                                        .Include(r => r.TuristPlace)
+                                        .FirstOrDefault(r => r.Id == findrate.Id);
+
             return mapper.Map<GetRateOutputDto>(endrate);
 
         }
         public async Task<List<GetRateOutputDto>> GetAllRate()
         {
             var rates = await RateRepository.GetAll();
-            var endrates = RateRepository.GetQuery().Include(r => r.User)
-                                                   .Include(r => r.TuristPlace)
-                                                   .Select(r=> mapper.Map<GetRateOutputDto>(r)).ToList();
+            var endrates = RateRepository.GetQuery()
+                                         .Include(r => r.User)
+                                         .Include(r => r.TuristPlace)
+                                         .Select(r=> mapper.Map<GetRateOutputDto>(r))
+                                         .ToList();
+
             return endrates;
 
         }
         public  Task<List<GetPlaceRatesOutputDto>> GetAllRatesOfPlace(GetPlaceRatesInputDto getplaceinput)
         {
             var findplace = FindPlace(getplaceinput.Place);
-            var rates = RateRepository.GetQuery().Include(r => r.TuristPlace)
-                                                 .Include(r => r.User)
-                                                 .Where(r => r.TuristPlace.Name == getplaceinput.Place)
-                                                 .Select(r => mapper.Map<GetPlaceRatesOutputDto>(r))
-                                                 .ToListAsync();
+            var rates = RateRepository.GetQuery()
+                                      .Include(r => r.TuristPlace)
+                                      .Include(r => r.User)
+                                      .Where(r => r.TuristPlace.Name == getplaceinput.Place)
+                                      .Select(r => mapper.Map<GetPlaceRatesOutputDto>(r))
+                                      .ToListAsync();
+
             if (rates == null)
                 throw new KeyNotFoundException("Not Found rate for this place");
 

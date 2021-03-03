@@ -8,6 +8,6 @@ namespace TravellingCore.Dto._ُSearchByCategory
     public class CategoryInputDto
     {
         [Required(ErrorMessage = "this field is empty")]
-        public string CategoryName { get; set; }
+        public int? CategoryId { get; set; }
     }
 }

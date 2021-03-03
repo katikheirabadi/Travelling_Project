@@ -85,27 +85,36 @@ namespace TravellingCore.Services.Models.Services.CityService
         {
             var findcity = await FindCity(getinput.YourCity);
 
-            var result = CityRepository.GetQuery().Include(c => c.TuristPlaces)
-                                                  .Include(c=>c.Country)
-                                                  .Where(c => c.Name == findcity.Name)
-                                                  .Select(c => mapper.Map<GetCityOutputDto>(c)).FirstOrDefault();
+            var result = CityRepository.GetQuery()
+                                       .Include(c => c.TuristPlaces)
+                                       .Include(c=>c.Country)
+                                       .Where(c => c.Name == findcity.Name)
+                                       .Select(c => mapper.Map<GetCityOutputDto>(c))
+                                       .FirstOrDefault();
+
             return result;
         }
         public  Task<List<GetCityOutputDto>> GetAllCities()
         {
-            var result = CityRepository.GetQuery().Include(c => c.TuristPlaces)
-                                                 .Include(c => c.Country)
-                                                 .Select(c => mapper.Map<GetCityOutputDto>(c)).ToListAsync();
+            var result = CityRepository.GetQuery()
+                                       .Include(c => c.TuristPlaces)
+                                       .Include(c => c.Country)
+                                       .Select(c => mapper.Map<GetCityOutputDto>(c))
+                                       .ToListAsync();
+
             return result;
 
         }
         public async Task<List<GetCityOutputDto>> GetCountryCities(GetCountryCitiesInputDto getinput)
         {
             var findcountry = await FindCountry(getinput.YourCountry);
-            var cities = CityRepository.GetQuery().Include(c => c.Country)
-                                                   .Include(c => c.TuristPlaces)
-                                                   .Where(c => c.Country.Name == findcountry.Name)
-                                                   .Select(c => mapper.Map<GetCityOutputDto>(c)).ToList();
+            var cities = CityRepository.GetQuery()
+                                       .Include(c => c.Country)
+                                       .Include(c => c.TuristPlaces)
+                                       .Where(c => c.Country.Name == findcountry.Name)
+                                       .Select(c => mapper.Map<GetCityOutputDto>(c))
+                                       .ToList();
+
             return cities;
         }
         public async Task<string> DeleteCity(DeleteCityInput deleteinput)
@@ -123,8 +132,10 @@ namespace TravellingCore.Services.Models.Services.CityService
          */
         public Task<GetCityByIdOutputDto> GetcityById(int id)
         {
-            var mycity = CityRepository.GetQuery().Include(c => c.TuristPlaces)
-                                                      .Where(c => c.Id == id).FirstOrDefault();
+            var mycity = CityRepository.GetQuery()
+                                       .Include(c => c.TuristPlaces)
+                                       .Where(c => c.Id == id)
+                                       .FirstOrDefault();
 
             if (mycity==null)
             {
@@ -137,7 +148,7 @@ namespace TravellingCore.Services.Models.Services.CityService
                                                                          Description = p.Description,
                                                                          Image = p.Image,
                                                                          Name = p.Name })
-                                                .ToList();
+                                               .ToList();
             return Task.Run(()=>result);                                        
                                                      
         }

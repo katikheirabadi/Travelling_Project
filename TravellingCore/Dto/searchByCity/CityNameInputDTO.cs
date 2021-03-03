@@ -8,6 +8,6 @@ namespace TravellingCore.Dto.searchByCity
     public class CityNameInputDTO
     {
         [Required(ErrorMessage = "this field is empty")]
-        public string CityName { get; set; }
+        public int? CityId { get; set; }
     }
 }

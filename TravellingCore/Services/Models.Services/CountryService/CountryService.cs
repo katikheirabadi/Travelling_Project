@@ -30,6 +30,7 @@ namespace TravellingCore.Services.Models.Services.CountryService
         {
             var Countries = await CountryRepository.GetAll();
             var reapited = Countries.Find(c=>c.Name==country.Name);
+
             if (reapited != null)
                 throw new ReapitException("this country alredy exist");
         }
@@ -37,6 +38,7 @@ namespace TravellingCore.Services.Models.Services.CountryService
         {
             var countries = await CountryRepository.GetAll();
             var findcountry = countries.Find(c => c.Name == country);
+
             if (findcountry == null)
                 throw new KeyNotFoundException("not found this country");
             return findcountry;
@@ -64,17 +66,22 @@ namespace TravellingCore.Services.Models.Services.CountryService
         {
             await FindCountry(getinput.YourCountry);
 
-            var yourcountry = CountryRepository.GetQuery().Include(c => c.Cities)
-                                                          .Include(c => c.TuristPlaces)
-                                                          .Where(c => c.Name == getinput.YourCountry)
-                                                          .Select(c => mapper.Map<GetCountryOutputDto>(c)).FirstOrDefault();
+            var yourcountry = CountryRepository.GetQuery()
+                                               .Include(c => c.Cities)
+                                               .Include(c => c.TuristPlaces)
+                                               .Where(c => c.Name == getinput.YourCountry)
+                                               .Select(c => mapper.Map<GetCountryOutputDto>(c))
+                                               .FirstOrDefault();
+
             return yourcountry;
         }
         public Task<List<GetCountryOutputDto>> GetAllCountry()
         {
-            var counreies = CountryRepository.GetQuery().Include(c => c.Cities)
-                                                                     .Include(c => c.TuristPlaces)
-                                                                     .Select(c => mapper.Map<GetCountryOutputDto>(c)).ToListAsync();
+            var counreies = CountryRepository.GetQuery()
+                                             .Include(c => c.Cities)
+                                             .Include(c => c.TuristPlaces)
+                                             .Select(c => mapper.Map<GetCountryOutputDto>(c))
+                                             .ToListAsync();
             return counreies;
         }
         public async Task<string> DeleteCountry(DeleteCountryInputDto deleteinput)
