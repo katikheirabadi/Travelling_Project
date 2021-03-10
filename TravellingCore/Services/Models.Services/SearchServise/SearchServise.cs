@@ -106,14 +106,15 @@ namespace TravellingCore.Services.Models.Services.SearchServise
         public async Task<TuristPlaceOutputDto> SearchByName(TuristPlaceInputDto turistPlace)
         {
             var place = await TuristPlaceRepository.GetQuery()
-                                                   .Include(x => x.City)
-                                                   .Include(y => y.Country)
-                                                   .FirstOrDefaultAsync(o => o.Id == turistPlace.TuristPlaceId);
+                                                   .Include(p=>p.Comments)
+                                                   .Include(p=>p.Rates)
+                                                   .FirstOrDefaultAsync(o => o.Name .Contains(turistPlace.TuristPlaceName));
+            if (place == null)
+                throw new KeyNotFoundException("همچین مکانی یافت نشد");
+
             var Reasult = mapper.Map<TuristPlaceOutputDto>(place);
 
-            if (place == null)
-                throw new KeyNotFoundException("Not Found This TuristPlace.");
-
+            
             return Reasult;
 
         }

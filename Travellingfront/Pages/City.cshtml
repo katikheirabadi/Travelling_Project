@@ -1,4 +1,48 @@
 ﻿@page
 @model Travellingfront.Pages.CityModel
 @{
+    ViewData["Title"] = "City";
 }
+<head>
+    <link href="~/css/City/City.css" rel="stylesheet" />
+</head>
+<div class="text-center">
+    <div class="banner">
+        <div class="container">
+            <div class="banner-text">
+                <div class="banner-heading">
+                    جاذبه های گردشگری @Model.City.Name
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        @for (int i = 0; i < Model.City.Places.Count; i++)
+        {
+            <div class="row country-item-row">
+                <div class="col-xl-9 text-right">
+                    <h3>@Model.City.Places[i].Name</h3>
+                    <p class="country-item-p">
+                        @Model.City.Places[i].Description
+                    </p>
+
+                    <a asp-page="/Place" asp-route-id="@Model.City.Places[i].Id" class="btn btn-info">تعداد کامنت : @Model.City.Places[i].Comments</a>
+                    @for (int k = 0; k < Convert.ToInt32(Model.City.Places[i].AverageRates); k++)
+                    {
+                        <span class="fa fa-star checked"></span>
+                    }
+                    @while (Model.City.Places[i].AverageRates < 5)
+                    {
+                        <span class="fa fa-star"></span>
+                        Model.City.Places[i].AverageRates++;
+                    }
+                </div>
+                <div class="col-xl-3 text-center">
+                    <img src='@Model.City.Places[i].Image' class="country-item-image justify-content-center myimage">
+                </div>
+            </div>
+
+        }
+    </div>
+</div>

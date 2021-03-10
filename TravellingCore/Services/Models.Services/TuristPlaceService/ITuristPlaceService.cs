@@ -14,6 +14,7 @@ using TravellingCore.Dto.TuristPlace.DeletePlace;
 using TravellingCore.Dto.TuristPlace.GetPlace;
 using TravellingCore.Dto.TuristPlace.UpdatePlace;
 using TravellingCore.Model;
+using TravellingCore.Dto.TuristPlaces.GetPlaceWithId;
 
 namespace TravellingCore.Services.Models.Services.TuristPlaceService
 {
@@ -28,6 +29,6 @@ namespace TravellingCore.Services.Models.Services.TuristPlaceService
         public Task<List<PopularOutputDto>> ShowPopular();
         public Task<string> DeletePlace(DeletePlaceInputDto deleteinput);
         public Task<string> UpdatePlace(UpdatePlaceInputDto updateinput);
-        public Task<GetPlaceOutputDto> GetByid(int id);
+        public Task<GetplaceWithIdOutputDto> GetByid(int id);
     }
 }

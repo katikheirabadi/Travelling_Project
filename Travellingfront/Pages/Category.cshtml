@@ -1,4 +1,48 @@
 ﻿@page
 @model Travellingfront.Pages.CategoryModel
 @{
+    ViewData["Title"] = "category";
 }
+<head>
+    <link href="~/css/Category/Category.css" rel="stylesheet" />
+</head>
+<div class="text-center">
+    <div class="banner" style="background-image:url(@Model.Category.Image)">
+        <div class="container">
+            <div class="banner-text">
+                <div class="banner-heading">
+                    @Model.Category.Name
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        @for (int i = 0; i < Model.Category.Places.Count; i++)
+        {
+            <div class="row country-item-row">
+                <div class="col-xl-9 text-right">
+                    <h3>@Model.Category.Places[i].Name</h3>
+                    <p class="country-item-p">
+                        @Model.Category.Places[i].Description
+                    </p>
+
+                    <a asp-page="/Place" asp-route-id="@Model.Category.Places[i].Id" class="btn btn-info">تعداد کامنت : @Model.Category.Places[i].CommentsNumber</a>
+                    @for (int k = 0; k < Convert.ToInt32(Model.Category.Places[i].AverageRates); k++)
+                    {
+                        <span class="fa fa-star checked"></span>
+                    }
+                    @while (Model.Category.Places[i].AverageRates < 5)
+                    {
+                        <span class="fa fa-star"></span>
+                        Model.Category.Places[i].AverageRates++;
+                    }
+                </div>
+                <div class="col-xl-3 text-center">
+                    <img src='@Model.Category.Places[i].Image' class="country-item-image justify-content-center myimage">
+                </div>
+            </div>
+
+        }
+    </div>
+
+</div>

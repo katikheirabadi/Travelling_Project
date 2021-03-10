@@ -43,8 +43,9 @@ namespace Travelling
             services.AddDbContext<TravellingDBContext>(o => { o.UseSqlServer(Configuration.GetConnectionString("TravellConection")); });
             services.AddDependency();
             services.AddSwaggerGen(c => c.SwaggerDoc("Travelling" , new Microsoft.OpenApi.Models.OpenApiInfo {Title = "Travelling" ,Version = "Travelling_Priject" }));
-          // services.AddSwaggerGen(c=>c.SwaggerDoc() )
-          
+            // services.AddSwaggerGen(c=>c.SwaggerDoc() )
+           
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -59,6 +60,7 @@ namespace Travelling
             app.UseHttpsRedirection();
 
             app.UseRouting();
+            
 
             app.UseAuthorization();
             app.UseMiddleware<CustomExceptionHandlerMiddleware>();

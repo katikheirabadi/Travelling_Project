@@ -61,15 +61,17 @@ namespace TravellingCore.Services.FavoriteService
 
             var favorites = GetFavorites(finduserlogin);
 
-            var reccomended = new List<int>();
+            var reccomended = new List<TuristPlace>();
 
             if (favorites[0] != null)
             {
                 var result = TuristPlaceCategoryRepository.GetQuery()
                                                           .Include(p => p.TuristPlaces)
+                                                          .ThenInclude(p=>p.Comments)
                                                           .Include(p => p.Categories)
                                                           .Where(p => p.Categories.Id == favorites[0])
-                                                          .Select(p => p.TuristPlaces.Id)
+                                                          .Select(p => p.TuristPlaces)
+                                                          .Include(p=>p.Rates)
                                                           .ToList();
                 reccomended = result;
             }
@@ -79,14 +81,15 @@ namespace TravellingCore.Services.FavoriteService
                                                           .Include(p => p.TuristPlaces)
                                                           .ThenInclude(p => p.Country)
                                                           .Where(p => p.TuristPlaces.Country.Id == favorites[1])
-                                                          .Select(p => p.TuristPlaces.Id)
+                                                          .Select(p => p.TuristPlaces)
+                                                          .Include(p=>p.Rates)
                                                           .ToList();
 
                 reccomended = reccomended.Concat(result).ToList();
             }
 
             if (reccomended == null)
-                throw new KeyNotFoundException("Not Found Any Place With Your Favorites..");
+                throw new KeyNotFoundException("شما علاقه مندی در ثبت نام خود انتخاب نکردی");
 
 
             return reccomended.Select(p => mapper.Map<FavoroteOutputDto>(p)).ToList();

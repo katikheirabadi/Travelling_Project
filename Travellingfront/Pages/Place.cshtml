@@ -3,46 +3,100 @@
 @{
     ViewData["Title"] = "Place page";
 }
+<link href="~/css/Place/Place.css" rel="stylesheet" />
 <div class="text-center">
 
-    <div class="banner  ">
+    <div class="banner" style="background-image:url(@Model.getPlace.Image)">
         <div class="container">
             <div class="banner-text">
                 <div class="banner-heading">
-                    خاطرات سفر خود را با ما شروع کنید
+                    @Model.getPlace.Name
                 </div>
-                <div class="banner-sub-heading">
-                    با ما می‌توانید اطلاعات جامعی از مکان های گردشگری داخلی و خارجی بدست آورید و انتخاب راحتی داشته باشید
-                </div>
-                <button type="button" class="btn btn-light text-dark btn-banner">بزن بریم</button>
             </div>
         </div>
     </div>
-    <div class="container">
-        <table class="table table-bordered">
-            <thead>
-                <tr>
-                    <th>
-                        نام مکان
-                    </th>
-                    <th>
-                        توضیحات
-                    </th>
 
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>
-                        @Model.getPlace.Name
-                    </td>
-                    <td>
+    <section id="about">
+        <div class="container">
+            <div class="row first-row">
+
+                <div class="col-xl-6  turistplace-left">
+                    <h1>@Model.getPlace.Name</h1>
+                    <p>
                         @Model.getPlace.Description
-                    </td>
+                    </p>
+                    <h3>
+                        امتیاز :
+                        @for (int i = 0; i < Convert.ToInt32(Model.getPlace.AverageRates); i++)
+                        {
+                            <span class="fa fa-star checked"></span>
+                        }
+                        @while (Model.getPlace.AverageRates < 5)
+                        {
+                            <span class="fa fa-star"></span>
+                            Model.getPlace.AverageRates++;
+                        }
 
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    
+                    </h3>
+
+                </div>
+                <div class="col-xl-6 text-center turistplace-right">
+                    <img src=@Model.getPlace.Image alt="" class="myimage">
+                </div>
+            </div>
+
+            <div class="row second-row">
+                <div class="col-xl-6 text-right comment-box">
+                    <h3 class="text-center">نظر شما</h3>
+                    <form style="margin-top: 30px;" method="post">
+                        <div class="form-group">
+                            <label for="comment">نظر:</label>
+                            <textarea class="form-control" rows="5" id="comment" ></textarea>
+                        </div>
+                        <h5>
+                            امتیاز شما :
+                            <span class="fa fa-star checked"></span>
+                            <span class="fa fa-star checked"></span>
+                            <span class="fa fa-star checked"></span>
+                            <span class="fa fa-star"></span>
+                            <span class="fa fa-star"></span>
+                        </h5>
+                        <button type="submit" class="btn btn-primary">ثبت</button>
+                    </form>
+                </div>
+                <div class="col-xl-6 text-right show-comments">
+                    <h3 class="text-center">نظرات</h3>
+
+                    <div class="row">
+                        <div class="col-xl-12 other-comments">
+                            @for (int i = 0; i < Model.getPlace.Comments.Count; i++)
+                            {
+                                <h6><img src="~/profile.png">@Model.getPlace.Comments[i].Name</h6>
+                                <p>
+                                    @Model.getPlace.Comments[i].Comment
+                                </p>
+                                <h6>
+                                    امتیاز :
+                                    <span class="fa fa-star checked"></span>
+                                    <span class="fa fa-star checked"></span>
+                                    <span class="fa fa-star checked"></span>
+                                    <span class="fa fa-star checked"></span>
+                                    <span class="fa fa-star checked"></span>
+                                </h6>
+                            }
+                        </div>
+
+                    </div>
+
+                </div>
+              
+
+            </div>
+            </div>
+</section>
+
 </div>
+          
+ 
+
+

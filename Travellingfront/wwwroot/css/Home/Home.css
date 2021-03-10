@@ -207,35 +207,29 @@ nav {
     left: 10px;
 }
 
-form.example input[type=text] {
-    padding: 10px;
-    font-size: 17px;
-    border: 1px solid grey;
-    float: left;
-    width: 80%;
-    background: #f1f1f1;
+.search-sec {
+    padding: 2rem;
 }
 
-form.example button {
-    float: left;
-    width: 20%;
-    padding: 10px;
-    background: #2196F3;
-    color: white;
-    font-size: 17px;
-    border: 1px solid grey;
-    border-left: none;
-    cursor: pointer;
+.search-slt {
+    display: block;
+    width: 100%;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #ccc;
+    height: calc(3rem + 2px) !important;
+    border-radius: 0;
 }
 
-    form.example button:hover {
-        background: #0b7dda;
-    }
-
-form.example::after {
-    content: "";
-    clear: both;
-    display: table;
+.wrn-btn {
+    width: 190px;
+    font-size: 16px;
+    font-weight: 400;
+    text-transform: capitalize;
+    height: calc(3rem + 2px) !important;
+    border-radius: 0;
 }
 
 .first-row {

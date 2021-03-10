@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace TravellingCore.Dto.SearchByTuristPlaceName
+namespace TravellingCore.Dto.Country.Get_CountrywithId
 {
-    public class TuristPlaceOutputDto
+    public class Place
     {
-        public int id { get; set; }
+        public int Id { get; set; }
         public string Image { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }

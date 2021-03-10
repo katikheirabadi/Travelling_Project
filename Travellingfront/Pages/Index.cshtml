@@ -3,7 +3,7 @@
 @{
     ViewData["Title"] = "Home page";
 }
-<div class="text-center">
+<div class="text-center" >
     <div class="banner  ">
         <div class="container">
             <div class="banner-text">
@@ -18,18 +18,49 @@
         </div>
     </div>
 
-    <section id="about">
+    <section id="about" >
         <div class="container">
             <div class="row" style="direction: rtl;">
                 <div class="col-xl-12">
                     <h2 class="text-right" style="margin-bottom: 25px;">کجا میخوای بری ؟</h2>
-                    <form form class="example" action="/action_page.php">
-                        <button type="submit"><i class="fa fa-search"></i></button>
-                        <input type="text" placeholder="جستجو ..." name="search">
-
-                    </form>
+                  
+                        <input type="submit" value="جستجو" id="search" style="width:200px;height:48px;background-color:#258abc">
+                        <input type="text" placeholder="جستجو ..." name="search" id="ss">
+                   
                 </div>
             </div>
+            @if (Model.State == true)
+            {
+                <div class="row tp-item-row" id="searchbyname">
+                <div class="col-xl-9 text-right" id="a">
+                    <h3>@Model.ResultPlaceSearch.Name</h3>
+                    <p class="tp-item-p text-right">
+                        @Model.ResultPlaceSearch.Description
+                    </p>
+                    <div class="float-left">
+                        @for (int i = 0; i < Convert.ToInt32(Model.ResultPlaceSearch.AverageRates); i++)
+                        {
+                            <span class="fa fa-star checked"></span>
+                        }
+                        @while (Model.ResultPlaceSearch.AverageRates < 5)
+                        {
+                            <span class="fa fa-star"></span>
+                            Model.ResultPlaceSearch.AverageRates++;
+                        }
+                        <span class="btn btn-info">تعداد کامنت : @Model.ResultPlaceSearch.CommentsNumber</span>
+                        <span class="text-info">تعداد بازدید : @Model.ResultPlaceSearch.Visit</span>
+                    </div>
+                </div>
+                <div class="col-xl-3 text-center">
+                    <div>
+                        <img src=@Model.ResultPlaceSearch.Image class="tp-item-image mx-auto">
+                    </div>
+                </div>
+            </div>
+
+            }
+
+
             <br>
             <div class="row first-row">
                 <div class="col-xl-6  col-md-12 col-sm-12 text-center one-left">
@@ -45,7 +76,6 @@
                     </p>
                 </div>
             </div>
-
             <h4 class="text-right">میدونستی محبوب ترین جاذبه های گردشگری رو میدونستی ؟</h4>
             <div class="row second-row">
                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
@@ -59,7 +89,7 @@
                         </ul>
                         <div class="carousel-inner">
                             <div class="carousel-item active">
-                                <img src="~/pasargad.jpg" alt="china">
+                                <img src=@Model.PopularList[0].Image alt=@Model.PopularList[0].TuristPlaceName>
                                 <div class="carousel-caption">
                                     <a asp-page="./Place" asp-route-id="@Model.PopularList[0].Id">
                                         <h3 class="myslider-title">@Model.PopularList[0].TuristPlaceName</h3>
@@ -77,7 +107,7 @@
                             @for (int i = 1; i < Model.PopularList.Count; i++)
                             {
                                 <div class="carousel-item">
-                                    <img src="~/pasargad.jpg" alt="turkey">
+                                    <img src=@Model.PopularList[i].Image alt=@Model.PopularList[i].TuristPlaceName>
                                     <div class="carousel-caption">
                                         <a asp-page="/Place" asp-route-id="@Model.PopularList[i].Id">
                                             <h3 class="myslider-title">@Model.PopularList[i].TuristPlaceName </h3>
@@ -111,22 +141,23 @@
 
             <h4 class="text-right popular-title myboxes-title">پربازدید ترین مکان های گردشگری</h4>
             <div class="row">
-                @for (int i = 0; i < Model.Newplaces.Turism_Places.Count; i++)
+                @for (int i = 0; i < Model.VisitedList.Count; i++)
                 {
                     if (i < 2)
                     {
                         <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 one-box-cards">
                             <div class="card main-card">
-                                <img src="~/pplace.jpg"
+                                <img src=@Model.VisitedList[i].Image
                                      class="card-img-top"
-                                     alt="@Model.Newplaces.Turism_Places[i].TuristPlaceName" />
+                                     style="width:253px ; height:191px"
+                                     alt="@Model.VisitedList[i].TuristPlaceName" />
                                 <div class="card-body text-right">
-                                    <h5 class="card-title">@Model.Newplaces.Turism_Places[i].TuristPlaceName</h5>
+                                    <h5 class="card-title">@Model.VisitedList[i].TuristPlaceName</h5>
                                     <p class="card-text">
                                     <p>
-                                        @Model.Newplaces.Turism_Places[i].Description
+                                        @*@Model.VisitedList[i].Description*@
                                     </p>
-                                    <a asp-page="/Place" asp-route-id="@Model.Newplaces.Turism_Places[i].Id" class="btn btn-primary">بیشتر بدانید</a>
+                                    <a asp-page="/Place" asp-route-id="@Model.VisitedList[i].Id" class="btn btn-primary">بیشتر بدانید</a>
                                 </div>
                             </div>
                         </div>
@@ -135,16 +166,17 @@
                     {
                         <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 one-box-cards two-box-cards">
                             <div class="card main-card">
-                                <img src="~/pplace.jpg"
+                                <img src=@Model.VisitedList[i].Image
                                      class="card-img-top"
-                                     alt="@Model.Newplaces.Turism_Places[i].TuristPlaceName" />
+                                     style="width:253px ; height:191px"
+                                     alt="@Model.VisitedList[i].TuristPlaceName" />
                                 <div class="card-body text-right">
-                                    <h5 class="card-title">@Model.Newplaces.Turism_Places[i].TuristPlaceName</h5>
+                                    <h5 class="card-title">@Model.VisitedList[i].TuristPlaceName</h5>
                                     <p class="card-text">
                                     <p>
-                                        @Model.Newplaces.Turism_Places[i].Description
+                                        @*@Model.Newplaces.Turism_Places[i].Description*@
                                     </p>
-                                    <a asp-page="/Place" asp-route-id="@Model.Newplaces.Turism_Places[i].Id" class="btn btn-primary">بیشتر بدانید</a>
+                                    <a asp-page="/Place" asp-route-id="@Model.VisitedList[i].Id" class="btn btn-primary">بیشتر بدانید</a>
                                 </div>
                             </div>
                         </div>
@@ -163,8 +195,9 @@
                     {
                         <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 one-box-cards">
                             <div class="card main-card">
-                                <img src="~/pplace.jpg"
+                                <img src=@Model.Newplaces.Turism_Places[i].Image
                                      class="card-img-top"
+                                     style="width:253px ; height:191px"
                                      alt="@Model.Newplaces.Turism_Places[i].TuristPlaceName" />
                                 <div class="card-body text-right">
                                     <h5 class="card-title">@Model.Newplaces.Turism_Places[i].TuristPlaceName</h5>
@@ -181,8 +214,9 @@
                     {
                         <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 one-box-cards two-box-cards">
                             <div class="card main-card">
-                                <img src="~/pplace.jpg"
+                                <img src=@Model.Newplaces.Turism_Places[i].Image
                                      class="card-img-top"
+                                     style="width:253px ; height:191px"
                                      alt="@Model.Newplaces.Turism_Places[i].TuristPlaceName" />
                                 <div class="card-body text-right">
                                     <h5 class="card-title">@Model.Newplaces.Turism_Places[i].TuristPlaceName</h5>
@@ -199,7 +233,7 @@
 
                 }
             </div>
-          
+
 
             <div id="accordion" class="text-right" style="margin-top: 100px;">
                 <div class="card">
@@ -215,7 +249,7 @@
                         <div class="card-body">
                             اولین نکته ای که مسافران و مخصوصا نو سفر ها باید بدانند،
                             نخوردن غذا در رستوران هایی است که در مجاورت مکان های توریستی واقع شده اند. این رستوران ها معمولا بی جهت گران اند
-                            و رستوران هایی هستند که غذاهای اصیل محلی هم سرو نمی کنند. 
+                            و رستوران هایی هستند که غذاهای اصیل محلی هم سرو نمی کنند.
                             به شدت توصیه می شود تحقیقات درستی در خصوص جاهایی که غذاهای محلی سرو می کنند، انجام دهید تا هم پولتان بیخود و بی جهت هدر نرود
                         </div>
                     </div>
@@ -230,10 +264,10 @@
                     </div>
                     <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
                         <div class="card-body">
-                            همراه داشتن مقدار زیادی پول نقد مطمئنا کار عاقلانه ای نیست 
-                            چون در حین سفر خیلی بیشتر از زمانی که در کشور خود هستید، مستعد قرار گرفتن در معرض جیب برها و سارقان می باشید. 
+                            همراه داشتن مقدار زیادی پول نقد مطمئنا کار عاقلانه ای نیست
+                            چون در حین سفر خیلی بیشتر از زمانی که در کشور خود هستید، مستعد قرار گرفتن در معرض جیب برها و سارقان می باشید.
                             اگر به پول نقد نیاز دارید همه ی پول تان را در یک جا نگه ندارید.
-                            سعی کنید پول نقد خود را در جاهای مختلفی از کیف و داخل لباستان جا ساز کنید. 
+                            سعی کنید پول نقد خود را در جاهای مختلفی از کیف و داخل لباستان جا ساز کنید.
                             این کار باعث می شود اگر هدف جیب برها قرار گرفتید، تمام پول تان گم نشود
                         </div>
                     </div>
@@ -249,8 +283,8 @@
                     <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
                         <div class="card-body">
                             همیشه در حین سفر به خاطر داشته باشید مردم هر کشور از آداب لباس پوشیدن خاصی تبعیت می کنند.
-                            در حالیکه در کشور های اروپایی برای پوشیدن لباس های کوتاه مشکلی وجود ندارد، در کشورهای اسلامی اینکار ممکن است شما را به دردسر بیندازد. 
-                            همانطور که در ضرب المثل معروف "خواهی نشوی رسوا همرنگ جماعت شو" آمده، عاقلانه است که از آداب و رسوم محلی پیروی کنید و کارهایی که به نظر محلی ها بی احترامی تلقی می شود را انجام ندهید. 
+                            در حالیکه در کشور های اروپایی برای پوشیدن لباس های کوتاه مشکلی وجود ندارد، در کشورهای اسلامی اینکار ممکن است شما را به دردسر بیندازد.
+                            همانطور که در ضرب المثل معروف "خواهی نشوی رسوا همرنگ جماعت شو" آمده، عاقلانه است که از آداب و رسوم محلی پیروی کنید و کارهایی که به نظر محلی ها بی احترامی تلقی می شود را انجام ندهید.
                             خانم ها بهتر است همیشه یک روسری بلند به همراه داشته باشند چون می تواند در موقعیت های زیادی مورد استفاده قرار گیرد
                         </div>
                     </div>
@@ -262,6 +296,21 @@
         <button class="feedback btn btn-info">مقایسه جاذبه های گردشگری</button>
     </div>
 
-
-
 </div>
+@section scripts{
+    <script type="text/javascript">
+        $(function () {
+            alert("به سایت ما خوش آمدید");
+            $("#search").click(function () {
+                var input = $("#ss").val();
+                $.get("/Travelling/api/Search/SearchbyName/TuristPlaceName=" + input, function (data, status) {
+                    console.log("niktaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+                })
+                console.log(input);
+            });
+           
+            
+
+        });
+    </script>
+ }

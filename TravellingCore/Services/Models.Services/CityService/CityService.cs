@@ -20,14 +20,17 @@ namespace TravellingCore.Services.Models.Services.CityService
     {
         private readonly IRepository<City> CityRepository;
         private readonly IRepository<Country> CountryRepository;
+        private readonly IRepository<TuristPlace> placeRepository;
         private readonly IMapper mapper;
 
         public CityService(IRepository<City> CityRepository
                            ,IRepository<Country> CountryRepository
+                           ,IRepository<TuristPlace> placeRepository
                            ,IMapper mapper)
         {
             this.CityRepository = CityRepository;
             this.CountryRepository = CountryRepository;
+            this.placeRepository = placeRepository;
             this.mapper = mapper;
         }
         private async Task<Country> FindCountry(string Country)
@@ -132,22 +135,26 @@ namespace TravellingCore.Services.Models.Services.CityService
          */
         public Task<GetCityByIdOutputDto> GetcityById(int id)
         {
-            var mycity = CityRepository.GetQuery()
-                                       .Include(c => c.TuristPlaces)
-                                       .Where(c => c.Id == id)
-                                       .FirstOrDefault();
-
-            if (mycity==null)
+            var places = placeRepository.GetQuery()
+                                        .Include(p => p.City)
+                                        .Include(p => p.Comments)
+                                        .Include(p => p.Rates)
+                                        .Where(p => p.City.Id == id)
+                                        .ToList();
+            if (places == null)
             {
                 throw new KeyNotFoundException("Not found any city with this id");
             }
 
             var result = new GetCityByIdOutputDto();
-            result.Name = mycity.Name;
-            result.Places = mycity.TuristPlaces.Select(p => new Place() { Id = p.Id,
+            result.Name = places.Select(p=> p.City.Name).FirstOrDefault();
+            result.Places = places.Select(p => new Place() { Id = p.Id,
                                                                          Description = p.Description,
                                                                          Image = p.Image,
-                                                                         Name = p.Name })
+                                                                         Name = p.Name,
+                                                                         Comments = p.Comments.Count,
+                                                                         AverageRates = p.Rates.Average(x=>x.UserRate)
+                                                                         })
                                                .ToList();
             return Task.Run(()=>result);                                        
                                                      

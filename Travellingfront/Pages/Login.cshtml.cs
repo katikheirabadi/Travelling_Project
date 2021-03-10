@@ -19,6 +19,10 @@ namespace Travellingfront.Pages
         }
         [BindProperty]
         public LoginInputDto NewUserLogin { get; set; }
+
+        [BindProperty]
+        public string Token { get; set; }
+
         [BindProperty]
         public bool State { get; set; }
         public async Task<IActionResult> OnPost()
@@ -27,7 +31,7 @@ namespace Travellingfront.Pages
             {
                 if (!ModelState.IsValid)
                     return Page();
-                await loginServicecs.AddLogin(NewUserLogin);
+                Token =await loginServicecs.AddLogin(NewUserLogin);
                 State = true;
                 return RedirectToPage("/Index");
             }

@@ -1,0 +1,60 @@
+﻿.first-row {
+    margin-top: 50px;
+    margin-bottom: 50px;
+    margin-left:50px;
+}
+
+.turistplace-left, .turistplace-left h3 {
+    text-align: right;
+    direction: rtl;
+    background-color: rgba(23, 162, 184, 0.1);
+    border-radius: 10px;
+}
+
+    .turistplace-left p {
+        margin-top: 10px;
+        direction: rtl;
+        text-align: justify;
+    }
+
+.turistplace-right img {
+    border-radius: 10px;
+}
+
+.checked {
+    color: orange;
+}
+
+@media (max-width:1200px) {
+    .turistplace-right img {
+        margin-top: 20px;
+    }
+
+    .show-comments {
+        margin-top: 50px;
+    }
+}
+
+.second-row {
+    margin-top: 100px;
+}
+
+.comment-box {
+    direction: rtl;
+}
+
+.show-comments {
+    direction: rtl;
+}
+
+    .show-comments p {
+        text-align: justify;
+        width: 90%;
+    }
+
+.other-comments {
+    margin-top: 20px;
+}
+.myimage{
+    width:550px;
+}

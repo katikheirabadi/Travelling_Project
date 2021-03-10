@@ -7,6 +7,7 @@ using TravellingCore.Dto.Category.DeleteCategory;
 using TravellingCore.Dto.Category.GetallPlaceCategory;
 using TravellingCore.Dto.Category.GetAllWithId;
 using TravellingCore.Dto.Category.GetCategory;
+using TravellingCore.Dto.Country.Get_CountrywithId;
 
 namespace TravellingCore.Services.Models.Services.CategoryServise
 {

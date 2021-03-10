@@ -1,0 +1,30 @@
+﻿.tp-item-image {
+    border-radius: 10px;
+    width:270px;
+    height :263px;
+}
+
+.tp-item-p {
+    text-align: justify;
+}
+
+.tp-item-row {
+    direction: ltr;
+    background-color: rgba(23, 162, 184, 0.1);
+    border-radius: 10px;
+    margin-top: 50px;
+}
+
+.checked {
+    color: orange;
+}
+
+@media (max-width:1200px) {
+    .tp-item-image {
+        margin-top: 20px;
+    }
+}
+.myb{
+    background-image:url('../../search.jpg');
+    font-size:80px;
+}

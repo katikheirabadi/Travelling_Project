@@ -113,7 +113,14 @@ namespace TravellingCore.Mapp
 
 
             CreateMap<TuristPlace, TuristPlaceOutputDto>()
-                .ForMember(o => o.TuristPlaceId, x => x.MapFrom(p => p.Id));
+                .ForMember(o => o.id, x => x.MapFrom(p => p.Id))
+                .ForMember(o => o.Image, x => x.MapFrom(p => p.Image))
+                .ForMember(o => o.Name, x => x.MapFrom(p => p.Name))
+                .ForMember(o => o.CommentsNumber, x => x.MapFrom(p => p.Comments.Count))
+                .ForMember(o => o.AverageRates, x => x.MapFrom(p => p.Rates.Average(r => r.UserRate)))
+                .ForMember(o => o.Description, x => x.MapFrom(p => p.Description))
+                .ForMember(o => o.Visit, x => x.MapFrom(p => p.Visit));
+               
 
 
             CreateMap<TuristPlace, VisitOutputDto>()
@@ -134,7 +141,13 @@ namespace TravellingCore.Mapp
                .ForMember(o => o.City, x => x.MapFrom(p => p.City.Name));
 
             CreateMap<TuristPlace, FavoroteOutputDto>()
-                .ForMember(o => o.TuristPlaceId, x => x.MapFrom(p => p.Id));
+                .ForMember(o => o.id, x => x.MapFrom(p => p.Id))
+                .ForMember(o => o.Image, x => x.MapFrom(p => p.Image))
+                .ForMember(o => o.Name, x => x.MapFrom(p => p.Name))
+                .ForMember(o => o.Description, x => x.MapFrom(p => p.Description))
+                .ForMember(o => o.AverageRates, x => x.MapFrom(p => p.Rates.Average(x=>x.UserRate)))
+                .ForMember(o => o.CommentsNumber, x => x.MapFrom(p => p.Comments.Count))
+                .ForMember(o => o.Visit, x => x.MapFrom(p => p.Visit));
 
             CreateMap<TuristPlace,NewInputDTO>()
                 .ForMember(o => o.Description, x => x.MapFrom(o => o.Description))

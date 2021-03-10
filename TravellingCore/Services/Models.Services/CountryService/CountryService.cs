@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using TravellingCore.ContextRepositoryInterface;
 using TravellingCore.Dto.Country.AddCountry;
 using TravellingCore.Dto.Country.DeleteCountry;
+using TravellingCore.Dto.Country.Get_CountrywithId;
 using TravellingCore.Dto.Country.GetAllCountries;
 using TravellingCore.Dto.Country.GetCountry;
 using TravellingCore.Exceptions;
@@ -100,6 +101,35 @@ namespace TravellingCore.Services.Models.Services.CountryService
         {
            var countries = await CountryRepository.GetAll();
             return countries.Select(c => new GetAllcountries() { Id = c.Id, Name = c.Name }).ToList();
+        }
+        public async Task<GetCountryWithIdOutputDto> GetCountryWithId(int id)
+        {
+            var result = new GetCountryWithIdOutputDto();
+            var country = CountryRepository.GetQuery().Include(c => c.Cities)
+                                                      .Include(c => c.TuristPlaces)
+                                                      .ThenInclude(c=>c.Rates)
+                                                      .FirstOrDefault(c => c.Id == id);
+
+            //var finalcountry = CountryRepository.GetQuery().Include(c => c.Cities)
+            //                                          .Include(c => c.TuristPlaces)
+            //                                          .FirstOrDefault(c => c.Id == id);
+
+            result.Id = id;
+            result.Image = country.Image;
+            result.Name = country.Name;
+            result.Places = country.TuristPlaces.Select(p => new Place()
+                                                        {
+                                                            Id = p.Id,
+                                                            Name = p.Name,
+                                                            AverageRates = p.Rates.Average(x => x.UserRate),
+                                                            CommentsNumber =0 /*p.Comments.Count*/,
+                                                            Description = p.Description,
+                                                            Image = p.Image,
+                                                            Visit = p.Visit
+                                                        }).ToList();
+            result.Cities =  country.Cities.Select(c => new CityDto() { Id = c.Id, Name = c.Name }).ToList();
+            return result;
+
         }
 
 

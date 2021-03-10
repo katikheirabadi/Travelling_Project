@@ -10,5 +10,6 @@ namespace TravellingCore.Dto.Popular
         public string TuristPlaceName { get; set; }
         public double Rate { get; set; }
         public int Visit { get; set; }
+        public string Image { get; set; }
     }
 }

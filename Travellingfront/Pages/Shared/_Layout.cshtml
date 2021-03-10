@@ -23,7 +23,7 @@
                 <div class="collapse navbar-collapse" id="collapsibleNavbar">
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="#">درباره ما</a>
+                            <a class="nav-link" href="#">Admins</a>
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
@@ -36,15 +36,15 @@
                             </div>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">ایران</a>
+                            <a class="nav-link" asp-page="/Country" asp-route-id="1">ایران</a>
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
                                 جاذبه های گردشگری
                             </a>
                             <div class="dropdown-menu">
-                                <a class="dropdown-item" href="#">پربازدیدترین ها</a>
-                                <a class="dropdown-item" href="#">محبوب ترین ها</a>
+                                <a class="dropdown-item" asp-page="/Category" asp-route-id="1">تاریخی</a>
+                                <a class="dropdown-item" asp-page="/Category" asp-route-id="2">تفریحی</a>
                             </div>
                         </li>
                         <li class="nav-item">

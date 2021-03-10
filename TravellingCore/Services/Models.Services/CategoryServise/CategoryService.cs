@@ -135,14 +135,13 @@ namespace TravellingCore.Services.Models.Services.CategoryServise
             result.Name = mycategory.Name;
             result.Places = TuristPlaceCategory.GetQuery().Include(tc => tc.Categories)
                                                           .Include(tc => tc.TuristPlaces)
-                                                          .ThenInclude(p => p.Comments)
+                                                          .ThenInclude(p => p.Rates)
                                                           .Where(tc => tc.Categories.Id == id)
                                                           .Select(tc => tc.TuristPlaces)
-                                                          .Include(p => p.Rates)
                                                           .Select(p => new Place()
                                                           {
                                                               AverageRates = p.Rates.Average(x => x.UserRate),
-                                                              CommentsNumber = p.Comments.Count,
+                                                              CommentsNumber = 0,
                                                               Name = p.Name,
                                                               Image = p.Image,
                                                               Description = p.Description,

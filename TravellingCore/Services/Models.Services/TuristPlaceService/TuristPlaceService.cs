@@ -19,6 +19,7 @@ using TravellingCore.Dto.View;
 using TravellingCore.Dto.Visit;
 using TravellingCore.Model;
 using TravellingCore.Services.Models.Services.TuristPlaceService;
+using TravellingCore.Dto.TuristPlaces.GetPlaceWithId;
 
 namespace TravellingCore.ModelsServiceRepository.Models.Methods
 {
@@ -197,6 +198,7 @@ namespace TravellingCore.ModelsServiceRepository.Models.Methods
                                                ,TuristPlaceName = x.Name
                                                ,Visit = x.Visit
                                                ,Id = x.Id
+                                               ,Image = x.Image
                                                 })
                                                .OrderByDescending(z => z.Rate)
                                                .Take(4)
@@ -207,10 +209,25 @@ namespace TravellingCore.ModelsServiceRepository.Models.Methods
          make for razor
          */
 
-        public async Task<GetPlaceOutputDto> GetByid(int id)
+        public async Task<GetplaceWithIdOutputDto> GetByid(int id)
         {
-            var results = await TuristPlaceRepository.GetAll();
-            return results.Where(p => p.Id == id).Select(p => mapper.Map<GetPlaceOutputDto>(p)).FirstOrDefault();
+
+            var place = TuristPlaceRepository.GetQuery().Include(p => p.Comments)
+                                                        .Include(p => p.Rates)
+                                                        .Include(p => p.Comments)
+                                                        .ThenInclude(c => c.User)
+                                                        .FirstOrDefault(p => p.Id == id);
+            var endplace = new GetplaceWithIdOutputDto();
+            endplace.Id = id;
+            endplace.Image = place.Image;
+            endplace.Name = place.Name;
+            endplace.Visit = place.Visit;
+            endplace.Description = place.Description;
+            endplace.AverageRates = place.Rates.Average(x => x.UserRate);
+            endplace.Comments = place.Comments.Select(c => new CommentDto() { Comment = c.Text, Name = c.User.FullName }).ToList();
+
+            return endplace;
+
         }
     }
 }

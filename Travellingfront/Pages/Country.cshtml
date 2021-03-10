@@ -1,4 +1,71 @@
 ﻿@page
 @model Travellingfront.Pages.CountryModel
 @{
+    ViewData["Title"] = "Country";
 }
+<head>
+    <link href="~/css/Country/Country.css" rel="stylesheet" />
+</head>
+<div class="text-center">
+    <div class="banner" style="background-image:url(@Model.Country.Image)">
+        <div class="container">
+            <div class="banner-text">
+                <div class="banner-heading">
+                    جاذبه های گردشگری @Model.Country.Name
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+
+        <div class="row text-right" style="direction: rtl;">
+            <ul class="nav nav-pills nav-fill">
+                <li class="nav-item">
+                    <a class="nav-link active" href="#">همه شهر ها</a>
+                </li>
+                @for (int i = 0; i < Model.Country.Cities.Count; i++)
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" asp-page="/City" asp-route-id="@Model.Country.Cities[i].Id">@Model.Country.Cities[i].Name</a>
+                    </li>
+                }
+            </ul>
+        </div>
+
+
+        @for (int i = 0; i < Model.Country.Places.Count; i++)
+        {
+            <div class="row country-item-row">
+                <div class="col-xl-9 text-right">
+                    <h3>
+                    @Model.Country.Places[i].Name
+                    </h3>
+                    <p class="country-item-p">
+                        @Model.Country.Places[i].Description
+                    </p>
+                    <a asp-page="/Place" asp-route-id="@Model.Country.Places[i].Id" class="btn btn-info">تعداد کامنت
+                    : @Model.Country.Places[i].CommentsNumber
+                       
+                    </a>
+                    @for (int k = 0; k < Convert.ToInt32(Model.Country.Places[i].AverageRates); k++)
+                    {
+                        <span class="fa fa-star checked"></span>
+                    }
+                    @while (Model.Country.Places[i].AverageRates < 5)
+                    {
+                        <span class="fa fa-star"></span>
+                        Model.Country.Places[i].AverageRates++;
+                    }
+                </div>
+                <div class="col-xl-3 text-center">
+                    <div>
+                        <img src='@Model.Country.Places[i].Image' class="country-item-image mx-auto myimage">
+                    </div>
+                </div>
+            </div>
+        }
+
+
+    </div>
+</div>
