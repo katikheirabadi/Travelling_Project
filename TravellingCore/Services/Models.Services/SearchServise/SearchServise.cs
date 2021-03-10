@@ -103,12 +103,12 @@ namespace TravellingCore.Services.Models.Services.SearchServise
                                               .ToListAsync();
             return result;
         }
-        public async Task<TuristPlaceOutputDto> SearchByName(TuristPlaceInputDto turistPlace)
+        public async Task<TuristPlaceOutputDto> SearchByName(string turistPlace)
         {
             var place = await TuristPlaceRepository.GetQuery()
                                                    .Include(p=>p.Comments)
                                                    .Include(p=>p.Rates)
-                                                   .FirstOrDefaultAsync(o => o.Name .Contains(turistPlace.TuristPlaceName));
+                                                   .FirstOrDefaultAsync(o => o.Name .Contains(turistPlace));
             if (place == null)
                 throw new KeyNotFoundException("همچین مکانی یافت نشد");
 

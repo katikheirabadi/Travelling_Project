@@ -16,6 +16,6 @@ namespace TravellingCore.Services.Models.Services.SearchServise
         public Task<List<CategoryOutputDto>> SearchByCategory(CategoryInputDto category);
         public Task<List<CountryOutPutDto>> SearchByCountry(CountryInputDto country);
         public Task<List<CityPlaceOutputDTO>> SearchByCity(CityNameInputDTO citynameinputdto);
-        public Task<TuristPlaceOutputDto> SearchByName(TuristPlaceInputDto turistPlace);
+        public Task<TuristPlaceOutputDto> SearchByName(string turistPlace);
     }
 }

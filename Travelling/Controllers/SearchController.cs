@@ -29,7 +29,7 @@ namespace Travelling.Controllers
             this.searchService = searchservise;
         }
         [HttpGet]
-        public async Task<IActionResult> SearchbyName([FromBody] TuristPlaceInputDto turistPlace)
+        public async Task<IActionResult> SearchbyName([FromQuery] string turistPlace)
         {
             if (!ModelState.IsValid)
                 return BadRequest();

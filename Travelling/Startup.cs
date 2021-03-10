@@ -44,7 +44,17 @@ namespace Travelling
             services.AddDependency();
             services.AddSwaggerGen(c => c.SwaggerDoc("Travelling" , new Microsoft.OpenApi.Models.OpenApiInfo {Title = "Travelling" ,Version = "Travelling_Priject" }));
             // services.AddSwaggerGen(c=>c.SwaggerDoc() )
-           
+            services.AddCors(options =>
+            {
+                options.AddDefaultPolicy(builder =>
+                {
+                    builder.AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader();
+
+                }
+              );
+            });
 
         }
 
@@ -60,7 +70,7 @@ namespace Travelling
             app.UseHttpsRedirection();
 
             app.UseRouting();
-            
+            app.UseCors();
 
             app.UseAuthorization();
             app.UseMiddleware<CustomExceptionHandlerMiddleware>();

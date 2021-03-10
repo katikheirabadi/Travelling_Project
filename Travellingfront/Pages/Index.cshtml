@@ -13,53 +13,48 @@
                 <div class="banner-sub-heading">
                     با ما می‌توانید اطلاعات جامعی از مکان های گردشگری داخلی و خارجی بدست آورید و انتخاب راحتی داشته باشید
                 </div>
-                <button type="button" class="btn btn-light text-dark btn-banner">بزن بریم</button>
             </div>
         </div>
     </div>
 
     <section id="about" >
         <div class="container">
+
             <div class="row" style="direction: rtl;">
                 <div class="col-xl-12">
                     <h2 class="text-right" style="margin-bottom: 25px;">کجا میخوای بری ؟</h2>
-                  
-                        <input type="submit" value="جستجو" id="search" style="width:200px;height:48px;background-color:#258abc">
-                        <input type="text" placeholder="جستجو ..." name="search" id="ss">
-                   
+                        <input type="submit" value="جستجو" id="search" style="width:230px;height:48px;background-color:#17a2b8;border:0px;">
+                        <input type="text" placeholder="جستجو ..." name="search" id="ss" style="width:664px;height:48px">
+                        <input type="submit" value="بعدی" id="next" style="height:48px;width:200px;border:0px;background-color:#17a2b8;" />
                 </div>
             </div>
-            @if (Model.State == true)
-            {
-                <div class="row tp-item-row" id="searchbyname">
+            <br />  
+            <br />
+          
+                <div class="row tp-item-row" id="searchbyname" style="background-color:rgba(23, 162, 184, 0.1);">
                 <div class="col-xl-9 text-right" id="a">
-                    <h3>@Model.ResultPlaceSearch.Name</h3>
-                    <p class="tp-item-p text-right">
-                        @Model.ResultPlaceSearch.Description
+                    <h3 id="name"></h3>
+                    <p class="tp-item-p text-right" id="description">  
                     </p>
                     <div class="float-left">
-                        @for (int i = 0; i < Convert.ToInt32(Model.ResultPlaceSearch.AverageRates); i++)
-                        {
-                            <span class="fa fa-star checked"></span>
-                        }
-                        @while (Model.ResultPlaceSearch.AverageRates < 5)
-                        {
-                            <span class="fa fa-star"></span>
-                            Model.ResultPlaceSearch.AverageRates++;
-                        }
-                        <span class="btn btn-info">تعداد کامنت : @Model.ResultPlaceSearch.CommentsNumber</span>
-                        <span class="text-info">تعداد بازدید : @Model.ResultPlaceSearch.Visit</span>
+                          <span class="fa fa-star " id="1"></span>
+                          <span class="fa fa-star " id="2"></span>
+                          <span class="fa fa-star " id="3"></span>
+                          <span class="fa fa-star " id="4"></span>
+                          <span class="fa fa-star " id="5"></span>
+                      
+                        <span class="btn btn-info" >تعداد کامنت :<i id="comment"></i></span>
+                        <span class="text-info" >تعداد بازدید :<i id="visit"></i></span>
                     </div>
                 </div>
                 <div class="col-xl-3 text-center">
                     <div>
-                        <img src=@Model.ResultPlaceSearch.Image class="tp-item-image mx-auto">
+                        <img src="" class="tp-item-image mx-auto" style="width:298px;height:217px;" id="image">
                     </div>
                 </div>
             </div>
 
-            }
-
+            
 
             <br>
             <div class="row first-row">
@@ -301,12 +296,51 @@
     <script type="text/javascript">
         $(function () {
             alert("به سایت ما خوش آمدید");
+            $("#searchbyname").hide();
             $("#search").click(function () {
-                var input = $("#ss").val();
-                $.get("/Travelling/api/Search/SearchbyName/TuristPlaceName=" + input, function (data, status) {
-                    console.log("niktaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+                $.get("https://localhost:44375/api/Search/SearchbyName", { turistPlace: $("#ss").val() }, function (data, status) {
+                    console.log(data);
+                    $("#searchbyname").show();
+                    $("#name").text(data.name);
+                    $("#description").text(data.description);
+                    var count = data.averageRates;
+                    if (count != 0)
+                    {
+                        $("#1").addClass("checked");
+                        count--;
+                    }
+                    if (count != 0)
+                    {
+                        $("#2").addClass("checked");
+                        count--;
+                    }
+                    if (count != 0) {
+                        $("#3").addClass("checked");
+                        count--;
+                    }
+                    if (count != 0) {
+                        $("#4").addClass("checked");
+                        count--;
+                    }
+                    if (count != 0) {
+                        $("#5").addClass("checked");
+                        count--;
+                    }
+                    
+                    var comment =  data.commentsNumber;
+                    $("#comment").text(comment);
+
+                    var visit =  data.visit;
+                    $("#visit").text(visit);
+
+                    $("#image").attr("src", data.image);
+
+                });
+
+                $("#next").click(function () {
+    
+                   $("#searchbyname").hide();
                 })
-                console.log(input);
             });
            
             
