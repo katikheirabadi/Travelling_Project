@@ -64,7 +64,7 @@ namespace Travelling.Controllers
             return Ok(reasult);
         }
         [HttpGet]
-        public async Task<IActionResult> SearchByFilter([FromBody] FilterInputDTO filterInputDTO)
+        public async Task<IActionResult> SearchByFilter([FromQuery] FilterInputDTO filterInputDTO)
         {
             if (!ModelState.IsValid)
                 return BadRequest();

@@ -4,6 +4,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TravellingCore.Dto.City.AddCity;
 using TravellingCore.Dto.City.DeleteCity;
+using TravellingCore.Dto.City.GetAll;
 using TravellingCore.Dto.City.GetCity;
 using TravellingCore.Dto.City.GetCitybyId;
 using TravellingCore.Dto.City.GetCountryCities;
@@ -18,5 +19,7 @@ namespace TravellingCore.Services.Models.Services.CityService
         public Task<List<GetCityOutputDto>> GetCountryCities(GetCountryCitiesInputDto getinput);
         public Task<string> DeleteCity(DeleteCityInput deleteinput);
         public Task<GetCityByIdOutputDto> GetcityById(int id);
+        public Task<List<GetAllOutputDto>> GetAll();
+        public Task DeleteById(int id);
     }
 }

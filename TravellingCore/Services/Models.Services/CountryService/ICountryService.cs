@@ -18,5 +18,6 @@ namespace TravellingCore.Services.Models.Services.CountryService
         public  Task<string> DeleteCountry(DeleteCountryInputDto deleteinput);
         public Task<List<GetAllcountries>> GetAll();
         public Task<GetCountryWithIdOutputDto> GetCountryWithId(int id);
+        public Task DeletById(int id);
     }
 }

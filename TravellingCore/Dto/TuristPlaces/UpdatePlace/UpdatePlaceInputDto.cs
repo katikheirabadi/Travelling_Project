@@ -7,9 +7,8 @@ namespace TravellingCore.Dto.TuristPlace.UpdatePlace
 {
     public class UpdatePlaceInputDto
     {
-        [Required(ErrorMessage ="this field is empty ")]
         public string Place { get; set; }
-        [Required(ErrorMessage ="this field is empty ")]
         public string NewDescription { get; set; }
+        public string NewImage { get; set; }
     }
 }

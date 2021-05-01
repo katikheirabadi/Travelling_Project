@@ -13,6 +13,7 @@ using AutoMapper;
 using TravellingCore.Dto.City.DeleteCity;
 using TravellingCore.Dto.City.GetCountryCities;
 using TravellingCore.Dto.City.GetCitybyId;
+using TravellingCore.Dto.City.GetAll;
 
 namespace TravellingCore.Services.Models.Services.CityService
 {
@@ -158,6 +159,15 @@ namespace TravellingCore.Services.Models.Services.CityService
                                                .ToList();
             return Task.Run(()=>result);                                        
                                                      
+        }
+        public Task<List<GetAllOutputDto>> GetAll()
+        {
+            return CityRepository.GetQuery().Select(c => new GetAllOutputDto() { Id = c.Id, Name = c.Name }).ToListAsync();
+        }
+        public async Task DeleteById(int id)
+        {
+            CityRepository.Delete(id);
+            await CityRepository.Save();
         }
     }
 }

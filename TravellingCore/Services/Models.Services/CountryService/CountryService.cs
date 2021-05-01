@@ -20,12 +20,15 @@ namespace TravellingCore.Services.Models.Services.CountryService
     {
         private readonly IRepository<Country> CountryRepository;
         private readonly IMapper mapper;
+        private readonly IRepository<TuristPlace> placereposirory;
 
         public CountryService(IRepository<Country> CountryRepository
-                              ,IMapper mapper)
+                              ,IMapper mapper
+                              ,IRepository<TuristPlace> placereposirory)
         {
             this.CountryRepository = CountryRepository;
             this.mapper = mapper;
+            this.placereposirory = placereposirory;
         }
         private async Task IsReapited(Country country)
         {
@@ -105,33 +108,36 @@ namespace TravellingCore.Services.Models.Services.CountryService
         public async Task<GetCountryWithIdOutputDto> GetCountryWithId(int id)
         {
             var result = new GetCountryWithIdOutputDto();
-            var country = CountryRepository.GetQuery().Include(c => c.Cities)
-                                                      .Include(c => c.TuristPlaces)
-                                                      .ThenInclude(c=>c.Rates)
-                                                      .FirstOrDefault(c => c.Id == id);
+            var country = CountryRepository.GetQuery().Include(C=>C.Cities).Include(C=>C.TuristPlaces).FirstOrDefault(c => c.Id == id);
 
-            //var finalcountry = CountryRepository.GetQuery().Include(c => c.Cities)
-            //                                          .Include(c => c.TuristPlaces)
-            //                                          .FirstOrDefault(c => c.Id == id);
 
             result.Id = id;
             result.Image = country.Image;
             result.Name = country.Name;
-            result.Places = country.TuristPlaces.Select(p => new Place()
-                                                        {
-                                                            Id = p.Id,
-                                                            Name = p.Name,
-                                                            AverageRates = p.Rates.Average(x => x.UserRate),
-                                                            CommentsNumber =0 /*p.Comments.Count*/,
-                                                            Description = p.Description,
-                                                            Image = p.Image,
-                                                            Visit = p.Visit
-                                                        }).ToList();
+            result.Places = placereposirory.GetQuery().Include(p => p.Country)
+                                                      .Include(p => p.Comments)
+                                                      .Include(p => p.City)
+                                                      .Include(p => p.Rates)
+                                                      .Where(p => p.Country.Id == id)
+                                                      .Select(p => new Place()
+                                                      {
+                                                          Id = p.Id,
+                                                          AverageRates = p.Rates.Average(X => X.UserRate),
+                                                          CommentsNumber = p.Comments.Count,
+                                                          Description = p.Description,
+                                                          Image = p.Image,
+                                                          Name =p.Name,
+                                                          Visit = p.Visit
+                                                      }).ToList();
             result.Cities =  country.Cities.Select(c => new CityDto() { Id = c.Id, Name = c.Name }).ToList();
             return result;
 
         }
+        public async Task DeletById(int id)
+        {
+            CountryRepository.Delete(id);
+            await CountryRepository.Save();
 
-
+        }
     }
 }

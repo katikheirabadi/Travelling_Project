@@ -30,24 +30,70 @@ namespace TravellingCore.Services.Models.Services.SearchServise
             this.TuristPlaceRepository = TuristPlaceRepository;
             this.TuristPlaceCategoryRepository = TuristPlaceCategoryRepository;
         }
-        public async Task<FilterOutputDTO> SearchByFilter(FilterInputDTO filterInputDTO)
+        public async Task<List<FilterOutputDetailDTO>> SearchByFilter(FilterInputDTO filterInputDTO)
         {
-            var first = TuristPlaceRepository.GetQuery()
+            var result = new List<FilterOutputDetailDTO>();
+            var city = new List<FilterOutputDetailDTO>();
+            var country = new List<FilterOutputDetailDTO>();
+            if (filterInputDTO.CityId!=null)
+            {
+                 city = TuristPlaceRepository.GetQuery()
+                                             .Include(x => x.City)
+                                             .Include(x=>x.Comments)
+                                             .Include(x=>x.Rates)
+                                             .Where(y => y.City.Id == filterInputDTO.CityId)
+                                             .Select(p=> mapper.Map<FilterOutputDetailDTO>(p))
+                                             .ToList();
+               
+            }
+            if (filterInputDTO.CountryId!=null)
+            {
+               country = TuristPlaceRepository.GetQuery()
+                                             .Include(x => x.Country)
+                                             .Include(x => x.Comments)
+                                             .Include(x => x.Rates)
+                                             .Where(y => y.Country.Id == filterInputDTO.CountryId)
+                                             .Select(p => mapper.Map<FilterOutputDetailDTO>(p))
+                                             .ToList();
+              
+            }
+            if (country.Count!=0)
+            {
+
+                if (city.Count != 0)
+                {
+                    foreach (var item in country)
+                    {
+                        foreach (var item2  in city)
+                        {
+                            if (item.id == item2.id)
+                            {
+                                result.Add(item);
+                            }
+                           
+                        }
+                    }
+                }
+                else
+                    result = country;
+            }
+            else 
+            if (city.Count!=0)
+            {
+                result = city;
+            }
+         
+            return result;
+            /*var first = TuristPlaceRepository.GetQuery()
                                              .Include(x => x.Country)
                                              .ThenInclude(x => x.TuristPlaces)
-                                             .Where(y => y.Country.Name.Contains(filterInputDTO.Country)).ToList();
+                                             .Where(y => y.Country.Id == filterInputDTO.CountryId).ToList();
 
             var second = TuristPlaceRepository.GetQuery()
                                               .Include(x => x.City)
                                               .ThenInclude(x => x.TuristPlaces)
-                                              .Where(x => x.City.Name.Contains(filterInputDTO.City)).ToList();
+                                              .Where(x => x.City.Id == filterInputDTO.CityId).ToList();
 
-            //var third = TuristPlaceCategoryRepository.GetQuery()
-            //                                         .Include(x => x.Categories)
-            //                                         .Include(x => x.TuristPlaces)
-            //                                         .Where(x => x.Categories.Name.Contains(filterInputDTO.Category))
-            //                                         .Select(x => x.TuristPlaces)
-            //                                         .ToList();
 
 
             var finall = (from a in first join b in second on a.Id equals b.Id select b).ToList();
@@ -57,7 +103,7 @@ namespace TravellingCore.Services.Models.Services.SearchServise
             {
                 Places = result.ToArray()
             };
-            return end;
+            return end;*/
 
         }
         public Task<List<CategoryOutputDto>> SearchByCategory(CategoryInputDto category)

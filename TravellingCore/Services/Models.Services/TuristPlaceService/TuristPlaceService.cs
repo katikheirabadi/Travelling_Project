@@ -20,6 +20,7 @@ using TravellingCore.Dto.Visit;
 using TravellingCore.Model;
 using TravellingCore.Services.Models.Services.TuristPlaceService;
 using TravellingCore.Dto.TuristPlaces.GetPlaceWithId;
+using TravellingCore.Dto.TuristPlaces.GetAll;
 
 namespace TravellingCore.ModelsServiceRepository.Models.Methods
 {
@@ -50,17 +51,17 @@ namespace TravellingCore.ModelsServiceRepository.Models.Methods
             var countries = await CountryRepository.GetAll();
             var findcountry = countries.Find(c => c.Name == country);
             if (findcountry == null)
-                throw new KeyNotFoundException("not found this country");
+                throw new KeyNotFoundException("کشوری یافت نشد");
             return findcountry;
         }
         private async Task<City> FindCity(string city)
         {
             var Cities = await CityRepository.GetAll();
             if (Cities == null)
-                throw new KeyNotFoundException("Not Found any City");
+                throw new KeyNotFoundException("شهری وجود ندارد");
             var findcity = Cities.FirstOrDefault(c => c.Name == city);
             if (findcity == null)
-                throw new KeyNotFoundException("Not Found This city");
+                throw new KeyNotFoundException("این شهر یافت نشد");
             return findcity;
 
         }
@@ -91,7 +92,7 @@ namespace TravellingCore.ModelsServiceRepository.Models.Methods
                                                           .FirstOrDefault(c => c.Country.Name == findcountry.Name &&
                                                                               c.Name == findcity.Name);
             if (cityofcountry == null)
-                throw new KeyNotFoundException("this city is not in this country");
+                throw new KeyNotFoundException("این شهر برای این کشور نیست");
 
             var newplace = new TuristPlace()
             {
@@ -145,7 +146,9 @@ namespace TravellingCore.ModelsServiceRepository.Models.Methods
         public async Task<string> UpdatePlace(UpdatePlaceInputDto updateinput)
         {
             var findplace = await Findplace(updateinput.Place);
+
             findplace.Description = updateinput.NewDescription;
+            findplace.Image = updateinput.NewImage;
 
             var result = TuristPlaceRepository.Update(findplace);
             await TuristPlaceRepository.Save();
@@ -228,6 +231,18 @@ namespace TravellingCore.ModelsServiceRepository.Models.Methods
 
             return endplace;
 
+        }
+        public async Task<List<GetAllPlaces>> ShowAll()
+        {
+            var places = await TuristPlaceRepository.GetAll();
+            var myplaces = places.Select(p => new GetAllPlaces() { id = p.Id, Naame = p.Name }).ToList();
+            return myplaces;
+        } 
+        public async Task<string> DeleteById(int id)
+        {
+             var result =TuristPlaceRepository.Delete(id);
+            await TuristPlaceRepository.Save();
+            return result;
         }
     }
 }

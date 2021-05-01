@@ -1,0 +1,89 @@
+﻿@page
+@model Travellingfront.Pages.User.UserUpdateModel
+@{
+}
+<head>
+    <link href="~/css/User/all.css" rel="stylesheet" />
+    <link href="~/css/User/user.css" rel="stylesheet" />
+    <link href="~/css/User/style.css" rel="stylesheet" />
+
+</head>
+<div class="text-center">
+
+    <div class="banner" style="background-image: url('../../header.jpg');">
+        <div class="container">
+            <div class="banner-text">
+                <div class="banner-heading">
+                    مدیریت رمز عبور
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container" style="direction: rtl;">
+        <div class="row">
+            <div class="col-lg-3 col-md-12">
+                <div class="panel-boxes">
+                    <div class="profile-head">
+                        <div class="profile-pic">
+                            <img src="~/profile.png">
+                        </div>
+                        <div class="profile-name text-right">
+                            <div>علی میرزایی</div>
+                            <div style="color: red;">کاربر</div>
+                        </div>
+                    </div>
+                    <div class="profile-foot fullsize">
+                        <div class="edit-profile profile-boxes">
+                            <a asp-page="UserUpdate">
+                                <img src="~/download.png" alt="Alternate Text" style="width: 25px; margin-bottom: 5px" />
+                                <div>ویرایش حساس</div>
+                            </a>
+                        </div>
+                        <div class="logout-profile profile-boxes">
+                            <a asp-page="../Index">
+                                <img src="~/Users-Exit-icon.png" alt="Alternate Text" style="width: 25px; margin-bottom: 5px" />
+                                <div>خروج از حساب</div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-9 col-md-12">
+                <div class="account-infos panel-boxes fullsize text-right">
+                    <div class="allinfo-heading fullsize">
+                        <div>ویرایش رمز عبور</div>
+                    </div>
+                    <form action="#" style="margin: 20px 39px;">
+                        <div class="form-group">
+                            <label for="comment">نام کاربری :</label>
+                            <input class="form-control" type="text" placeholder="alimirzaei@gmail.com" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label>نام و نام خانوادگی :</label>
+                            <input type="text" class="form-control" placeholder="علی میرزایی">
+                        </div>
+                        <div class="form-group">
+                            <label>کشور مورد علاقه :</label>
+                            <input type="text" class="form-control" placeholder="ایران">
+                        </div>
+                        <div class="form-group">
+                            <label>دسته بندی مورد علاقه :</label>
+                            <input type="text" class="form-control" placeholder="تاریخی">
+                        </div>
+                        <div class="form-group">
+                            <label>رمز عبور جدید :</label>
+                            <input type="password" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label>تکرار رمز عبور جدید :</label>
+                            <input type="password" class="form-control">
+                        </div>
+                        <button type="submit" class="btn btn-success">ویرایش</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,167 @@
+﻿@page
+@model Travellingfront.Pages.Admins.AdminpannelModel
+@{
+}
+<head>
+    <link href="~/css/Admin/admin.css" rel="stylesheet" />
+    <link href="~/css/Admin/all.css" rel="stylesheet" />
+    <link href="~/css/Admin/style.css" rel="stylesheet" />
+
+</head>
+<div class="text-center">
+
+    <div class="banner" style="background-image: url('../../adminbg.jpg');">
+        <div class="container">
+            <div class="banner-text">
+                <div class="banner-heading">
+                    پنل مدیریت
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="body-of-admin">
+        <div class="container" style="direction: rtl;">
+            <div class="row">
+                <div class="col-lg-3 col-md-12">
+                    <div class="panel-boxes">
+                        <ul class="account-nav fullsize">
+                            <li>
+                                <a asp-page="./Places/Place">
+                                    <i class='far fa-map'></i>
+                                    جاذبه های گردشگری
+                                </a>
+                            </li>
+                            <li>
+                                <a asp-page="./Categories/Category">
+                                    <i class='fas fa-layer-group'></i>
+                                    دسته بندی
+                                </a>
+                            </li>
+                            <li>
+                                <a asp-page="./Countries/Country">
+                                    <i class='fas fa-flag'></i>
+                                    کشور ها
+                                </a>
+                            </li>
+                            <li>
+                                <a asp-page="./Cities/City">
+                                    <i class='fas fa-map-marker-alt'></i>
+                                    شهر ها
+                                </a>
+                            </li>
+                            <li>
+                                <a href="comments.html">
+                                    <i class='far fa-comment-alt'></i>
+                                    نظرات
+                                </a>
+                            </li>
+                            <li>
+                                <a href="rates.html">
+                                    <i class='fas fa-star'></i>
+                                    رای ها
+                                </a>
+                            </li>
+                            <li>
+                                <a href="users.html">
+                                    <i class='fas fa-id-card'></i>
+                                    کاربران
+                                </a>
+                            </li>
+                            <li>
+                                <a href="userlogins.html">
+                                    <i class='fas fa-user-clock'></i>
+                                    لاگین ها
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-9 col-md-12">
+                    <div class="account-infos panel-boxes fullsize text-right">
+                        <div class="allinfo-heading fullsize">
+                            آمار کلی سایت
+                        </div>
+                        <div class="accountinfo-table fullsize">
+                            <div class="my-rows">
+                                <div class="acc-name acc-boxes">
+                                    <div class="acc-label">
+                                        تعداد جاذبه های گردشگری
+                                    </div>
+                                    <div class="acc-value">
+                                        @Model.PlaceNumber
+                                    </div>
+                                </div>
+                                <div class="acc-name acc-boxes">
+                                    <div class="acc-label">
+                                        تعداد دسته بندی
+                                    </div>
+                                    <div class="acc-value">
+                                        @Model.categoryNumber
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="my-rows">
+                                <div class="acc-name acc-boxes">
+                                    <div class="acc-label">
+                                        تعداد کشور ها
+                                    </div>
+                                    <div class="acc-value">
+                                       @Model.CountryNumber
+                                    </div>
+                                </div>
+                                <div class="acc-name acc-boxes">
+                                    <div class="acc-label">
+                                        تعداد شهر ها
+                                    </div>
+                                    <div class="acc-value">
+                                       @Model.CityNumber
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="my-rows">
+                                <div class="acc-name acc-boxes">
+                                    <div class="acc-label">
+                                        تعداد نظرات
+                                    </div>
+                                    <div class="acc-value">
+                                        @Model.CommentNumber
+                                    </div>
+                                </div>
+                                <div class="acc-name acc-boxes">
+                                    <div class="acc-label">
+                                        تعداد رای ها
+                                    </div>
+                                    <div class="acc-value">
+                                        @Model.RateNumber
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="my-rows">
+                                <div class="acc-name acc-boxes">
+                                    <div class="acc-label">
+                                        تعداد کاربران
+                                    </div>
+                                    <div class="acc-value">
+                                        @Model.UserNumber
+                                    </div>
+                                </div>
+                                <div class="acc-name acc-boxes">
+                                    <div class="acc-label">
+                                        تعداد لاگین ها
+                                    </div>
+                                    <div class="acc-value">
+                                        @Model.LoginNumber
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+</div>

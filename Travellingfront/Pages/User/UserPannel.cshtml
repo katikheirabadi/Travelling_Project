@@ -1,0 +1,149 @@
+﻿@page
+@model Travellingfront.Pages.UserPannelModel
+@{
+}
+<head>
+    <link href="~/css/User/all.css" rel="stylesheet" />
+    <link href="~/css/User/user.css" rel="stylesheet" />
+    <link href="~/css/User/style.css" rel="stylesheet" />
+    
+</head>
+
+<div class="text-center">
+    <div class="banner" style="background-image: url('../../header.jpg')">
+        <div class="container">
+            <div class="banner-text">
+                <div class="banner-heading">
+                    پنل کاربری
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container" style="direction: rtl;">
+        <div class="row">
+            <div class="col-lg-3 col-md-12">
+                <div class="panel-boxes">
+                    <div class="profile-head">
+                        <div class="profile-pic">
+                            <img src="~/profile.png">
+                        </div>
+                        <div class="profile-name text-right">
+                            <div>علی میرزایی</div>
+                            <div style="color: red;">کاربر</div>
+                        </div>
+                    </div>
+                    <div class="profile-foot fullsize">
+                        <div class="edit-profile profile-boxes">
+                            <a asp-page="./UserUpdate" >
+                                <img src="~/download.png" alt="Alternate Text" style="width: 25px; margin-bottom: 5px" />
+                                <div> ویرایش حساب</div>
+                            </a>
+                        </div>
+                        <div class="logout-profile profile-boxes">
+                            <a asp-page="../Index">
+                                <img src="~/Users-Exit-icon.png" alt="Alternate Text" style="width: 25px; margin-bottom: 5px" />
+                                <div>خروج از حساب</div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-9 col-md-12">
+                <div class="account-infos panel-boxes fullsize text-right">
+
+                    <div class="allinfo-heading fullsize">
+                        به پنل کاربری خوش آمدید
+                    </div>
+
+                    <div class="title-favorite">
+                        هنوز موفق به انتخاب نشدی ؟ علایقت رو تو پروفایل وارد کن تا اینجا بتونی راحت‌تر مکان گردشگری مورد علاقت رو پیدا کنی :
+                    </div>
+
+                    <div class="favorite-turist">
+                        <div class="row country-item-row">
+                            <div class="col-xl-7 text-right">
+                                <h3>تخت جمشید</h3>
+                                <p class="country-item-p text-right">
+                                    لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان
+                                    گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و
+                                    برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می
+                                    باشد. کتابهای زیادی در شصت و سه درصد گذشته، حال و آینده شناخت فراوان جامعه و
+                                    متخصصان را می طلبد تا با نرم افزارها شناخت بیشتری را برای طراحان
+                                </p>
+                                <div class="float-left">
+                                    <span class="fa fa-star checked"></span>
+                                    <span class="fa fa-star checked"></span>
+                                    <span class="fa fa-star checked"></span>
+                                    <span class="fa fa-star"></span>
+                                    <span class="fa fa-star"></span>
+                                    <span class="btn btn-info">تعداد کامنت : 2</span>
+                                    <span class="text-info">تعداد بازدید : 25</span>
+                                </div>
+                            </div>
+                            <div class="col-xl-2 text-center">
+                                <div>
+                                    <img src="~/TravellingFlatArt.jpg" class="country-item-image mx-auto" style="width:300px;height:288px">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row country-item-row">
+                            <div class="col-xl-7 text-right">
+                                <h3>تخت جمشید</h3>
+                                <p class="country-item-p text-right">
+                                    لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان
+                                    گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و
+                                    برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می
+                                    باشد. کتابهای زیادی در شصت و سه درصد گذشته، حال و آینده شناخت فراوان جامعه و
+                                    متخصصان را می طلبد تا با نرم افزارها شناخت بیشتری را برای طراحان
+                                </p>
+                                <div class="float-left">
+                                    <span class="fa fa-star checked"></span>
+                                    <span class="fa fa-star checked"></span>
+                                    <span class="fa fa-star checked"></span>
+                                    <span class="fa fa-star"></span>
+                                    <span class="fa fa-star"></span>
+                                    <span class="btn btn-info">تعداد کامنت : 2</span>
+                                    <span class="text-info">تعداد بازدید : 25</span>
+                                </div>
+                            </div>
+                            <div class="col-xl-2 text-center">
+                                <div>
+                                    <img src="~/TravellingFlatArt.jpg" class="country-item-image mx-auto" style="width:300px;height:288px">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row country-item-row">
+                            <div class="col-xl-7 text-right">
+                                <h3>تخت جمشید</h3>
+                                <p class="country-item-p text-right">
+                                    لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان
+                                    گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و
+                                    برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می
+                                    باشد. کتابهای زیادی در شصت و سه درصد گذشته، حال و آینده شناخت فراوان جامعه و
+                                    متخصصان را می طلبد تا با نرم افزارها شناخت بیشتری را برای طراحان
+                                </p>
+                                <div class="float-left">
+                                    <span class="fa fa-star checked"></span>
+                                    <span class="fa fa-star checked"></span>
+                                    <span class="fa fa-star checked"></span>
+                                    <span class="fa fa-star"></span>
+                                    <span class="fa fa-star"></span>
+                                    <span class="btn btn-info">تعداد کامنت : 2</span>
+                                    <span class="text-info">تعداد بازدید : 25</span>
+                                </div>
+                            </div>
+                            <div class="col-xl-2 text-center">
+                                <div>
+                                    <img src="~/TravellingFlatArt.jpg" class="country-item-image mx-auto"  style="width:300px;height:288px">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

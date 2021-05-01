@@ -1,0 +1,368 @@
+﻿@font-face {
+    font-family: iranyekan;
+    font-style: normal;
+    font-weight: normal;
+    src: url('fonts/eot/iranyekanwebregular.eot');
+    src: url('fonts/eot/iranyekanwebregular.eot?#iefix') format('embedded-opentype'), url('fonts/woff/iranyekanwebregular.woff') format('woff'), url('fonts/ttf/iranyekanwebregular.ttf') format('truetype');
+}
+
+
+
+/*               header                               */
+
+
+body {
+    font-family: iranyekan;
+    font-size: 16px;
+}
+
+p {
+    color: #6c6c6f;
+    font-size: 1em;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: #000000;
+    text-transform: uppercase;
+}
+
+.navbar-brand span {
+    color: #fed136;
+    font-size: 25px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    font-family: iranyekan;
+}
+
+.navbar .btn-light {
+    margin-right: 10px;
+}
+
+.navbar-nav .nav-item .nav-link {
+    padding: 1.1em 1em !important;
+    font-size: 120%;
+    font-weight: 500;
+    letter-spacing: 1px;
+    color: #fff;
+    font-family: iranyekan;
+}
+
+    .navbar-nav .nav-item .nav-link:hover {
+        color: #fed136;
+    }
+
+.navbar-expand-md .navbar-nav .dropdown-menu {
+    border-top: 3px solid #fed136;
+}
+
+.dropdown-item:hover {
+    background-color: #fed136;
+    color: #fff;
+}
+
+nav {
+    -webkit-transition: padding-top .3s,padding-bottom .3s;
+    -moz-transition: padding-top .3s,padding-bottom .3s;
+    transition: padding-top .3s,padding-bottom .3s;
+    border: none;
+}
+
+.shrink {
+    padding-top: 0;
+    padding-bottom: 0;
+    background-color: #212529;
+}
+
+.banner {
+    background-image: url('../image/header.jpg');
+    text-align: center;
+    color: #fff;
+    margin-bottom: 100px;
+    background-repeat: no-repeat;
+    background-attachment: scroll;
+    background-position: center center;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+.banner-text {
+    padding: 200px 0 150px 0;
+}
+
+.banner-heading {
+    font-family: iranyekan;
+    font-size: 50px;
+    font-weight: 700;
+    line-height: 100px;
+    margin-bottom: 30px;
+    color: #fff;
+}
+
+.banner-sub-heading {
+    font-family: iranyekan;
+    font-size: 30px;
+    font-weight: 300;
+    line-height: 30px;
+    margin-bottom: 50px;
+    color: #fff;
+}
+
+.btn-banner {
+    padding: 5px 20px;
+    border-radius: 10px;
+    font-weight: 700;
+    line-height: 1.5;
+    text-align: center;
+    color: #fff;
+    text-transform: uppercase;
+}
+
+.text-intro {
+    width: 90%;
+    margin: auto;
+    text-align: center;
+    padding-top: 30px;
+}
+
+
+@media (max-width:500px) {
+    .navbar-nav {
+        background-color: #000;
+        border-top: 3px solid #fed136;
+        color: #fff;
+        z-index: 1;
+        margin-top: 5px;
+    }
+
+        .navbar-nav .nav-item .nav-link {
+            padding: 0.7em 1em !important;
+            font-size: 100%;
+            font-weight: 500;
+        }
+
+    .banner-text {
+        padding: 150px 0 150px 0;
+    }
+
+    .banner-heading {
+        font-size: 30px;
+        line-height: 30px;
+        margin-bottom: 20px;
+    }
+
+    .banner-sub-heading {
+        font-size: 10px;
+        font-weight: 200;
+        line-height: 10px;
+        margin-bottom: 40px;
+    }
+}
+
+@media (max-width:576px) {
+    .one-box-cards {
+        margin-top: 20px;
+    }
+}
+
+@media (max-width:768px) {
+    .banner-text {
+        padding: 150px 0 150px 0;
+    }
+
+    .banner-sub-heading {
+        font-size: 23px;
+        font-weight: 200;
+        line-height: 23px;
+        margin-bottom: 40px;
+    }
+
+    .dakheli {
+        margin-top: 40px;
+    }
+
+    .news-slider-title {
+        font-size: 15px;
+    }
+
+    .news-slider-subtitle {
+        font-size: 10px;
+    }
+}
+
+@media (max-width:992px) {
+    .two-box-cards {
+        margin-top: 20px;
+    }
+}
+
+/*               section(container)                               */
+.feedback {
+    color: black;
+    padding: 10px 20px;
+    border: solid 1px white;
+    border-radius: 4px;
+}
+
+#mybutton {
+    position: fixed;
+    bottom: 10px;
+    left: 10px;
+}
+
+
+
+form.example input[type=text] {
+    padding: 10px;
+    font-size: 17px;
+    border: 1px solid grey;
+    float: left;
+    width: 80%;
+    background: #f1f1f1;
+}
+
+form.example button {
+    float: left;
+    width: 20%;
+    padding: 10px;
+    background: #2196F3;
+    color: white;
+    font-size: 17px;
+    border: 1px solid grey;
+    border-left: none;
+    cursor: pointer;
+}
+
+    form.example button:hover {
+        background: #0b7dda;
+    }
+
+form.example::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+
+.first-row {
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+.social-media-buttons {
+    width: 250px;
+    margin-bottom: 5px;
+}
+
+.foot-title {
+    margin-bottom: 50px;
+}
+
+.footer-links {
+    margin-top: 30px;
+}
+
+    .footer-links li {
+        margin-bottom: 10px;
+    }
+
+.one-right {
+    text-align: right;
+}
+
+    .one-right p {
+        margin-top: 30px;
+        direction: rtl;
+        text-align: justify;
+    }
+
+.one-left img {
+    border-radius: 10px;
+}
+
+.carousel-inner img {
+    width: 100%;
+    height: 100%;
+}
+
+.carousel-item img {
+    border-radius: 10px;
+}
+
+.myslider-title {
+    color: #fff;
+    text-shadow: 3px 3px 2px #000;
+}
+
+.second-row {
+    margin-bottom: 50px;
+}
+
+.myboxes-title {
+    margin-top: 50px;
+}
+
+.news-border {
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+.news-slider-title {
+    color: #fff;
+}
+
+.news-slider-subtitle {
+    color: #b8b8b8;
+}
+
+.ersal {
+    margin-right: 15px;
+}
+
+
+
+
+
+/*               footer                               */
+
+footer {
+    margin-top: 100px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*search box css start here*/
+.search-sec {
+    padding: 2rem;
+}
+
+.search-slt {
+    display: block;
+    width: 100%;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #ccc;
+    height: calc(3rem + 2px) !important;
+    border-radius: 0;
+}
+
+.wrn-btn {
+    width: 100%;
+    font-size: 16px;
+    font-weight: 400;
+    text-transform: capitalize;
+    height: calc(3rem + 2px) !important;
+    border-radius: 0;
+}

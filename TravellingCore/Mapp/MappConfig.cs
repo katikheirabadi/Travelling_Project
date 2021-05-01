@@ -137,8 +137,13 @@ namespace TravellingCore.Mapp
 
             CreateMap<TuristPlace, FilterOutputDetailDTO>()
                .ForMember(o => o.TuristPlaceName, x => x.MapFrom(p => p.Name))
-               .ForMember(o => o.Country, x => x.MapFrom(p => p.Country.Name))
-               .ForMember(o => o.City, x => x.MapFrom(p => p.City.Name));
+               .ForMember(o => o.Image, x => x.MapFrom(p => p.Image))
+               .ForMember(o => o.Description, x => x.MapFrom(p => p.Description))
+               .ForMember(o => o.CommentsNumber, x => x.MapFrom(p => p.Comments.Count))
+               .ForMember(o => o.AverageRates, x => x.MapFrom(p => p.Rates.Average(x => x.UserRate)))
+               .ForMember(o => o.Visit, x => x.MapFrom(p => p.Visit))
+               .ForMember(o => o.id, x => x.MapFrom(p => p.Id));
+              
 
             CreateMap<TuristPlace, FavoroteOutputDto>()
                 .ForMember(o => o.id, x => x.MapFrom(p => p.Id))

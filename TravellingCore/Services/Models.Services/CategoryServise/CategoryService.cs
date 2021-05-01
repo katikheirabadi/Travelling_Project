@@ -152,6 +152,11 @@ namespace TravellingCore.Services.Models.Services.CategoryServise
             
             return result;
         }
+        public async Task DeleteById(int id)
+        {
+             CategoryRepoditory.Delete(id);
+             await CategoryRepoditory.Save();
+        }
         public async Task<List<GetallCategoriesWithIdOutPutDto>> GetAll()
         {
             var allcategories = await CategoryRepoditory.GetAll();

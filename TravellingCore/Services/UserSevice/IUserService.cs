@@ -16,5 +16,6 @@ namespace TravellingCore.Services.SigninServicefoulder
         public Task<string> UpdateUser(UpdateUserOutputDto updateinput);
         public Task<GetUseroutputDto> ShowUser(GetUserInputDto getinput);
         public Task<List<GetUseroutputDto>> ShowAllUser();
+        
     }
 }

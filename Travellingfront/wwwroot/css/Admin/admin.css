@@ -1,0 +1,150 @@
+﻿ul li {
+    list-style: none;
+}
+
+a, a:hover, a:visited {
+    text-decoration: none;
+}
+
+body {
+    background-color: #f5f5f5;
+    font-family: iranyekan;
+}
+
+.fullsize {
+    width: 100%;
+}
+
+.profile-boxes {
+    width: 50%;
+    padding: 8px 10px;
+    text-align: center;
+    font-size: 13px;
+}
+
+    .profile-boxes a {
+        color: #222;
+        line-height: 1;
+    }
+
+    .profile-boxes i {
+        font-size: 20px;
+    }
+
+.panel-boxes {
+    margin-bottom: 21px;
+    background-color: #fff;
+    box-shadow: 0 12px 12px 0 hsl(0deg 0% 71% / 10%);
+    border: 1px solid #dedede;
+    width: 100%;
+}
+
+.profile-head {
+    display: flex;
+}
+
+.profile-pic {
+    width: 64px;
+    padding-right: 10px;
+    padding-top: 14px;
+}
+
+    .profile-pic img {
+        max-width: 100%;
+        height: auto;
+    }
+
+.profile-name {
+    width: calc(100% - 64px);
+    padding-right: 15px;
+    padding-left: 10px;
+    font-size: 14px;
+    margin-top: 18px;
+}
+
+.profile-foot {
+    border-top: 1px solid #f1f1f1;
+    background-color: #fcfcfc !important;
+    margin-top: 15px;
+    padding: 5px;
+    display: flex;
+}
+
+.edit-profile {
+    border-left: 1px solid #f1f1f1;
+}
+
+.allinfo-heading {
+    padding: 18px 39px 18px 0;
+    border-bottom: 1px solid #f3f3f3;
+    font-weight: 700;
+    letter-spacing: .2px;
+    color: #535353;
+    font-size: 13px;
+    font-size: .929rem;
+    line-height: 1.692;
+}
+
+.account-nav li {
+    width: 100%;
+}
+
+    .account-nav li a {
+        position: relative;
+        padding: 12px 0px 12px 0;
+        color: #535353;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+        font-size: 14px;
+    }
+
+        .account-nav li a i.icon-user {
+            font-size: 21px;
+        }
+
+        .account-nav li a i {
+            margin-top: 0px;
+            font-size: 18px;
+            margin-left: 14px;
+            color: #535353;
+        }
+
+.acc-boxes {
+    width: 50%;
+    padding: 10px 15px;
+    border-left: 1px solid #f3f3f3;
+    border-bottom: 1px solid #f3f3f3;
+}
+
+.acc-label, .acc-value {
+    width: 100%;
+    font-size: 15px;
+    color: #535353;
+}
+
+.acc-value {
+    color: rgb(0, 0, 0);
+    margin-top: 2px;
+    font-size: 18px;
+}
+
+.my-rows {
+    display: flex;
+}
+
+.jazebe {
+    display: flex;
+    justify-content: space-between;
+}
+
+.jazebe-btn {
+    padding-left: 39px;
+}
+
+.checked {
+    color: orange;
+}

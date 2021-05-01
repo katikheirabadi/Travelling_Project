@@ -23,16 +23,21 @@
                 <div class="collapse navbar-collapse" id="collapsibleNavbar">
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Admins</a>
+                            <a class="nav-link" asp-page="/Admins/Adminpannel">مدیریت</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-page="/SearchResult">جستجو با فیلتر</a>
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
                                 سایر کشور ها
                             </a>
                             <div class="dropdown-menu">
-                                <a class="dropdown-item" href="#">ترکیه</a>
-                                <a class="dropdown-item" href="#">آمریکا</a>
-                                <a class="dropdown-item" href="#">انگلستان</a>
+                                <a class="dropdown-item"asp-page="/Country" asp-route-id="2">ایتالیا</a>
+                                <a class="dropdown-item" asp-page="/Country" asp-route-id="3">ژاپن</a>
+                                <a class="dropdown-item" asp-page="/Country" asp-route-id="4">مصر</a>
+                                <a class="dropdown-item" asp-page="/Country" asp-route-id="5">ترکیه</a>
+                                <a class="dropdown-item" asp-page="/Country" asp-route-id="7">انگلستان</a>
                             </div>
                         </li>
                         <li class="nav-item">
@@ -43,8 +48,9 @@
                                 جاذبه های گردشگری
                             </a>
                             <div class="dropdown-menu">
-                                <a class="dropdown-item" asp-page="/Category" asp-route-id="1">تاریخی</a>
-                                <a class="dropdown-item" asp-page="/Category" asp-route-id="2">تفریحی</a>
+                                <a class="dropdown-item" asp-page="/Category" asp-route-id="2">تاریخی</a>
+                                <a class="dropdown-item" asp-page="/Category" asp-route-id="3">مذهبی</a>
+                                <a class="dropdown-item" asp-page="/Category" asp-route-id="4">تفریحی</a>
                             </div>
                         </li>
                         <li class="nav-item">

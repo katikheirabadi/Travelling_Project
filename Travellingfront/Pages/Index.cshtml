@@ -198,7 +198,7 @@
                                     <h5 class="card-title">@Model.Newplaces.Turism_Places[i].TuristPlaceName</h5>
                                     <p class="card-text">
                                     <p>
-                                        @Model.Newplaces.Turism_Places[i].Description
+                                        @*@Model.Newplaces.Turism_Places[i].Description*@
                                     </p>
                                     <a asp-page="/Place" asp-route-id="@Model.Newplaces.Turism_Places[i].Id" class="btn btn-primary">بیشتر بدانید</a>
                                 </div>
@@ -217,7 +217,7 @@
                                     <h5 class="card-title">@Model.Newplaces.Turism_Places[i].TuristPlaceName</h5>
                                     <p class="card-text">
                                     <p>
-                                        @Model.Newplaces.Turism_Places[i].Description
+                                        @*@Model.Newplaces.Turism_Places[i].Description*@
                                     </p>
                                     <a asp-page="/Place" asp-route-id="@Model.Newplaces.Turism_Places[i].Id" class="btn btn-primary">بیشتر بدانید</a>
                                 </div>
@@ -288,14 +288,14 @@
         </div>
     </section>
     <div id="mybutton">
-        <button class="feedback btn btn-info">مقایسه جاذبه های گردشگری</button>
+        <button class="feedback btn btn-info" id="b">مقایسه جاذبه های گردشگری</button>
     </div>
 
 </div>
 @section scripts{
     <script type="text/javascript">
         $(function () {
-            alert("به سایت ما خوش آمدید");
+            
             $("#searchbyname").hide();
             $("#search").click(function () {
                 $.get("https://localhost:44375/api/Search/SearchbyName", { turistPlace: $("#ss").val() }, function (data, status) {
@@ -342,7 +342,11 @@
                    $("#searchbyname").hide();
                 })
             });
-           
+            $("#b").click(function () {
+                $.get("https://localhost:44375/api/TuristPlace/GetAllPlace", function (data, status) {
+                    console.log(data[0]);
+                })
+            })
             
 
         });

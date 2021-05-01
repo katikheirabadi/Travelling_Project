@@ -7,15 +7,15 @@ namespace TravellingCore.Dto.TuristPlace.AddPlace
 {
     public class AddPlaceInputDto
     {
-        [Required(ErrorMessage ="this field is empty")]
+        [Required(ErrorMessage = "پر کردن این فیلد الزامی می‌باشد.")]
         public string Name { get; set; } 
-        [Required(ErrorMessage ="this field is empty")]
+        [Required(ErrorMessage = "پر کردن این فیلد الزامی می‌باشد.")]
         public string CityName { get; set; }
-        [Required(ErrorMessage = "this field is empty")]
+        [Required(ErrorMessage = "پر کردن این فیلد الزامی می‌باشد.")]
         public string Country { get; set; }
-        [Required(ErrorMessage = "this field is empty")]
+        [Required(ErrorMessage = "پر کردن این فیلد الزامی می‌باشد.")]
         public string Description { get; set; }
-        [Required(ErrorMessage = "this field is empty")]
+        [Required(ErrorMessage = "پر کردن این فیلد الزامی می‌باشد.")]
         public string Image { get; set; }
 
     }

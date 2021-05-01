@@ -6,6 +6,6 @@ namespace TravellingCore.Dto.SearchByFilter
 {
     public class FilterOutputDTO
     {
-        public FilterOutputDetailDTO[] Places { get; set; }
+        public List<FilterOutputDetailDTO> Places { get; set; }
     }
 }

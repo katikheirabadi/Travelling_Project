@@ -52,22 +52,6 @@ namespace Travellingfront.Pages
             Newplaces = await turistPlaceService.NewPlaces();
            
         }
-        public async Task<IActionResult> OnPost(string PlaceName)
-        {
-            PlaceSearch.TuristPlaceName = PlaceName;
-            try
-            {
-              //  ResultPlaceSearch = await searchservise.SearchByName(PlaceSearch);
-                State = true;
-                return Page();
-            }
-            catch(Exception e)
-            {
-                State = false;
-                ViewData["Error"] = e.Message;
-                return Page();
-            }
-          
-        }
+       
     }
 }
