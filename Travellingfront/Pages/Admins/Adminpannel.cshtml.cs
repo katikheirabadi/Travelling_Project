@@ -2,9 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using TravellingCore.Services.LoginService;
+using TravellingCore.Claims;
 using TravellingCore.Services.Models.Services.CategoryServise;
 using TravellingCore.Services.Models.Services.CityService;
 using TravellingCore.Services.Models.Services.CommentServise;
@@ -15,6 +16,8 @@ using TravellingCore.Services.SigninServicefoulder;
 
 namespace Travellingfront.Pages.Admins
 {
+    [Authorize(Roles = RoleNames.Admin)]
+    
     public class AdminpannelModel : PageModel
     {
         private readonly ITuristPlaceService turistPlaceService;
@@ -24,7 +27,6 @@ namespace Travellingfront.Pages.Admins
         private readonly ICommentService commentService;
         private readonly IRateService rateService;
         private readonly IUserService userService;
-        private readonly ILoginServicecs loginServicecs;
 
         [BindProperty]
         public int PlaceNumber { get; set; }
@@ -49,8 +51,8 @@ namespace Travellingfront.Pages.Admins
                                 ICityService cityService,
                                 ICommentService commentService,
                                 IRateService rateService,
-                                IUserService userService,
-                                ILoginServicecs loginServicecs)
+                                IUserService userService
+                               )
         {
             turistPlaceService = TuristPlaceService;
             this.categoryServise = categoryServise;
@@ -59,7 +61,6 @@ namespace Travellingfront.Pages.Admins
             this.commentService = commentService;
             this.rateService = rateService;
             this.userService = userService;
-            this.loginServicecs = loginServicecs;
         }
         public  async Task OnGet()
         {
@@ -81,11 +82,6 @@ namespace Travellingfront.Pages.Admins
             var ratelist = await rateService.GetAllRate();
             RateNumber = ratelist.Count;
 
-            var usernumbers = await userService.ShowAllUser();
-            UserNumber = usernumbers.Count;
-
-            var loginlist = await loginServicecs.ShowAllUserLogin();
-            LoginNumber = loginlist.Count;
         }
     }
 }

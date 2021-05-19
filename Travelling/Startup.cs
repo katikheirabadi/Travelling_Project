@@ -2,6 +2,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -20,7 +21,7 @@ using TravellingCore.Mapp;
 using TravellingCore.Model;
 using TravellingCore.ModelsServiceRepository.Models.Methods;
 using TravellingCore.ModelsServiceRepository.SigninRepository;
-using TravellingCore.ServiceRepository.LoginService;
+//using TravellingCore.ServiceRepository.LoginService;
 using TravellingEF.ContextRepository;
 using TravellingEF.DataBase;
 
@@ -40,9 +41,9 @@ namespace Travelling
         {
             services.AddControllers();
             services.AddAutoMapper(Assembly.GetAssembly(typeof(MappConfig)));
-            services.AddDbContext<TravellingDBContext>(o => { o.UseSqlServer(Configuration.GetConnectionString("TravellConection")); });
+            services.AddDbContext<TravellingDBContext>(o => { o.UseSqlServer(Configuration.GetConnectionString("TravellConection"), b => b.MigrationsAssembly("Travelling")); });
             services.AddDependency();
-            services.AddSwaggerGen(c => c.SwaggerDoc("Travelling" , new Microsoft.OpenApi.Models.OpenApiInfo {Title = "Travelling" ,Version = "Travelling_Priject" }));
+            services.AddSwaggerGen(c => c.SwaggerDoc("Travelling", new Microsoft.OpenApi.Models.OpenApiInfo { Title = "Travelling", Version = "Travelling_Priject" }));
             // services.AddSwaggerGen(c=>c.SwaggerDoc() )
             services.AddCors(options =>
             {
@@ -55,6 +56,7 @@ namespace Travelling
                 }
               );
             });
+           services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<TravellingDBContext>();
 
         }
 

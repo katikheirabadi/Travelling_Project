@@ -75,7 +75,7 @@ namespace TravellingCore.ModelsServiceRepository.SigninRepository
         public async Task<string> DeleteUser(DeleteUseiInputDto deleteinput)
         {
             var finduser =  await FindUser(deleteinput.UserName);
-            var result = UserRepository.Delete(finduser.Id);
+            var result = UserRepository.Delete(Convert.ToInt32( finduser.Id));
             await UserRepository.Save();
             return result;
 
@@ -93,7 +93,7 @@ namespace TravellingCore.ModelsServiceRepository.SigninRepository
         public async Task<GetUseroutputDto> ShowUser(GetUserInputDto getinput)
         {
             var finduser = await FindUser(getinput.Username);
-            var getDetabase = await UserRepository.Get(finduser.Id);
+            var getDetabase = await UserRepository.Get(Convert.ToInt32(finduser.Id));
             return mapper.Map<GetUseroutputDto>(finduser);
         }
         public async Task<List<GetUseroutputDto>> ShowAllUser()

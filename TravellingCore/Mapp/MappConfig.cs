@@ -47,7 +47,6 @@ namespace TravellingCore.Mapp
 
             CreateMap<TuristPlace, CountryOutPutDto>();
 
-            CreateMap<UserLogin, ShowUserLoginOutputDto>();
 
             CreateMap<User, GetUseroutputDto>()
                 .ForMember(o => o.FullName, x => x.MapFrom(o => o.FullName))

@@ -13,10 +13,9 @@
     <header >
         <nav class="navbar navbar-expand-md navbar-dark fixed-top" id="banner" style="background-color: rgba(0, 0, 0, 0.5);">
             <div class="container">
-                <div class="row">
-                    <button type="button" class="btn btn-light left-b"><a asp-page="/Signin">ثبت نام</a></button>
-                    <button type="button" class="btn btn-outline-light"><a asp-page="/Login">ورود</a></button>
-                </div>
+               <div class="row">
+                   <partial name="_Login" />
+               </div>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -33,7 +32,7 @@
                                 سایر کشور ها
                             </a>
                             <div class="dropdown-menu">
-                                <a class="dropdown-item"asp-page="/Country" asp-route-id="2">ایتالیا</a>
+                                <a class="dropdown-item" asp-page="/Country" asp-route-id="2">ایتالیا</a>
                                 <a class="dropdown-item" asp-page="/Country" asp-route-id="3">ژاپن</a>
                                 <a class="dropdown-item" asp-page="/Country" asp-route-id="4">مصر</a>
                                 <a class="dropdown-item" asp-page="/Country" asp-route-id="5">ترکیه</a>

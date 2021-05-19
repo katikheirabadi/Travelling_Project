@@ -1,15 +1,19 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿//using Microsoft.AspNet.Identity.EntityFramework;
+
+using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using TravellingCore.Claims;
 using TravellingCore.ContextRepositoryInterface;
 using TravellingCore.Model;
 using TravellingCore.ModelsServiceRepository.Models.Methods;
 using TravellingCore.ModelsServiceRepository.SigninRepository;
-using TravellingCore.ServiceRepository.LoginService;
+//using TravellingCore.ServiceRepository.LoginService;
 using TravellingCore.Services.FavoriteService;
-using TravellingCore.Services.LoginService;
+//using TravellingCore.Services.LoginService;
 using TravellingCore.Services.Models.Services.CategoryServise;
 using TravellingCore.Services.Models.Services.CityService;
 using TravellingCore.Services.Models.Services.CommentServise;
@@ -21,6 +25,7 @@ using TravellingCore.Services.Models.Services.TuristPlaceCategoryServise;
 using TravellingCore.Services.Models.Services.TuristPlaceService;
 using TravellingCore.Services.SigninServicefoulder;
 using TravellingEF.ContextRepository;
+using TravellingEF.DataBase;
 
 namespace Travellingfront.Extention
 {
@@ -33,11 +38,11 @@ namespace Travellingfront.Extention
         }
         private static void AddRepositories(IServiceCollection services)
         {
-            services.AddTransient<IRepository<User>, Repository<User>>();
+           // services.AddTransient<IRepository<User>, Repository<User>>();
             services.AddTransient<IRepository<Comment>, Repository<Comment>>();
             services.AddTransient<IRepository<TuristPlace>, Repository<TuristPlace>>();
             services.AddTransient<IRepository<Rate>, Repository<Rate>>();
-            services.AddTransient<IRepository<UserLogin>, Repository<UserLogin>>();
+           // services.AddTransient<IRepository<UserLogin>, Repository<UserLogin>>();
             services.AddTransient<IRepository<Country>, Repository<Country>>();
             services.AddTransient<IRepository<City>, Repository<City>>();
             services.AddTransient<IRepository<TuristPlaceCategory>, Repository<TuristPlaceCategory>>();
@@ -46,9 +51,9 @@ namespace Travellingfront.Extention
         private static void AddServices(IServiceCollection services)
         {
 
-            services.AddTransient<ILoginServicecs, LoginServices>();
-            services.AddTransient<IUserService, UserService>();
-            services.AddTransient<ILoginServicecs, LoginServices>();
+           // services.AddTransient<ILoginServicecs, LoginServices>();
+            //services.AddTransient<IUserService, UserService>();
+          //  services.AddTransient<ILoginServicecs, LoginServices>();
             services.AddTransient<ICommentService, ComentService>();
             services.AddTransient<IRateService, RateService>();
             services.AddTransient<ITuristPlaceService, TuristPlaceService>();
@@ -59,6 +64,47 @@ namespace Travellingfront.Extention
             services.AddTransient<ICountryService, CountryService>();
             services.AddTransient<ITuristPlaceCategoryServise, TuristPlaceCategoryServise>();
             services.AddTransient<IFavoriteService, FavorteService>();
+        }
+        public static void AddAspNetIdentity(this IServiceCollection services)
+        {
+            services.AddIdentity<User, IdentityRole>()
+           .AddEntityFrameworkStores<TravellingDBContext>()
+           .AddDefaultTokenProviders();
+
+            services.AddScoped<IUserClaimsPrincipalFactory<User>,
+             AdditionalUserClaimsPrincipalFactory>();
+            services.Configure<IdentityOptions>(options =>
+            {
+                // Password settings.
+                options.Password.RequireDigit = true;
+                options.Password.RequireLowercase = true;
+                options.Password.RequireNonAlphanumeric = true;
+                options.Password.RequireUppercase = true;
+                options.Password.RequiredLength = 6;
+                options.Password.RequiredUniqueChars = 1;
+
+                // Lockout settings.
+                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
+                options.Lockout.MaxFailedAccessAttempts = 5;
+                options.Lockout.AllowedForNewUsers = true;
+
+                // User settings.
+                options.User.AllowedUserNameCharacters =
+                "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
+                options.User.RequireUniqueEmail = false;
+            });
+
+            services.ConfigureApplicationCookie(options =>
+            {
+                // Cookie settings
+                options.Cookie.HttpOnly = true;
+                options.ExpireTimeSpan = TimeSpan.FromMinutes(5);
+
+                options.LoginPath = "/Account/Login";
+                options.AccessDeniedPath = "/Account/AccessDenied";
+                options.SlidingExpiration = true;
+            });
+
         }
     }
 }

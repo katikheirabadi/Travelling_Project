@@ -21,37 +21,19 @@ namespace TravellingCore.ModelsServiceRepository.Models.Methods
     public class RateService : IRateService
     {
         private readonly IRepository<Rate> RateRepository;
-        private readonly IRepository<UserLogin> UserLoginRepository;
         private readonly IRepository<TuristPlace> TuristPlaceRepository;
         private readonly IMapper mapper;
 
         public RateService(IRepository<Rate> RateRepository,
-                          IRepository<UserLogin> UserLoginRepository, 
                           IRepository<TuristPlace> TuristPlaceRepository,
                           IMapper mapper)
         {
             this.RateRepository = RateRepository;
-            this.UserLoginRepository = UserLoginRepository;
             this.TuristPlaceRepository = TuristPlaceRepository;
             this.mapper = mapper;
         }
-        private async Task<UserLogin> FindUserLogin(string Token)
-        {
-            var users = await UserLoginRepository.GetAll();
-            var user = users.FirstOrDefault(u => u.Token == Token);
-
-            if (user == null)
-                throw new KeyNotFoundException("Not Found  Login-user with this Token ");
-
-            return user;
-        }
-        private void IsExpired(UserLogin user)
-        {
-            TimeSpan time = user.ExpireDate.Date - DateTime.Now.Date;
-
-            if (time.TotalMilliseconds <= 0)
-               throw new ExpiredException("Token was expired"); 
-        }
+      
+       
         private TuristPlace FindPlace(string place)
         {
             var places = TuristPlaceRepository.GetQuery();
@@ -74,18 +56,18 @@ namespace TravellingCore.ModelsServiceRepository.Models.Methods
         }
         public async Task<string> AddRate(RateInputDto  rate , string Token)
         {
-            var user = await FindUserLogin(Token);
-            IsExpired(user);
-            var place = FindPlace(rate.place);
+            //var user = await FindUserLogin(Token);
+            //IsExpired(user);
+            //var place = FindPlace(rate.place);
 
-            RateRepository.Insert(new Rate()
-            {
-                RecordDate = DateTime.Now,
-                UserRate = rate.Rate,
-                TuristPlaceId = place.Id,
-                UserId = user.UserId
-            }) ;
-            await RateRepository.Save();
+            //RateRepository.Insert(new Rate()
+            //{
+            //    RecordDate = DateTime.Now,
+            //    UserRate = rate.Rate,
+            //    TuristPlaceId = place.Id,
+            //    UserId = user.UserId
+            //}) ;
+            //await RateRepository.Save();
 
 
             return "we add your Rate .";

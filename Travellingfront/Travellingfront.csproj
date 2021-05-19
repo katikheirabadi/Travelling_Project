@@ -10,12 +10,14 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Pages\Admins\Comments\" />
     <Folder Include="Pages\Admins\PlaceCategories\" />
     <Folder Include="Pages\Admins\Users\" />
-    <Folder Include="Pages\Admins\Rates\" />
     <Folder Include="wwwroot\css\fonts\" />
     <Folder Include="wwwroot\image\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Authentication" Version="2.2.0" />
   </ItemGroup>
 
 </Project>

@@ -49,7 +49,7 @@ namespace Travellingfront.Pages.Admins.Places
                     return Page();
                 await turistPlaceService.AddTuristPlace(placeinput);
                 State = true;
-                return RedirectToPage("/Place");
+                return RedirectToPage("./Place");
             }
             catch (Exception e)
             {

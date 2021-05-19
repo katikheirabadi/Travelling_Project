@@ -1,0 +1,100 @@
+﻿@page
+@model Travellingfront.Pages.Users.UserUpdateModel
+@{
+}
+<head>
+    <link href="~/css/User/all.css" rel="stylesheet" />
+    <link href="~/css/User/user.css" rel="stylesheet" />
+    <link href="~/css/User/style.css" rel="stylesheet" />
+
+</head>
+<partial name="_StatusMessage" model="Model.StatusMessage" />
+<div class="text-center">
+
+    <div class="banner" style="background-image: url('../../header.jpg');">
+        <div class="container">
+            <div class="banner-text">
+                <div class="banner-heading">
+                    مدیریت رمز عبور
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container" style="direction: rtl;">
+        <div class="row">
+            <div class="col-lg-3 col-md-12">
+                <div class="panel-boxes">
+                    <div class="profile-head">
+                        <div class="profile-pic">
+                            <img src="~/profile.png">
+                        </div>
+                        <div class="profile-name text-right">
+                            <div>علی میرزایی</div>
+                            <div style="color: red;">کاربر</div>
+                        </div>
+                    </div>
+                    <div class="profile-foot fullsize">
+                        <div class="edit-profile profile-boxes">
+                            <a href="#">
+                                <img src="~/download.png" alt="Alternate Text" style="width: 25px; margin-bottom: 5px" />
+                                <div type="submit" class="nav-link btn btn-link"> ویرایش حساب</div>
+                            </a>
+                        </div>
+                        <div class="edit-profile profile-boxes">
+                            <form class="form-inline" asp-page="./LogOut"
+                                  asp-route-returnUrl="@Url.Page("/", new { area = "" })"
+                                  method="post">
+                                <button type="submit" class="nav-link btn btn-link">
+                                    <img src="~/Users-Exit-icon.png" alt="Alternate Text" style="width: 25px; margin-bottom: 5px" />
+                                    <br />
+                                    خروج از حساب
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                </div>
+                <div class="col-lg-9 col-md-12">
+                    <div class="account-infos panel-boxes fullsize text-right">
+                        <div class="allinfo-heading fullsize">
+                            <div>ویرایش رمز عبور</div>
+                        </div>
+                        <form action="#" method="post" style="margin: 20px 39px;">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <div class="form-group">
+                                <label for="comment">نام کاربری :</label>
+                                <input class="form-control" asp-for="Input.Username" type="text">
+                            </div>
+                            <div class="form-group">
+                                <label>نام و نام خانوادگی :</label>
+                                <input type="text" class="form-control" asp-for="Input.FullName" >
+                            </div>
+                            <div class="form-group">
+                                <label>کشور مورد علاقه :</label>
+                                <select class="custom-select mr-sm-2" id="inlineFormCustomSelect" asp-for="Input.FavoriteCountry" asp-items="ViewBag.countries"></select>
+                            </div>
+                            <div class="form-group">
+                                <label>دسته بندی مورد علاقه :</label>
+                                <select class="custom-select mr-sm-2" id="inlineFormCustomSelect" asp-for="Input.FavoriteCategory" asp-items="ViewBag.categories"></select>
+                            </div>
+                            <div class="form-group">
+                                <label>رمز عبور جدید :</label>
+                                <input type="password" class="form-control" asp-for="Input.Password">
+                            </div>
+                            <div class="form-group">
+                                <label>تکرار رمز عبور جدید :</label>
+                                <input type="password" class="form-control" asp-for="Input.RePassword">
+                            </div>
+                            <button type="submit" class="btn btn-success">ویرایش</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    @section Scripts {
+        <partial name="_ValidationScriptsPartial" />
+    }

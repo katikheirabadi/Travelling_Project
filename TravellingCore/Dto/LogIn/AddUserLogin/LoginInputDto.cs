@@ -16,5 +16,7 @@ namespace TravellingCore.Dto.LogIn
         [DisplayName("رمز عبور")]
         [Required(ErrorMessage = "پر کردن این فیلد الزامی می‌باشد")]
         public string Password { get; set; }
+
+        public bool Remember { get; set; }
     }
 }

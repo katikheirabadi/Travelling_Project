@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -21,36 +23,22 @@ namespace TravellingCore.ModelsServiceRepository.Models.Methods
     public class ComentService :ICommentService 
     {
         private readonly IRepository<Comment> CommentRepository;
-        private readonly IRepository<UserLogin> UserLoginRepository;
         private readonly IRepository<TuristPlace> TuristPlaceRepository;
         private readonly IMapper mapper;
+       
 
         public ComentService(IRepository<Comment> CommentRepository,
-                             IRepository<UserLogin> UserLoginRepository,
                              IRepository<TuristPlace> TuristPlaceRepository,
                              IMapper mapper)
         {
             this.CommentRepository = CommentRepository;
-            this.UserLoginRepository = UserLoginRepository;
             this.TuristPlaceRepository = TuristPlaceRepository;
             this.mapper = mapper;
-        }
-       
-        private async Task<UserLogin> FindUserLogin(string Token)
-        {
-            var users = await UserLoginRepository.GetAll();
-            var user = users.FirstOrDefault(u => u.Token == Token);
-            if (user == null)
-                throw new KeyNotFoundException("Not Found UserLogin");
-            return user;
-        }
-        private void IsExpiresdToken(UserLogin user, string Token)
-        {
-            TimeSpan time = user.ExpireDate.Date - DateTime.Now.Date;
-            if (time.TotalMilliseconds <= 0)
-                throw new ExpiredException("Yor Token Was Excpired");
             
         }
+       
+     
+       
         private TuristPlace FindPlace(string placename)
         {
             var places =  TuristPlaceRepository.GetQuery();
@@ -76,17 +64,16 @@ namespace TravellingCore.ModelsServiceRepository.Models.Methods
         }
         public async Task<string> AddComment(ComentInsertDto coment, string Token)
         {
-            var user = await FindUserLogin(Token);
-            IsExpiresdToken(user,Token);
-            var place = FindPlace(coment.TuristPlace);
-            CommentRepository.Insert(new Comment()
-            {
-                RecordDate = DateTime.Now,
-                Text = coment.comment,
-                UserId = user.UserId,
-                TuristPlaceId = place.Id
-            }) ;
-            await CommentRepository.Save();
+            //User user = await userManager.FindByIdAsync(User.Identity.GetUserId());
+            //var place = FindPlace(coment.TuristPlace);
+            //CommentRepository.Insert(new Comment()
+            //{
+            //    RecordDate = DateTime.Now,
+            //    Text = coment.comment,
+            //    UserId = user?.Id,
+            //    TuristPlaceId = place.Id
+            //}) ;
+            //await CommentRepository.Save();
             return "we add your coment .";
            
         }

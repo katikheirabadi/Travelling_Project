@@ -2,71 +2,94 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Extensions.Logging;
 using TravellingCore.Dto.Category.GetAllWithId;
 using TravellingCore.Dto.Country.GetAllCountries;
 using TravellingCore.Dto.Sign_in;
 using TravellingCore.Services.Models.Services.CategoryServise;
 using TravellingCore.Services.Models.Services.CountryService;
 using TravellingCore.Services.SigninServicefoulder;
+using TravellingCore.Model;
+using TravellingCore.Claims;
 
 namespace Travellingfront.Pages
 {
     public class SigninModel : PageModel
     {
-        private readonly IUserService userService;
+        private readonly SignInManager<User> _signInManager;
         private readonly ICountryService countryService;
         private readonly ICategoryServise categoryServise;
+        private readonly UserManager<User> _userManager;
+        private readonly ILogger<SigninModel> _logger;
+
+
+        public SigninModel(
+          UserManager<User> userManager,
+          SignInManager<User> signInManager,
+          ICountryService countryService,
+          ICategoryServise categoryServise,
+          ILogger<SigninModel> logger)
+        {
+            _userManager = userManager;
+            _signInManager = signInManager;
+            this.countryService = countryService;
+            this.categoryServise = categoryServise;
+            _logger = logger;
+        }
 
         [BindProperty]
         public SigninInputDTO Signin { get; set; }
+        public string ReturnUrl { get; set; }
 
-        [BindProperty]
-        public List<GetallCategoriesWithIdOutPutDto> Allcategories { get; set; }
-
-        [BindProperty]
-        public List<GetAllcountries> Allcountries { get; set; }
-
-        [BindProperty]
-        public bool State { get; set; }
-
-        public SigninModel(IUserService userService,
-                           ICountryService countryService,
-                           ICategoryServise categoryServise)
+        public  async Task OnGet(string returnUrl = null)
         {
-            this.userService = userService;
-            this.countryService = countryService;
-            this.categoryServise = categoryServise;
-        }
-        public async Task OnGet()
-        {
+            ReturnUrl = returnUrl;
             var countries = await countryService.GetAll();
             var categories = await categoryServise.GetAll();
 
             ViewData["Countries"] = new SelectList(countries, "Id", "Name");
             ViewData["categories"] = new SelectList(categories, "Id", "Name");
+
+           // return Task.CompletedTask;
         }
-        public async Task<IActionResult> OnPost()
+        public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
-            try
+            returnUrl = returnUrl ?? Url.Content("~/");
+            if (ModelState.IsValid)
             {
-                if (!ModelState.IsValid)
-                    return Page();
-                await userService.AddUser(Signin);
-                State = true;
-                return RedirectToPage("/Login");
+                var user = new TravellingCore.Model.User
+                {
+                    FullName = Signin.FullName,
+                    UserName = Signin.Username,
+                    Password = Signin.Password,
+                    RePassword = Signin.RePassword,
+                    PhoneNumber = Signin.PhoneNumber,
+                    FavoriteCategory = Signin.FavoriteCategory,
+                    FavoriteCountry = Signin.FavoriteCountry,
+                };
+
+
+                var result = await _userManager.CreateAsync(user, Signin.Password);
+                await _userManager.AddToRoleAsync(user, AppRole.User.ToString());
+                if (result.Succeeded)
+                {
+                    _logger.LogInformation("User created a new account with password.");
+
+                    await _signInManager.SignInAsync(user, isPersistent: false);
+                    return LocalRedirect(returnUrl);
+                }
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError(string.Empty, error.Description);
+                }
             }
-            catch (Exception e)
-            {
-                State = false;
-                ViewData["Error"] = e.Message;
-                return Page();
-               
-            }
-           
+
+            // If we got this far, something failed, redisplay form
+            return Page();
         }
-       
     }
 }

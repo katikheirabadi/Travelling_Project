@@ -23,8 +23,8 @@ namespace TravellingCore.Dto.Sign_in
         [DisplayName("شماره همراه")]
         public string PhoneNumber { get; set; }
         [DisplayName("کشور مورد علاقه")]
-        public int FavoriteCountry { get; set; }
+        public int? FavoriteCountry { get; set; }
         [DisplayName("دسته بندی مورد علاقه")]
-        public int FavoriteCategory { get; set; }
+        public int? FavoriteCategory { get; set; }
     }
 }

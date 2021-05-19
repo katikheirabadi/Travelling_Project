@@ -1,5 +1,5 @@
 ﻿@page
-@model Travellingfront.Pages.UserPannelModel
+@model Travellingfront.Pages.Users.UserPannelModel
 @{
 }
 <head>
@@ -28,23 +28,27 @@
                         <div class="profile-pic">
                             <img src="~/profile.png">
                         </div>
-                        <div class="profile-name text-right">
-                            <div>علی میرزایی</div>
-                            <div style="color: red;">کاربر</div>
+                        <div class="profile-name text-center" style="font-size:30px" >
+                            <div>@Model.Me.FullName</div>
                         </div>
                     </div>
                     <div class="profile-foot fullsize">
                         <div class="edit-profile profile-boxes">
-                            <a asp-page="./UserUpdate" >
+                            <a asp-page="./UserUpdate">
                                 <img src="~/download.png" alt="Alternate Text" style="width: 25px; margin-bottom: 5px" />
-                                <div> ویرایش حساب</div>
+                                <div type="submit" class="nav-link btn btn-link"> ویرایش حساب</div>
                             </a>
                         </div>
-                        <div class="logout-profile profile-boxes">
-                            <a asp-page="../Index">
-                                <img src="~/Users-Exit-icon.png" alt="Alternate Text" style="width: 25px; margin-bottom: 5px" />
-                                <div>خروج از حساب</div>
-                            </a>
+                        <div class="edit-profile profile-boxes">
+                            <form class="form-inline" asp-page="./LogOut"
+                                  asp-route-returnUrl="@Url.Page("/", new { area = "" })"
+                                  method="post">
+                                <button type="submit" class="nav-link btn btn-link">
+                                    <img src="~/Users-Exit-icon.png" alt="Alternate Text" style="width: 25px; margin-bottom: 5px" />
+                                    <br />
+                                    خروج از حساب
+                                </button>
+                            </form>
                         </div>
                     </div>
                 </div>

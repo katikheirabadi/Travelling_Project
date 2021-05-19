@@ -1,0 +1,20 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using TravellingCore.Model
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager
+
+<div class="container">
+    @if (SignInManager.IsSignedIn(User))
+    {
+        <button type="button" class="btn btn-light left-b">
+            <a class="nav-link "
+               title="Manage" asp-page="./Users/UserPannel">@User.Identity.Name!</a>
+        </button>
+
+    }
+    else
+    {
+        <button type="button" class="btn btn-light left-b"><a asp-page="/Signin">ثبت نام</a></button>
+        <button type="button" class="btn btn-outline-light"><a asp-page="/Login">ورود</a></button>
+    }
+</div>

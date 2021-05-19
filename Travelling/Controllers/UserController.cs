@@ -1,73 +1,61 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using TravellingCore.Claims;
 using TravellingCore.Dto.Sign_in;
-using TravellingCore.Dto.User.DeleteUser;
-using TravellingCore.Dto.User.GetUser;
-using TravellingCore.Dto.User.UpdateUser;
-using TravellingCore.ModelsServiceRepository.SigninRepository;
-using TravellingCore.Services.SigninServicefoulder;
+using TravellingCore.Model;
 
 namespace Travelling.Controllers
 {
-    [Route("api/[controller]/[action]")]
+    [Route("[controller]")]
     [ApiController]
     public class UserController : ControllerBase
     {
-        private readonly IUserService UserService;
+        private readonly SignInManager<User> signInManager;
+        private readonly UserManager<User> userManager;
 
-        public UserController(IUserService UserService)
+        public UserController(SignInManager<User> signInManager,
+                              UserManager<User> userManager)
         {
-            this.UserService = UserService;
+            this.signInManager = signInManager;
+            this.userManager = userManager;
         }
         [HttpPost]
-        public async Task<IActionResult> AddUser([FromBody]SigninInputDTO signinitem)
+        public async Task<IActionResult> Add(SigninInputDTO signin)
         {
-            if(!ModelState.IsValid)
-            {
-                return BadRequest();
-            }
-            var result =await UserService.AddUser(signinitem);
-            return Ok(result);
-        }
-        [HttpGet]
-        public async Task<IActionResult> ShowUser([FromBody] GetUserInputDto getinput)
-        {
+            var user = new User();
             if (!ModelState.IsValid)
-            {
                 return BadRequest();
-            }
-            var result = await UserService.ShowUser(getinput);
-            return Ok(result);
-        }
-        [HttpGet]
-        public async Task<IActionResult> ShowAll()
-        {
-            var result = await UserService.ShowAllUser();
-            return Ok(result);
-        }
-        [HttpDelete]
-        public async Task<IActionResult> DeleteUser([FromBody]DeleteUseiInputDto deleteinput)
-        {
-            if (!ModelState.IsValid)
+            else if (ModelState.IsValid)
             {
-                return BadRequest();
+                user.FullName = signin.FullName;
+                user.UserName = signin.Username;
+                user. Password = signin.Password;
+                user.RePassword = signin.RePassword;
+                user.PhoneNumber = signin.PhoneNumber;
+                user.FavoriteCategory = signin.FavoriteCategory;
+                user.FavoriteCountry = signin.FavoriteCountry;
             }
-            var result = await UserService.DeleteUser(deleteinput);
-            return Ok(result);
-        }
-        [HttpPut]
-        public async Task<IActionResult> UpdateUder([FromBody]UpdateUserOutputDto updateinput)
-        {
-            if (!ModelState.IsValid)
+            var result = await userManager.CreateAsync(user, signin.Password);
+            await userManager.AddToRoleAsync(user, AppRole.User.ToString());
+            if (result.Succeeded)
             {
-                return BadRequest();
+                await signInManager.SignInAsync(user, isPersistent: false);
+                return Ok();
+               
             }
-            var result = await UserService.UpdateUser(updateinput);
-            return Ok(result);
+            List<Object> errors = new List<object>();
+            foreach (var error in result.Errors)
+            {
+                // ModelState.AddModelError("", error.Description);
+                errors.Add(error.Description);
+            }
+
+            return BadRequest(errors);
+
         }
     }
 }
