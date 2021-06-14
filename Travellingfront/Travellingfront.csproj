@@ -5,6 +5,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Pages\Admins\PlaceCategories\**" />
+    <Compile Remove="Pages\Admins\Users\**" />
+    <Content Remove="Pages\Admins\PlaceCategories\**" />
+    <Content Remove="Pages\Admins\Users\**" />
+    <EmbeddedResource Remove="Pages\Admins\PlaceCategories\**" />
+    <EmbeddedResource Remove="Pages\Admins\Users\**" />
+    <None Remove="Pages\Admins\PlaceCategories\**" />
+    <None Remove="Pages\Admins\Users\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\TravellingCore\TravellingCore.csproj" />
     <ProjectReference Include="..\TravellingEF\TravellingEF.csproj" />
   </ItemGroup>

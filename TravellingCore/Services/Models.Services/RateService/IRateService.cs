@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TravellingCore.Dto.Rate;
 using TravellingCore.Dto.Rate.DeleteRate;
+using TravellingCore.Dto.Rate.GetAll;
 using TravellingCore.Dto.Rate.GetPlaceRates;
 using TravellingCore.Dto.Rate.GetRate;
 using TravellingCore.Dto.Rate.UpdateRate;
@@ -20,5 +21,6 @@ namespace TravellingCore.Services.Models.Services.RateService
         public Task<List<GetPlaceRatesOutputDto>> GetAllRatesOfPlace(GetPlaceRatesInputDto getplaceinput);
         public Task<string> DeleteRate(DeleterateInputDto deleterateinput);
         public Task<string> UpdateRate(UpdateRateInputDto updateinput);
+        public Task<List<GetAllOutPutDto>> GetAll();
     }
 }

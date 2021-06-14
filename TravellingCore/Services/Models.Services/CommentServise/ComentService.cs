@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using TravellingCore.ContextRepositoryInterface;
 using TravellingCore.Dto.Coment;
 using TravellingCore.Dto.Coment.DeleteComment;
+using TravellingCore.Dto.Coment.GetAllByIdComment;
 using TravellingCore.Dto.Coment.GetComment;
 using TravellingCore.Dto.Coment.GetPlaceComment;
 using TravellingCore.Dto.Coment.UpdateComment;
@@ -114,7 +115,7 @@ namespace TravellingCore.ModelsServiceRepository.Models.Methods
                 throw new KeyNotFoundException("not found any comment");
             return comments;
         }
-        public async Task<string> UpdateComment(UpdateCommentInputdto updateinput)
+        public async Task<string> UpdateComment(UpdateCommentInputdto updateinput) 
         {
             var comment = await FindComment(updateinput.CommentId);
             var text = comment.Text;
@@ -144,6 +145,12 @@ namespace TravellingCore.ModelsServiceRepository.Models.Methods
                                            .FirstOrDefault(c => c.Id == findcomment.Id);
 
             return mapper.Map<GetCoomentOutputDto>(findcomment);
+        }
+        public async Task<List<GetAllcommentByIdOutput>> GetAll()
+        {
+            var result = await CommentRepository.GetAll();
+            return result.Select(c => new GetAllcommentByIdOutput() { Id = c.Id, Text = c.Text, UserId = c.UserId, PlaceId = c.TuristPlaceId })
+                         .ToList();
         }
 
     }

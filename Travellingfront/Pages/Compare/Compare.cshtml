@@ -1,0 +1,70 @@
+﻿@page
+@model Travellingfront.Pages.Compare.CompareModel
+@{
+}
+<head>
+    <link href="~/css/Admin/admin.css" rel="stylesheet" />
+    <link href="~/css/Admin/all.css" rel="stylesheet" />
+    <link href="~/css/Admin/style.css" rel="stylesheet" />
+
+</head>
+<div class="text-center">
+    <div class="banner" style="background-image:url('image/compareheader.jpg');">
+        <div class="container">
+            <div class="banner-text">
+                <div class="banner-heading">
+                    مقایسه
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container comparebody">
+        <form action="#">
+            <div class="row">
+                <div class="col-xl-6">
+                    <div class="form-group">
+                        <h2 class="text-right">انتخاب جاذبه گردشگری اول</h2>
+                        <select class="select-turistplace form-control" asp-items="ViewBag.Places">
+                        </select>
+                    </div>
+                </div>
+                <div class="col-xl-6">
+                    <div class="form-group">
+                        <h2 class="text-right">انتخاب جاذبه گردشگری دوم</h2>
+                        <select class="select-turistplace form-control" asp-items="ViewBag.Places">
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <input type="submit" class="btn btn-primary" value="مقایسه" style="margin: 10px auto;">
+            </div>
+        </form>
+        @if (Model.State == true)
+        {
+            <div class="row compareshow" dir="rtl">
+                <div class="col-xl-12">
+                    <div class="row" style="border-bottom: 2px solid rgba(114, 114, 114, 0.514);">
+                        <div class="col-xl-6 top-boxes text-center" style="border-left: 2px solid rgba(114, 114, 114, 0.514);">
+                            <h4>@Model.compareOutput.FirstPlace جاذبه انتخابی اول : </h4>
+                            <p>میانگین رای : @Model.compareOutput.AverageRate1</p>
+                        </div>
+                        <div class="col-xl-6 top-boxes text-center">
+                            <h4>جاذبه انتخابی دوم :@Model.compareOutput.SecendPlace</h4>
+                            <p>میانگین رای : @Model.compareOutput.AverageRate2</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xl-12 top-boxes">
+                            <h5 class="text-center">نتیجه : @Model.compareOutput.Result</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+         else
+            {
+                <p>@ViewBag.Errore</p>
+            }
+    </div>
+</div>

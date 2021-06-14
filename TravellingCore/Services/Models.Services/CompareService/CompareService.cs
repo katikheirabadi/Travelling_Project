@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using TravellingCore.ContextRepositoryInterface;
 using TravellingCore.Model;
 using System.Linq;
+using TravellingCore.Dto.Compare;
 
 namespace TravellingCore.Services.Models.Services.CompareService
 {
@@ -20,35 +21,81 @@ namespace TravellingCore.Services.Models.Services.CompareService
             this.rate = rate;
             this.turistPlace = turistPlace;
         }
-
-        // get avarage rate of place
-        double Attraction(string Place)
+        private async Task<double> GetAverage(int TuricePlaceId)
         {
-            var FirstPlace = turistPlace.GetQuery()
-                                        .FirstOrDefault(x => x.Name.Contains(Place));
-
-            if (FirstPlace == null)
-                throw new KeyNotFoundException("not found this place");
-
-            var FirstPlaceId = FirstPlace.Id;
-
-            return rate.GetQuery()
-                       .Where(y => y.TuristPlaceId == FirstPlaceId)
-                       .Select(z => z.UserRate)
-                       .Average();
+            var computingRate = await rate.GetAll();
+            return computingRate.Where(r => r.TuristPlaceId == TuricePlaceId)
+                                .Average(r => r.UserRate);
         }
-
-        // compare place rate
-        public Task<string> CompareAttraction(string firstplace, string seccendplace)
+        private async Task<int> GetPlaceId(string placeName)
         {
-            if (Attraction(firstplace) > Attraction(seccendplace))
-                return Task.Run(() => { return $"{firstplace} محبوب تر از {seccendplace} است"; });
+            var compare = await turistPlace.GetAll();
 
-            else if (Attraction(seccendplace) > Attraction(firstplace))
-                return Task.Run(() => { return $"{seccendplace} محبوب تر از {firstplace} است"; });
+            return compare.Where(c => c.Name == placeName)
+                                  .Select(c => c.Id)
+                                  .FirstOrDefault();
+        }
+        public async Task<CompareOutputDto> Compare(CompareInputDTO compareInput)
+        {
+            var FirstPlaceId = await GetPlaceId(compareInput.FirstPlace);
+            var SecendPlaceId = await GetPlaceId(compareInput.SecendPlace);
 
+            var FirstPlaceRate = await GetAverage(FirstPlaceId);
+            var FirstPlaceIdRate = await GetAverage(SecendPlaceId);
+
+
+            if (FirstPlaceRate == FirstPlaceIdRate)
+            {
+                return new CompareOutputDto
+                {
+                    FirstPlace = compareInput.FirstPlace,
+
+                    SecendPlace = compareInput.SecendPlace,
+
+                    AverageRate1 = FirstPlaceId,
+
+                    AverageRate2 = SecendPlaceId,
+
+                    Result = "میانگین رای  این دو مکان توریستی با هم برابر است"
+                };
+            }
+            else if (FirstPlaceRate >= FirstPlaceIdRate)
+            {
+                return new CompareOutputDto
+                {
+                    FirstPlace = compareInput.FirstPlace,
+
+                    SecendPlace = compareInput.SecendPlace,
+
+                    AverageRate1 = FirstPlaceId,
+
+                    AverageRate2 = SecendPlaceId,
+
+                    Result = "میانگین رای " + compareInput.FirstPlace + "بیش تر از" + compareInput.SecendPlace
+
+                };
+             }
             else
-                return Task.Run(() => { return $"محبوبیت این دو مکان گردشگری برابر است"; });
+            {
+                return new CompareOutputDto
+                {
+                    FirstPlace = compareInput.FirstPlace,
+
+                    SecendPlace = compareInput.SecendPlace,
+
+                    AverageRate1 = FirstPlaceId,
+
+                    AverageRate2 = SecendPlaceId,
+
+                    Result = "میانگین رای " + compareInput.SecendPlace + "بیش تر از" + compareInput.FirstPlace
+
+                };
+            }
+            
+       
+       
         }
-    }
+
+
+    }   
 }

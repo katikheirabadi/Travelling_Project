@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using TravellingCore.ContextRepositoryInterface;
 using TravellingCore.Dto.Rate;
 using TravellingCore.Dto.Rate.DeleteRate;
+using TravellingCore.Dto.Rate.GetAll;
 using TravellingCore.Dto.Rate.GetPlaceRates;
 using TravellingCore.Dto.Rate.GetRate;
 using TravellingCore.Dto.Rate.UpdateRate;
@@ -135,6 +136,12 @@ namespace TravellingCore.ModelsServiceRepository.Models.Methods
             await RateRepository.Save();
 
             return result;
+        }
+        public async Task<List<GetAllOutPutDto>> GetAll()
+        {
+            var result1 = await RateRepository.GetAll();
+            return result1.Select(r => new GetAllOutPutDto() { Id = r.Id, Rate = r.UserRate, UserId = r.UserId, PlaceId = r.TuristPlaceId })
+                                 .ToList();
         }
 
     }
