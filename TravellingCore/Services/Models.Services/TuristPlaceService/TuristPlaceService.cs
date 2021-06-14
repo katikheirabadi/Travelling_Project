@@ -166,7 +166,6 @@ namespace TravellingCore.ModelsServiceRepository.Models.Methods
                                           Turism_Places = finall.ToList()
                                        };
         }
-
         public async Task<VisitOutputDto> View (VisitInputDto turistPlace)
         {
             var findplace =  await Findplace(turistPlace.TuristPlaceName);
@@ -183,7 +182,6 @@ namespace TravellingCore.ModelsServiceRepository.Models.Methods
                                                
           
         }
-
         public async Task<List<ViewOutputDto>> ShowVisit()
         {
             var reasult = await TuristPlaceRepository.GetAll();
@@ -194,18 +192,25 @@ namespace TravellingCore.ModelsServiceRepository.Models.Methods
         }
         public  Task<List<PopularOutputDto>> ShowPopular()
         {
+
             return TuristPlaceRepository.GetQuery()
                                                .Include(x => x.Rates)
-                                               .Select(x => new PopularOutputDto() {
-                                                Rate = x.Rates.Average(y => y.UserRate)
-                                               ,TuristPlaceName = x.Name
-                                               ,Visit = x.Visit
-                                               ,Id = x.Id
-                                               ,Image = x.Image
-                                                })
+                                               .Select(x => new PopularOutputDto()
+                                               {
+                                                   Rate = x.Rates.Average(y => y.UserRate)
+                                               ,
+                                                   TuristPlaceName = x.Name
+                                               ,
+                                                   Visit = x.Visit
+                                               ,
+                                                   Id = x.Id
+                                               ,
+                                                   Image = x.Image
+                                               })
                                                .OrderByDescending(z => z.Rate)
                                                .Take(4)
                                                .ToListAsync();
+
         }
 
         /*
@@ -215,9 +220,7 @@ namespace TravellingCore.ModelsServiceRepository.Models.Methods
         public async Task<GetplaceWithIdOutputDto> GetByid(int id)
         {
 
-            var place = TuristPlaceRepository.GetQuery().Include(p => p.Comments)
-                                                        .Include(p => p.Rates)
-                                                        .Include(p => p.Comments)
+            var place = TuristPlaceRepository.GetQuery().Include(p => p.Rates)
                                                         .ThenInclude(c => c.User)
                                                         .FirstOrDefault(p => p.Id == id);
             var endplace = new GetplaceWithIdOutputDto();
@@ -227,7 +230,6 @@ namespace TravellingCore.ModelsServiceRepository.Models.Methods
             endplace.Visit = place.Visit;
             endplace.Description = place.Description;
             endplace.AverageRates = place.Rates.Average(x => x.UserRate);
-            endplace.Comments = place.Comments.Select(c => new CommentDto() { Comment = c.Text, Name = c.User.FullName }).ToList();
 
             return endplace;
 
@@ -235,7 +237,7 @@ namespace TravellingCore.ModelsServiceRepository.Models.Methods
         public async Task<List<GetAllPlaces>> ShowAll()
         {
             var places = await TuristPlaceRepository.GetAll();
-            var myplaces = places.Select(p => new GetAllPlaces() { id = p.Id, Naame = p.Name }).ToList();
+            var myplaces = places.Select(p => new GetAllPlaces() { id = p.Id, Name = p.Name }).ToList();
             return myplaces;
         } 
         public async Task<string> DeleteById(int id)

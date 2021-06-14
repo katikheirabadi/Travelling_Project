@@ -12,6 +12,5 @@ namespace TravellingCore.Dto.TuristPlaces.GetPlaceWithId
         public string Description { get; set; }
         public int Visit { get; set; }
         public double AverageRates { get; set; }
-        public List<CommentDto> Comments { get; set; }
     }
 }

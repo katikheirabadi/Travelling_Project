@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TravellingCore.ContextRepositoryInterface;
+using TravellingCore.Dto.TuristPlaceCategory.GetAll;
 using TravellingCore.Dto.TuristPlaceCategory.Regisster;
 using TravellingCore.Exceptions;
 using TravellingCore.Model;
@@ -68,6 +70,7 @@ namespace TravellingCore.Services.Models.Services.TuristPlaceCategoryServise
             return relation;
 
         }
+
         public async Task<string> Register(RegisterInputDto registerinput)
         {
             var findplace = await FindPlace(registerinput.TuristPlace);
@@ -99,6 +102,23 @@ namespace TravellingCore.Services.Models.Services.TuristPlaceCategoryServise
             return result;
 
         }
+        public async Task<List<GetturistPlaceOutputDto>> GetAll()
+        {
+            var placecategories = await TuristPlaceCategoryRepository.GetAll();
+            return placecategories.Select(pr => new GetturistPlaceOutputDto()
+            {
+                Id = pr.Id,
+                CategoryId = pr.CategoryId,
+                PlacrId = pr.TuristPlaceId
+            }).ToList();
+
+        }
+        public async Task DeleteById(int Id)
+        {
+            TuristPlaceCategoryRepository.Delete(Id);
+            await TuristPlaceCategoryRepository.Save();
+        }
+        
 
     }
 }

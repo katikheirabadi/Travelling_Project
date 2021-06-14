@@ -21,8 +21,9 @@ namespace Travellingfront.Pages
         [BindProperty]
         public GetCategoryByIdOutput Category { get; set; }
 
-        public async Task OnGet(int id)
+        public async Task OnGet(int id, string returnUrl = null)
         {
+            returnUrl = returnUrl ?? Url.Content("~/");
             Category = await categoryServise.GetCategoryById(id);
         }
     }

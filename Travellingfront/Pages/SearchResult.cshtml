@@ -16,7 +16,7 @@
         </div>
     </div>
     <section id="about">
-        <div class="container">
+        <div class="container secend">
             <form id="form">
                 <div class="row" style="direction: rtl;">
                     <div class="col-lg-12">
@@ -40,132 +40,15 @@
                 </div>
             </form>
 
-
-            <div class="row tp-item-row item" id="1">
-                <div class="col-xl-9 text-right">
-                    <h3> <a id="name1"></a></h3>
-                    <p class="tp-item-p text-right" id="description1">
-                    </p>
-                    <div class="float-left">
-                        <span class="fa fa-star" id="1s"></span>
-                        <span class="fa fa-star" id="12s"></span>
-                        <span class="fa fa-star" id="13s"></span>
-                        <span class="fa fa-star"id="14s"></span>
-                        <span class="fa fa-star" id="15s"></span>
-                        <span class="btn btn-info" >تعداد کامنت :<i id="comment1"></i> </span>
-                        <span class="text-info" id="v1">تعداد بازدید :  <i id="visit1"></i></span>
-                    </div>
-                </div>
-                <div class="col-xl-3 text-center">
-                    <div>
-                        <img class="tp-item-image mx-auto" id="im1">
-                    </div>
-                </div>
-            </div>
-
-
-            <div class="row tp-item-row item" id="2">
-                <div class="col-xl-9 text-right">
-                    <h3> <a id="name2"></a></h3>
-                    <p class="tp-item-p text-right" id="description2">
-                    </p>
-                    <div class="float-left">
-                        <span class="fa fa-star" id="2s"></span>
-                        <span class="fa fa-star" id="22s"></span>
-                        <span class="fa fa-star" id="23s"></span>
-                        <span class="fa fa-star" id="24s"></span>
-                        <span class="fa fa-star" id="25s"></span>
-                        <span class="btn btn-info">تعداد کامنت :<i id="comment2"></i> </span>
-                        <span class="text-info">تعداد بازدید :<i id="visit2"></i> </span>
-                    </div>
-                </div>
-                <div class="col-xl-3 text-center">
-                    <div>
-                        <img class="tp-item-image mx-auto" id="im2">
-                    </div>
-                </div>
-            </div>
-
-            <div class="row tp-item-row item" id="3">
-                <div class="col-xl-9 text-right">
-                    <h3> <a id="name3"></a></h3>
-                    <p class="tp-item-p text-right" id="description3">
-                    </p>
-                    <div class="float-left">
-                        <span class="fa fa-star" id="3s"></span>
-                        <span class="fa fa-star" id="32s"></span>
-                        <span class="fa fa-star" id="33s"></span>
-                        <span class="fa fa-star" id="34s"></span>
-                        <span class="fa fa-star" id="35s"></span>
-                        <span class="btn btn-info">تعداد کامنت :<i id="comment3"></i>  </span>
-                        <span class="text-info">تعداد بازدید : <i id="visit3"></i> </span>
-                    </div>
-                </div>
-                <div class="col-xl-3 text-center">
-                    <div>
-                        <img class="tp-item-image mx-auto" id="im3">
-                    </div>
-                </div>
-            </div>
-
-
-            <div class="row tp-item-row item" id="4">
-                <div class="col-xl-9 text-right">
-                    <h3> <a id="name4"></a></h3>
-                    <p class="tp-item-p text-right" id="description4">
-
-                    </p>
-                    <div class="float-left">
-                        <span class="fa fa-star" id="4s"></span>
-                        <span class="fa fa-star" id="42s"></span>
-                        <span class="fa fa-star" id="43s"></span>
-                        <span class="fa fa-star" id="44s"></span>
-                        <span class="fa fa-star" id="45s"></span>
-                        <span class="btn btn-info">تعداد کامنت : <i id="comment4"></i> </span>
-                        <span class="text-info">تعداد بازدید : <i id="visit4"></i> </span>
-                    </div>
-                </div>
-                <div class="col-xl-3 text-center">
-                    <div>
-                        <img id="im4" class="tp-item-image mx-auto">
-                    </div>
-                </div>
-            </div>
-
-
-            <div class="row tp-item-row item" id="5">
-                <div class="col-xl-9 text-right">
-                    <h3 ><a id="name5"></a></h3>
-                    <p class="tp-item-p text-right" id="description5">
-                    </p>
-                    <div class="float-left">
-                        <span class="fa fa-star" id="5s"></span>
-                        <span class="fa fa-star" id="52s"></span>
-                        <span class="fa fa-star" id="53s"></span>
-                        <span class="fa fa-star" id="54s"></span>
-                        <span class="fa fa-star" id="55s"></span>
-                        <span class="btn btn-info">تعداد کامنت :<i id="comment5"></i> </span>
-                        <span class="text-info">تعداد بازدید : 25<i id="visit5"></i> </span>
-                    </div>
-                </div>
-                <div class="col-xl-3 text-center">
-                    <div>
-                        <img id="im5" class="tp-item-image mx-auto">
-                    </div>
-                </div>
-            </div>
-
         </div>
     </section>
 
 </div>
 @section scripts{
     <script type="text/javascript">
-
         $(function () {
-            $(".item").hide();
             $("#search").click(function () {
-                console.log("yes");
+                $(".item").hide();
                 var city = $("#city").val();
                 if (city == "شهر") {
                     city = null;
@@ -174,161 +57,35 @@
                 if (country == "کشور") {
                     country = null;
                 }
-                console.log(country, city);
                 $.get("https://localhost:44375/api/Search/SearchByFilter", { CountryId: country, CityId: city }, function (data, status) {
-                    console.log(data[0]);
-                    if (data.length >= 1)
-                    {
-                        $("#1").show();
-                        $("#name1").text(data[0].turistPlaceName);
-                        $("#description1").text(data[0].description);
-                        $("#comment1").text(data[0].commentsNumber);
-                        $("#visit1").text(data[0].visit);
-                        $("#im1").attr("src", data[0].image);
-                        var count = data[0].averageRates;
-                        if (count != 0) {
-                            $("#1s").addClass("checked");
+                    for (var i = 0; i < data.length; i++) {
+                        console.log(data[i]);
+                        $(".secend").append("<div class='row tp-item-row item'></div>");
+                        $(".tp-item-row").last().append("<div class='col-xl-9 text-right'></div>");
+                        $(".col-xl-9").last().append("<h3>" + data[i].turistPlaceName + "</h3>");
+                        $(".col-xl-9").last().append("<p class='tp-item-p text-right'>" + data[i].description + "</p>");
+                        $(".col-xl-9").last().append("<div class='float-left'></div>");
+                        var count = data[i].averageRates;
+                        var star = 0;
+                        while (count != 0) {
+                            $(".float-left").last().append("<span class='fa fa-star checked'></span>")
                             count--;
+                            star++;
                         }
-                        if (count != 0) {
-                            $("#12s").addClass("checked");
-                            count--;
+                        while (star < 5) {
+                            $(".float-left").last().append("<span class='fa fa-star '></span>")
+                            star++;
                         }
-                        if (count != 0) {
-                            $("#13s").addClass("checked");
-                            count--;
-                        }
-                        if (count != 0) {
-                            $("#14s").addClass("checked");
-                            count--;
-                        }
-                        if (count != 0) {
-                            $("#15").addClass("checked");
-                            count--;
-                        }
+                        $(".float-left").last().append("<span class='btn btn-info' >تعداد کامنت :" + data[i].commentsNumber +"</span>");
+                        $(".float-left").last().append("<span class='text-info' >تعداد بازدید :" + data[i].visit + "</span>");
 
+                        $(".tp-item-row").last().append("<div class='col-xl-3 text-center'></div>");
+                        $(".col-xl-3").last().append("<div><img class='tp-item-image mx-auto' id=img></div>");
+                        $(".tp-item-image").last().attr("src", data[i].image);
+                        
                     }
-                    if (data.length >= 2)
-                    {
-                        $("#2").show();
-                        $("#name2").text(data[1].turistPlaceName);
-                        $("#description2").text(data[1].description);
-                        $("#comment2").text(data[1].commentsNumber);
-                        $("#visit2").text(data[1].visit);
-                        $("#im2").attr("src", data[1].image);
-                        var count = data[1].averageRates;
-                        if (count != 0) {
-                            $("#2s").addClass("checked");
-                            count--;
-                        }
-                        if (count != 0) {
-                            $("#22s").addClass("checked");
-                            count--;
-                        }
-                        if (count != 0) {
-                            $("#23s").addClass("checked");
-                            count--;
-                        }
-                        if (count != 0) {
-                            $("#24s").addClass("checked");
-                            count--;
-                        }
-                        if (count != 0) {
-                            $("#25").addClass("checked");
-                            count--;
-                        }
-                    }
+                       
 
-                    if (data.length >= 3) {
-                        $("#3").show();
-                        $("#name3").text(data[2].turistPlaceName);
-                        $("#description3").text(data[2].description);
-                        $("#comment3").text(data[2].commentsNumber);
-                        $("#visit3").text(data[2].visit);
-                        $("#im3").attr("src", data[2].image);
-                        var count = data[2].averageRates;
-                        if (count != 0) {
-                            $("#3s").addClass("checked");
-                            count--;
-                        }
-                        if (count != 0) {
-                            $("#32s").addClass("checked");
-                            count--;
-                        }
-                        if (count != 0) {
-                            $("#33s").addClass("checked");
-                            count--;
-                        }
-                        if (count != 0) {
-                            $("#34s").addClass("checked");
-                            count--;
-                        }
-                        if (count != 0) {
-                            $("#35").addClass("checked");
-                            count--;
-                        }
-                    }
-
-                    if (data.length >= 4) {
-                        $("#4").show();
-                        $("#name4").text(data[3].turistPlaceName);
-                        $("#description4").text(data[3].description);
-                        $("#comment4").text(data[3].commentsNumber);
-                        $("#visit4").text(data[3].visit);
-                        $("#im4").attr("src", data[3].image);
-                        var count = data[3].averageRates;
-                        if (count != 0) {
-                            $("#4s").addClass("checked");
-                            count--;
-                        }
-                        if (count != 0) {
-                            $("#42s").addClass("checked");
-                            count--;
-                        }
-                        if (count != 0) {
-                            $("#43s").addClass("checked");
-                            count--;
-                        }
-                        if (count != 0) {
-                            $("#44s").addClass("checked");
-                            count--;
-                        }
-                        if (count != 0) {
-                            $("#45").addClass("checked");
-                            count--;
-                        }
-                    }
-
-                    if (data.length >= 5) {
-                        $("#5").show();
-                        $("#name5").text(data[4].turistPlaceName);
-                        $("#description5").text(data[4].description);
-                        $("#comment5").text(data[4].commentsNumber);
-                        $("#visit5").text(data[4].visit);
-                        $("#im5").attr("src", data[4].image);
-                        var count = data[4].averageRates;
-                        if (count != 0) {
-                            $("#5s").addClass("checked");
-                            count--;
-                        }
-                        if (count != 0) {
-                            $("#52s").addClass("checked");
-                            count--;
-                        }
-                        if (count != 0) {
-                            $("#53s").addClass("checked");
-                            count--;
-                        }
-                        if (count != 0) {
-                            $("#54s").addClass("checked");
-                            count--;
-                        }
-                        if (count != 0) {
-                            $("#55").addClass("checked");
-                            count--;
-                        }
-                    }
-                
                 });
                 
             });

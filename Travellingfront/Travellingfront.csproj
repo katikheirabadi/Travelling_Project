@@ -10,8 +10,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Pages\Admins\PlaceCategories\" />
-    <Folder Include="Pages\Admins\Users\" />
     <Folder Include="wwwroot\css\fonts\" />
     <Folder Include="wwwroot\image\" />
   </ItemGroup>

@@ -17,7 +17,6 @@ using TravellingCore.Services.SigninServicefoulder;
 namespace Travellingfront.Pages.Admins
 {
     [Authorize(Roles = RoleNames.Admin)]
-    
     public class AdminpannelModel : PageModel
     {
         private readonly ITuristPlaceService turistPlaceService;
@@ -26,7 +25,6 @@ namespace Travellingfront.Pages.Admins
         private readonly ICityService cityService;
         private readonly ICommentService commentService;
         private readonly IRateService rateService;
-        private readonly IUserService userService;
 
         [BindProperty]
         public int PlaceNumber { get; set; }
@@ -40,18 +38,13 @@ namespace Travellingfront.Pages.Admins
         public int CommentNumber { get; set; }
         [BindProperty]
         public int RateNumber { get; set; }
-        [BindProperty]
-        public int UserNumber { get; set; }
-        [BindProperty]
-        public int LoginNumber { get; set; }
-
+       
         public AdminpannelModel(ITuristPlaceService TuristPlaceService,
                                 ICategoryServise categoryServise,
                                 ICountryService countryService,
                                 ICityService cityService,
                                 ICommentService commentService,
-                                IRateService rateService,
-                                IUserService userService
+                                IRateService rateService
                                )
         {
             turistPlaceService = TuristPlaceService;
@@ -60,7 +53,6 @@ namespace Travellingfront.Pages.Admins
             this.cityService = cityService;
             this.commentService = commentService;
             this.rateService = rateService;
-            this.userService = userService;
         }
         public  async Task OnGet()
         {

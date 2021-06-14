@@ -24,15 +24,18 @@ namespace TravellingCore.ModelsServiceRepository.Models.Methods
     {
         private readonly IRepository<Comment> CommentRepository;
         private readonly IRepository<TuristPlace> TuristPlaceRepository;
+        private readonly UserManager<User> userManager;
         private readonly IMapper mapper;
        
 
         public ComentService(IRepository<Comment> CommentRepository,
                              IRepository<TuristPlace> TuristPlaceRepository,
+                             UserManager<User> userManager,
                              IMapper mapper)
         {
             this.CommentRepository = CommentRepository;
             this.TuristPlaceRepository = TuristPlaceRepository;
+            this.userManager = userManager;
             this.mapper = mapper;
             
         }
@@ -62,20 +65,28 @@ namespace TravellingCore.ModelsServiceRepository.Models.Methods
             
             return comment;
         }
-        public async Task<string> AddComment(ComentInsertDto coment, string Token)
+        public async Task<string> AddComment(ComentInsertDto coment)
         {
-            //User user = await userManager.FindByIdAsync(User.Identity.GetUserId());
-            //var place = FindPlace(coment.TuristPlace);
-            //CommentRepository.Insert(new Comment()
-            //{
-            //    RecordDate = DateTime.Now,
-            //    Text = coment.comment,
-            //    UserId = user?.Id,
-            //    TuristPlaceId = place.Id
-            //}) ;
-            //await CommentRepository.Save();
-            return "we add your coment .";
-           
+            var places = await TuristPlaceRepository.GetAll();
+            var place = places.Find(p => p.Id == coment.TuristPlace);
+            try
+            {
+                var user = await userManager.FindByIdAsync(coment.UserId);
+                CommentRepository.Insert(new Comment()
+                {
+                    RecordDate = DateTime.Now,
+                    Text = coment.comment,
+                    TuristPlaceId = place.Id,
+                    UserId = user.Id
+                });
+                await CommentRepository.Save();
+                return "we add your comment .";
+            }
+            catch
+            {
+                throw new KeyNotFoundException("not found this user");
+            }
+
         }
         public Task<List<GetCommentOutputDto>> ShowAllComments()
         {

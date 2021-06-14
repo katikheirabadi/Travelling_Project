@@ -84,26 +84,7 @@ namespace TravellingCore.Services.Models.Services.SearchServise
             }
          
             return result;
-            /*var first = TuristPlaceRepository.GetQuery()
-                                             .Include(x => x.Country)
-                                             .ThenInclude(x => x.TuristPlaces)
-                                             .Where(y => y.Country.Id == filterInputDTO.CountryId).ToList();
-
-            var second = TuristPlaceRepository.GetQuery()
-                                              .Include(x => x.City)
-                                              .ThenInclude(x => x.TuristPlaces)
-                                              .Where(x => x.City.Id == filterInputDTO.CityId).ToList();
-
-
-
-            var finall = (from a in first join b in second on a.Id equals b.Id select b).ToList();
-            var result = mapper.Map<List<FilterOutputDetailDTO>>(finall);
-
-            var end = new FilterOutputDTO()
-            {
-                Places = result.ToArray()
-            };
-            return end;*/
+           
 
         }
         public Task<List<CategoryOutputDto>> SearchByCategory(CategoryInputDto category)

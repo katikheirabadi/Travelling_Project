@@ -1,23 +1,24 @@
 ﻿@page
-@model Travellingfront.Pages.Admins.Cities.CityModel
+@model Travellingfront.Pages.Admins.PlaceCategories.ShowAllModel
 @{
 }
 <head>
     <link href="~/css/Admin/admin.css" rel="stylesheet" />
     <link href="~/css/Admin/all.css" rel="stylesheet" />
     <link href="~/css/Admin/style.css" rel="stylesheet" />
+
 </head>
 <div class="text-center">
-    <div class="banner" style="background-image:url('../../adminbg.jpg');">
+
+    <div class="banner" style="background-image: url('../../adminbg.jpg');">
         <div class="container">
             <div class="banner-text">
                 <div class="banner-heading">
-                    مدیریت شهر ها
+                    مدیریت رابطه جاذبه ها و دسسته بندی ها
                 </div>
             </div>
         </div>
     </div>
-
     <div class="body-of-admin">
         <div class="container" style="direction: rtl;">
             <div class="row">
@@ -43,7 +44,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="#">
+                                <a asp-page="../Cities/City">
                                     <i class='fas fa-map-marker-alt'></i>
                                     شهر ها
                                 </a>
@@ -61,13 +62,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="users.html">
-                                    <i class='fas fa-id-card'></i>
-                                    کاربران
-                                </a>
-                            </li>
-                            <li>
-                                <a href="userlogins.html">
+                                <a href="#">
                                     <i class='fas fa-user-clock'></i>
                                     جاذبه و دسته بندی
                                 </a>
@@ -85,18 +80,20 @@
                             <thead class="thead-dark">
                                 <tr>
                                     <th>شناسه</th>
-                                    <th>نام</th>
+                                    <th>شناسه جاذبه گردشگری</th>
+                                    <th>دسته بندی</th>
                                     <th>عملیات</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @for (int i = 0; i < Model.Cities.Count; i++)
+                                @for (int i = 0; i < Model.PlaceCategories.Count; i++)
                                 {
                                     <tr>
-                                        <td>@Model.Cities[i].Id</td>
-                                        <td>@Model.Cities[i].Name</td>
+                                        <td>@Model.PlaceCategories[i].Id</td>
+                                        <td>@Model.PlaceCategories[i].PlacrId</td>
+                                        <td>@Model.PlaceCategories[i].CategoryId</td>
                                         <td>
-                                            <a asp-page="./Delete" asp-route-id="@Model.Cities[i].Id" class="btn btn-danger">حذف</a>
+                                            <a asp-page="./Delete" asp-route-id="@Model.PlaceCategories[i].Id" class="btn btn-danger">حذف</a>
                                         </td>
                                     </tr>
                                 }

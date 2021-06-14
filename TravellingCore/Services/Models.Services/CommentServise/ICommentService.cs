@@ -14,7 +14,7 @@ namespace TravellingCore.Services.Models.Services.CommentServise
 {
     public interface ICommentService 
     {
-        public Task<string> AddComment(ComentInsertDto coment, string Token);
+        public Task<string> AddComment(ComentInsertDto coment);
         public Task<GetCoomentOutputDto> GetComment(GetCommentInputDto getinput);
         public Task<List<GetCommentOutputDto>> ShowAllComments();
         public Task<List<GetPlacecommentsOutputDto>> ShowPlaceComments(GetPlaceCommentsInputDto getinput);

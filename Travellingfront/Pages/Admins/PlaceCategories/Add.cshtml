@@ -1,23 +1,23 @@
 ﻿@page
-@model Travellingfront.Pages.Admins.Cities.CityModel
+@model Travellingfront.Pages.Admins.PlaceCategories.AddModel
 @{
 }
 <head>
     <link href="~/css/Admin/admin.css" rel="stylesheet" />
     <link href="~/css/Admin/all.css" rel="stylesheet" />
     <link href="~/css/Admin/style.css" rel="stylesheet" />
+
 </head>
 <div class="text-center">
-    <div class="banner" style="background-image:url('../../adminbg.jpg');">
+    <div class="banner" style="background-image: url('../../adminbg.jpg');">
         <div class="container">
             <div class="banner-text">
                 <div class="banner-heading">
-                    مدیریت شهر ها
+                    ایجاد رابطه جاذبه ها و دسسته بندی ها
                 </div>
             </div>
         </div>
     </div>
-
     <div class="body-of-admin">
         <div class="container" style="direction: rtl;">
             <div class="row">
@@ -25,7 +25,7 @@
                     <div class="account-info-box fullsize panel-boxes text-right">
                         <ul class="account-nav fullsize">
                             <li>
-                                <a asp-page="../Places/Place">
+                                <a asp-page="../Places/place">
                                     <i class='far fa-map'></i>
                                     جاذبه های گردشگری
                                 </a>
@@ -43,7 +43,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="#">
+                                <a asp-page="../Cities/City">
                                     <i class='fas fa-map-marker-alt'></i>
                                     شهر ها
                                 </a>
@@ -61,13 +61,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="users.html">
-                                    <i class='fas fa-id-card'></i>
-                                    کاربران
-                                </a>
-                            </li>
-                            <li>
-                                <a href="userlogins.html">
+                                <a asp-page="./ShowAll">
                                     <i class='fas fa-user-clock'></i>
                                     جاذبه و دسته بندی
                                 </a>
@@ -77,35 +71,35 @@
                 </div>
                 <div class="col-lg-9 col-md-12">
                     <div class="account-infos panel-boxes fullsize text-right">
-                        <div class="jazebe allinfo-heading fullsize">
-                            <div>شهر ها</div>
-                            <div class="jazebe-btn"><a asp-page="./Add" class="btn btn-primary">ایجاد</a></div>
+                        <div class="allinfo-heading fullsize">
+                            <div>افزودن رابطه</div>
                         </div>
-                        <table class="table">
-                            <thead class="thead-dark">
-                                <tr>
-                                    <th>شناسه</th>
-                                    <th>نام</th>
-                                    <th>عملیات</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @for (int i = 0; i < Model.Cities.Count; i++)
-                                {
-                                    <tr>
-                                        <td>@Model.Cities[i].Id</td>
-                                        <td>@Model.Cities[i].Name</td>
-                                        <td>
-                                            <a asp-page="./Delete" asp-route-id="@Model.Cities[i].Id" class="btn btn-danger">حذف</a>
-                                        </td>
-                                    </tr>
-                                }
-                            </tbody>
-                        </table>
+                        <form method="post" style="margin: 20px 39px;">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            < <div class="form-group">
+                                <label> دسته بندی :</label>
+                                <select class="custom-select mr-sm-2" id="inlineFormCustomSelect" asp-for="NewPlaceCategory.Category" asp-items="ViewBag.Categories"></select>
+                                <span asp-validation-for="NewPlaceCategory.Category" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label> جاذبه گردشگری :</label>
+                                <select class="custom-select mr-sm-2" id="inlineFormCustomSelect" asp-for="NewPlaceCategory.TuristPlace" asp-items="ViewBag.Places"></select>
+                                <span asp-validation-for="NewPlaceCategory.TuristPlace" class="text-danger"></span>
+                            </div>
+                            <button type="submit" class="btn btn-primary">ایجاد</button>
+                            @if (Model.State == false)
+                            {
+                                <div>
+                                    <span class="text-danger">@ViewBag.Error</span>
+                                </div>
+                            }
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
 </div>
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
