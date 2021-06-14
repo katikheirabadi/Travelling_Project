@@ -19,12 +19,12 @@ namespace Travelling.Controllers
             this.compareService = compareService;
         }
         [HttpGet]
-        public async Task<IActionResult> CompareAttraction([FromBody] CompareInputDTO compareInputDTO)
+        public async Task<IActionResult> Compare([FromBody] CompareInputDTO compareInputDTO)
         {
             if (!ModelState.IsValid)
                 return BadRequest();
 
-            var result = await compareService.CompareAttraction(compareInputDTO.FirstPlace, compareInputDTO.SecendPlace);
+            var result = await compareService.Compare(compareInputDTO);
             return Ok(result);
         }
     }

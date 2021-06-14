@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TravellingCore.Dto.Coment;
 using TravellingCore.Dto.Coment.DeleteComment;
+using TravellingCore.Dto.Coment.GetAllByIdComment;
 using TravellingCore.Dto.Coment.GetComment;
 using TravellingCore.Dto.Coment.GetPlaceComment;
 using TravellingCore.Dto.Coment.UpdateComment;
@@ -20,6 +21,7 @@ namespace TravellingCore.Services.Models.Services.CommentServise
         public Task<List<GetPlacecommentsOutputDto>> ShowPlaceComments(GetPlaceCommentsInputDto getinput);
         public Task<string> UpdateComment(UpdateCommentInputdto updateinput);
         public Task<string> DeleteComment(DeleteCommentInputDto deleteinput);
+        public Task<List<GetAllcommentByIdOutput>> GetAll();
 
     }
 }

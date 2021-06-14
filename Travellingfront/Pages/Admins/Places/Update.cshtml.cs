@@ -21,7 +21,7 @@ namespace Travellingfront.Pages.Admins.Places
         public UpdatePlaceInputDto UpdatePlace { get; set; }
         [ModelBinder]
         public bool State { get; set; }
-
+         
         public UpdateModel(ITuristPlaceService turistPlaceService)
         {
             this.turistPlaceService = turistPlaceService;

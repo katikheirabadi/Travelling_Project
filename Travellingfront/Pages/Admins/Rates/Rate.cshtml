@@ -1,19 +1,19 @@
 ﻿@page
-@model Travellingfront.Pages.Admins.Places.PlaceModel
+@model Travellingfront.Pages.Admins.Rates.RateModel
 @{
 }
 <head>
     <link href="~/css/Admin/admin.css" rel="stylesheet" />
-    <link href="~/css/Admin/all.css" rel="stylesheet" /> 
+    <link href="~/css/Admin/all.css" rel="stylesheet" />
     <link href="~/css/Admin/style.css" rel="stylesheet" />
 
 </head>
 <div class="text-center">
-    <div class="banner" style="background-image: url('../../adminbg.jpg');">
+    <div class="banner" style="background-image:url('../../adminbg.jpg');">
         <div class="container">
             <div class="banner-text">
                 <div class="banner-heading">
-                    مدیریت جاذبه های گردشگری
+                    مدیریت رای ها
                 </div>
             </div>
         </div>
@@ -23,10 +23,10 @@
         <div class="container" style="direction: rtl;">
             <div class="row">
                 <div class="col-lg-3 col-md-12">
-                    <div class="panel-boxes">
+                    <div class="account-info-box fullsize panel-boxes text-right">
                         <ul class="account-nav fullsize">
                             <li>
-                                <a asp-page="#">
+                                <a asp-page="../Places/Place">
                                     <i class='far fa-map'></i>
                                     جاذبه های گردشگری
                                 </a>
@@ -56,7 +56,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="../Rates/Rate">
+                                <a href="#">
                                     <i class='fas fa-star'></i>
                                     رای ها
                                 </a>
@@ -73,29 +73,40 @@
                 <div class="col-lg-9 col-md-12">
                     <div class="account-infos panel-boxes fullsize text-right">
                         <div class="jazebe allinfo-heading fullsize">
-                            <div>جاذبه های گردشگری</div>
-                            <div class="jazebe-btn"><a asp-page="./Add" class="btn btn-primary">ایجاد</a></div>
+                            <div>رای ها</div>
                         </div>
                         <table class="table">
                             <thead class="thead-dark">
                                 <tr>
                                     <th>شناسه</th>
-                                    <th>نام</th>
+                                    <th>رای</th>
+                                    <th>شناسه کاربر</th>
+                                    <th>شناسه جاذبه</th>
                                     <th>عملیات</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @for (int i = 0; i < Model.places.Count; i++)
+                                @for (int i = 0; i < Model.Rates.Count; i++)
                                 {
                                     <tr>
-                                        <td>@Model.places[i].id</td>
-                                        <td>@Model.places[i].Naame</td>
+                                        <td>@Model.Rates[i].Id</td>
                                         <td>
-                                            <a asp-page="./Delete" asp-route-id="@Model.places[i].id" class="btn btn-danger" >حذف</a>
-                                            <a asp-page="./Update" asp-route-id="@Model.places[i].id" class="btn btn-success">ویرایش</a>
+                                            @for (int j = 0; j < Model.Rates[i].Rate; j++)
+                                            {
+                                                <span class="fa fa-star checked"></span>
+                                            }
+                                            @while (5 - Model.Rates[i].Rate > 0)
+                                            {
+                                                <span class="fa fa-star "></span>
+                                                Model.Rates[i].Rate++;
+                                            }
+                                        </td>
+                                        <td>@Model.Rates[i].UserId</td>
+                                        <td>@Model.Rates[i].PlaceId</td>
+                                        <td>
+                                            <a asp-page="./Delete"  asp-route-id="@Model.Rates[i].Id" class="btn btn-danger" >حذف</a>
                                         </td>
                                     </tr>
-
                                 }
 
                             </tbody>

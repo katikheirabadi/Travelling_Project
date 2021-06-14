@@ -1,10 +1,10 @@
 ﻿@page
-@model Travellingfront.Pages.Admins.Places.PlaceModel
+@model Travellingfront.Pages.Admins.Comments.UpdateModel
 @{
 }
 <head>
     <link href="~/css/Admin/admin.css" rel="stylesheet" />
-    <link href="~/css/Admin/all.css" rel="stylesheet" /> 
+    <link href="~/css/Admin/all.css" rel="stylesheet" />
     <link href="~/css/Admin/style.css" rel="stylesheet" />
 
 </head>
@@ -13,20 +13,19 @@
         <div class="container">
             <div class="banner-text">
                 <div class="banner-heading">
-                    مدیریت جاذبه های گردشگری
+                    مدیریت نظرات
                 </div>
             </div>
         </div>
     </div>
-
     <div class="body-of-admin">
         <div class="container" style="direction: rtl;">
             <div class="row">
                 <div class="col-lg-3 col-md-12">
-                    <div class="panel-boxes">
+                    <div class="account-info-box fullsize panel-boxes text-right">
                         <ul class="account-nav fullsize">
                             <li>
-                                <a asp-page="#">
+                                <a asp-page="../Places/Place">
                                     <i class='far fa-map'></i>
                                     جاذبه های گردشگری
                                 </a>
@@ -38,7 +37,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a asp-page="../Countries/Country">
+                                <a asp-page="../Countries/Countries">
                                     <i class='fas fa-flag'></i>
                                     کشور ها
                                 </a>
@@ -50,13 +49,13 @@
                                 </a>
                             </li>
                             <li>
-                                <a asp-page="../Comments/Comment">
+                                <a asp-page="./Comment">
                                     <i class='far fa-comment-alt'></i>
                                     نظرات
                                 </a>
                             </li>
                             <li>
-                                <a href="../Rates/Rate">
+                                <a asp-page="../Rates/Rate">
                                     <i class='fas fa-star'></i>
                                     رای ها
                                 </a>
@@ -72,37 +71,33 @@
                 </div>
                 <div class="col-lg-9 col-md-12">
                     <div class="account-infos panel-boxes fullsize text-right">
-                        <div class="jazebe allinfo-heading fullsize">
-                            <div>جاذبه های گردشگری</div>
-                            <div class="jazebe-btn"><a asp-page="./Add" class="btn btn-primary">ایجاد</a></div>
+                        <div class="allinfo-heading fullsize">
+                            <div>ویرایش نظر</div>
                         </div>
-                        <table class="table">
-                            <thead class="thead-dark">
-                                <tr>
-                                    <th>شناسه</th>
-                                    <th>نام</th>
-                                    <th>عملیات</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @for (int i = 0; i < Model.places.Count; i++)
-                                {
-                                    <tr>
-                                        <td>@Model.places[i].id</td>
-                                        <td>@Model.places[i].Naame</td>
-                                        <td>
-                                            <a asp-page="./Delete" asp-route-id="@Model.places[i].id" class="btn btn-danger" >حذف</a>
-                                            <a asp-page="./Update" asp-route-id="@Model.places[i].id" class="btn btn-success">ویرایش</a>
-                                        </td>
-                                    </tr>
-
-                                }
-
-                            </tbody>
-                        </table>
+                        <form method="post" style="margin: 20px 39px;">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <div class="form-group">
+                                <input class="form-control" type="text" value="@Model.CommentId" asp-for="updateComment.CommentId">
+                                <span asp-validation-for="updateComment.CommentId" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label>نظر :</label>
+                                <textarea class="form-control" rows="5" asp-for="updateComment.Text"></textarea>
+                                <span asp-validation-for="updateComment.CommentId" class="text-danger"></span>
+                            </div>
+                            <button type="submit" class="btn btn-success">ویرایش</button>
+                            @if(Model.State == false)
+                            {
+                                <p>@ViewBag.Errore</p>
+                            }
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

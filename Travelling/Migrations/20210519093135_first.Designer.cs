@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TravellingEF.DataBase;
 
-namespace TravellingEF.Migrations
+namespace Travelling.Migrations
 {
     [DbContext(typeof(TravellingDBContext))]
-    partial class TravellingDBContextModelSnapshot : ModelSnapshot
+    [Migration("20210519093135_first")]
+    partial class first
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
