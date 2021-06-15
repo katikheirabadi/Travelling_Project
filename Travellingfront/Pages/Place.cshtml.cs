@@ -31,12 +31,10 @@ namespace Travellingfront.Pages
         [BindProperty]
         public User CurrentUser { get; set; }
         [BindProperty]
-        public RateInputDto NewRate { get; set; }
         public  static int PlaceId { get; set; }
 
         public PlaceModel(ITuristPlaceService turistPlaceService,
                           ICommentService commentService,
-                          IRateService rateService,
                           UserManager<User> userManager)
         {
             this.turistPlaceService = turistPlaceService;
@@ -51,9 +49,6 @@ namespace Travellingfront.Pages
             CurrentUser = await userManager.GetUserAsync(HttpContext.User);
             PlaceId = id;
         }
-
-
-      
 
     }
 }

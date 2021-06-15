@@ -30,7 +30,7 @@ namespace Travellingfront.Pages.Compare
         {
             var places = await turistPlaceService.ShowAll();
 
-            ViewData["Places"] = new SelectList(places, "Naame", "Naame");
+            ViewData["Places"] = new SelectList(places, "Name", "Name");
         }
         public async  Task<IActionResult> OnPost()
         {
@@ -38,7 +38,7 @@ namespace Travellingfront.Pages.Compare
             {
                 if (!ModelState.IsValid)
                     return Page();
-                var reasult = await compareService.Compare(compareInput);
+                compareOutput = await compareService.Compare(compareInput);
                 State = true;
                 return Page();
             }

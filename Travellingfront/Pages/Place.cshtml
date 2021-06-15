@@ -43,20 +43,23 @@
                     <img src=@Model.getPlace.Image alt="" class="myimage">
                 </div>
             </div>
+
             @if (Model.CurrentUser != null)
             {
-                <p id="login">@Model.CurrentUser.Id</p>
+                <p id="login" asp-for="NewComment.UserId">@Model.CurrentUser.Id</p>
                 <p id="email">@Model.CurrentUser.UserName</p>
-                <p id="place">@Model.getPlace.Id</p>
+                <p id="place" asp-for="NewComment.TuristPlace">@Model.getPlace.Id</p>
             }
             else
             {
                 <p id="login">logout</p>
+                <p id="email">logout</p>
+                <p id="place" asp-for="NewComment.TuristPlace">@Model.getPlace.Id</p>
             }
             <div class="row second-row">
                 <div class="col-xl-6 text-right comment-box">
                     <h3 class="text-center">نظر شما</h3>
-                    <form style="margin-top: 30px;">
+                    <form style="margin-top: 30px;" method="post">
                         <div class="form-group">
                             <label for="comment">نظر:</label>
                             <textarea class="form-control" rows="5" id="comment"></textarea>
@@ -82,7 +85,7 @@
                         <div class="col-xl-12 other-comments">
                             @for (int i = 0; i < Model.PlacesComment.Count; i++)
                             {
-                                <h6 id="profile"><img src="~/profile.png" >@Model.PlacesComment[i].UserName</h6>
+                                <h6 id="profile"><img src="~/profile.png">@Model.PlacesComment[i].UserName</h6>
                                 <p>
                                     @Model.PlacesComment[i].Text
                                 </p>
@@ -104,18 +107,21 @@
     <script type="text/javascript">
         $(function () {
             document.getElementById("login").style.display = "none";
-            document.getElementById("email").style.display = "none";
             document.getElementById("sendrate").style.display = "none";
             document.getElementById("commentsend").style.display = "none";
+            document.getElementById("email").style.display = "none";
             document.getElementById("place").style.display = "none";
             var star;
             var comment;
             var user;
+            var disabale;
             $(".fa-star").click(function () {
                 if ($("#login").text() == "logout") {
                     var result = confirm("شماوارد نشدید.آیا عضو سایت هستید؟");
                     if (result == true)
                         window.location = '/Login'
+                    else if (result == false)
+                        window.Location = "/Signin"
                 }
                 else {
                     user = $("#login").text()
@@ -131,8 +137,8 @@
                     star = starcount;
 
                 }
-            })
-            $("#sendrate").(function () {
+            });
+            $("#sendrate").click(function () {
 
                 star = parseInt(star);
                 console.log(user);
@@ -156,41 +162,46 @@
             });
             $("#comment").click(function () {
                 if ($("#login").text() == "logout") {
+                    $(this).attr('disabled', 'true');
+                    disabale = true;
                     var result = confirm("شماوارد نشدید.آیا عضو سایت هستید؟");
                     if (result == true)
                         window.location = '/Login'
                 }
                 else {
                     user = $("#login").text();
-                    comment = $("#comment").text();
-                    document.getElementById("commentsend").style.display = "inline";
+                    disabale = false;
+                    $("#commentsend").css("display", "inline");
                 }
-            })
+            });
+           
             $("#commentsend").click(function () {
-                if (comment == "") {
-                    alert("هیچ نظری ننوشته اید.");
-                }
-                else {
-                    var place1 = $("#place").text();
+                var place1 = $("#place").text();
+                place1 = parseInt(place1);
+                comment = $("#comment").val();
+                if (comment != "") {
+
                     var settings = {
                         "url": "https://localhost:44375/api/Comment/CreateComment",
                         "method": "POST",
                         "timeout": 0,
                         "headers": {
-                            "Token": "5d0074b7-aeec-42bf-aaab-f2ea697548e2",
+
                             "Content-Type": "application/json"
                         },
                         "data": JSON.stringify({ "comment": comment, "TuristPlace": place1, "UserId": user }),
                     };
 
                     $.ajax(settings).done(function (response) {
-                        $(".other-comments").last().append("<h6><img src='~/profile.png'></h6>");
-                        $("#profile").text($("#login2").text());
+                        $(".other-comments").last().append("<h6 id='profile'><img src='~/profile.png'>" + $("#email").text() + "</h6>");
                         $(".other-comments").last().append("<p>" + comment + "</p>");
                     });
                 }
+                else {
+                    alert("نظری ننوشته اید..");
+                }
+               
             })
-            
             function clear() {
                 var stars = $("h5").children("span");
                 for (var i = 0; i < stars.length; i++) {
