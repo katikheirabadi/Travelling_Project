@@ -22,7 +22,6 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\css\fonts\" />
-    <Folder Include="wwwroot\image\" />
   </ItemGroup>
 
   <ItemGroup>
