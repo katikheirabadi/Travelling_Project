@@ -22,58 +22,7 @@
         <div class="container" style="direction: rtl;">
             <div class="row">
                 <div class="col-lg-3 col-md-12">
-                    <div class="panel-boxes">
-                        <ul class="account-nav fullsize">
-                            <li>
-                                <a asp-page="./Place">
-                                    <i class='far fa-map'></i>
-                                    جاذبه های گردشگری
-                                </a>
-                            </li>
-                            <li>
-                                <a href="categories.html">
-                                    <i class='fas fa-layer-group'></i>
-                                    دسته بندی
-                                </a>
-                            </li>
-                            <li>
-                                <a href="countries.html">
-                                    <i class='fas fa-flag'></i>
-                                    کشور ها
-                                </a>
-                            </li>
-                            <li>
-                                <a href="cities.html">
-                                    <i class='fas fa-map-marker-alt'></i>
-                                    شهر ها
-                                </a>
-                            </li>
-                            <li>
-                                <a href="comments.html">
-                                    <i class='far fa-comment-alt'></i>
-                                    نظرات
-                                </a>
-                            </li>
-                            <li>
-                                <a href="rates.html">
-                                    <i class='fas fa-star'></i>
-                                    رای ها
-                                </a>
-                            </li>
-                            <li>
-                                <a href="users.html">
-                                    <i class='fas fa-id-card'></i>
-                                    کاربران
-                                </a>
-                            </li>
-                            <li>
-                                <a href="userlogins.html">
-                                    <i class='fas fa-user-clock'></i>
-                                    لاگین ها
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
+                    <partial name="_AdminNavbar" />
                 </div>
                 <div class="col-lg-9 col-md-12">
                     <p>@Model.getitem.Name حذف شد</p>
