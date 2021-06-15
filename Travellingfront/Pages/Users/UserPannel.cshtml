@@ -80,7 +80,11 @@
                         <div class="favorite-turist">
                             <div class="row country-item-row">
                                 <div class="col-xl-7 text-right">
-                                    <h3>@Model.Recommendeds[i].TuristPlaceName</h3>
+                                    <h3>
+                                        <a asp-page="../Place" asp-route-id=" @Model.Recommendeds[i].id">
+                                            @Model.Recommendeds[i].TuristPlaceName
+                                        </a>
+                                    </h3>
                                     <p class="country-item-p text-right">
                                        @Model.Recommendeds[i].Description
                                     </p>
@@ -94,13 +98,13 @@
                                             <span class="fa fa-star"></span>
                                             Model.Recommendeds[i].AverageRates++;
                                         }
-                                        <span class="btn btn-info">تعداد کامنت : @Model.Recommendeds[i].CommentsNumber</span>
-                                        <span class="text-info">تعداد بازدید : @Model.Recommendeds[i].Visit</span>
+                                        <span class="text text-info">تعداد کامنت : @Model.Recommendeds[i].CommentsNumber</span>
+                                        <span class="text text-info">تعداد بازدید : @Model.Recommendeds[i].Visit</span>
                                     </div>
                                 </div>
                                 <div class="col-xl-2 text-center">
                                     <div>
-                                        <img src=@Model.Recommendeds[i].Image class="country-item-image mx-auto" style="width:300px;height:288px">
+                                        <img src='~/image/@Model.Recommendeds[i].Image' class="country-item-image mx-auto" style="width:300px;height:288px">
                                     </div>
                                 </div>
                              </div>
