@@ -10,7 +10,7 @@ using TravellingCore.Dto.TuristPlaceCategory.GetAll;
 using TravellingCore.Dto.TuristPlaceCategory.Regisster;
 using TravellingCore.Exceptions;
 using TravellingCore.Model;
-using System.Linq;
+using TravellingCore.Dto.TuristPlaceCategory;
 
 namespace TravellingCore.Services.Models.Services.TuristPlaceCategoryServise
 {
@@ -104,17 +104,29 @@ namespace TravellingCore.Services.Models.Services.TuristPlaceCategoryServise
             return result;
 
         }
-        public async Task<List<GetturistPlaceOutputDto>> GetAll()
+        public async Task<List<ShowAllTuristPlaceCategoryOutputDtol>> ShowAll()
         {
-            var placecategories = await TuristPlaceCategoryRepository.GetAll();
-            return placecategories.Select(pr => new GetturistPlaceOutputDto()
-            {
-                Id = pr.Id,
-                CategoryId = pr.CategoryId,
-                PlacrId = pr.TuristPlaceId
-            }).ToList();
+            return TuristPlaceCategoryRepository.GetQuery()
+                                                .Include(c => c.Categories)
+                                                .Include(p => p.TuristPlaces)
+                                                .Select(p => new ShowAllTuristPlaceCategoryOutputDtol()
+                                                {
+                                                    CategoryName = p.Categories.Name,
+                                                    TuristPlaceName = p.TuristPlaces.Name,
+                                                    Id = p.Id
+                                                }
+                                                ).ToList();
 
         }
+        public async Task DeleteById(int id)
+        {
+            var delete = await TuristPlaceCategoryRepository.GetAll();
+            var delete1 = delete.FirstOrDefault(d => d.Id == id);
+            if (delete1 == null)
+                throw new KeyNotFoundException("Not Found");
 
+            TuristPlaceCategoryRepository.Delete(id);
+            await TuristPlaceCategoryRepository.Save();
+        }
     }
 }

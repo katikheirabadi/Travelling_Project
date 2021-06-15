@@ -108,7 +108,10 @@ namespace TravellingCore.Services.Models.Services.CountryService
         public async Task<GetCountryWithIdOutputDto> GetCountryWithId(int id)
         {
             var result = new GetCountryWithIdOutputDto();
-            var country = CountryRepository.GetQuery().Include(C=>C.Cities).Include(C=>C.TuristPlaces).FirstOrDefault(c => c.Id == id);
+            var country = CountryRepository.GetQuery()
+                                           .Include(C=>C.Cities)
+                                           .Include(C=>C.TuristPlaces)
+                                           .FirstOrDefault(c => c.Id == id);
 
 
             result.Id = id;
