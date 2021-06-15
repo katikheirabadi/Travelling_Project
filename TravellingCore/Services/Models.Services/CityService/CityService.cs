@@ -149,12 +149,14 @@ namespace TravellingCore.Services.Models.Services.CityService
 
             var result = new GetCityByIdOutputDto();
             result.Name = places.Select(p=> p.City.Name).FirstOrDefault();
+            result.Image = places.Select(p => p.City.Image).FirstOrDefault();
             result.Places = places.Select(p => new Place() { Id = p.Id,
                                                                          Description = p.Description,
                                                                          Image = p.Image,
                                                                          Name = p.Name,
                                                                          Comments = p.Comments.Count,
-                                                                         AverageRates = p.Rates.Average(x=>x.UserRate)
+                                                                         AverageRates = p.Rates.Average(x=>x.UserRate),
+                                                                         Visit = p.Visit
                                                                          })
                                                .ToList();
             return Task.Run(()=>result);                                        

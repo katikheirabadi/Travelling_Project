@@ -20,6 +20,7 @@ namespace Travellingfront.Pages.Admins.Comments
         [BindProperty]
         public UpdateCommentInputdto updateComment { get; set; }
         public bool State { get; set; }
+        [BindProperty]
         public int CommentId { get; set; }
         public void OnGet(int id)
         {

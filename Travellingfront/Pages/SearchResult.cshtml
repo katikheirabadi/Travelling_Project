@@ -10,8 +10,8 @@
         <div class="container">
             <div class="banner-text">
                 <div class="banner-heading">
-                   جستجو با فیلتر
-                </div> 
+                    جستجو با فیلتر
+                </div>
             </div>
         </div>
     </div>
@@ -58,6 +58,7 @@
                     country = null;
                 }
                 $.get("https://localhost:44375/api/Search/SearchByFilter", { CountryId: country, CityId: city }, function (data, status) {
+                    console.log(data);
                     for (var i = 0; i < data.length; i++) {
                         console.log(data[i]);
                         $(".secend").append("<div class='row tp-item-row item'></div>");
@@ -67,28 +68,24 @@
                         $(".col-xl-9").last().append("<div class='float-left'></div>");
                         var count = data[i].averageRates;
                         var star = 0;
-                        while (count != 0) {
+                        for (var j = 0; j < count;j++) {
                             $(".float-left").last().append("<span class='fa fa-star checked'></span>")
-                            count--;
                             star++;
                         }
-                        while (star < 5) {
+                        for (var k = star; k < 5; k++) {
                             $(".float-left").last().append("<span class='fa fa-star '></span>")
-                            star++;
                         }
-                        $(".float-left").last().append("<span class='btn btn-info' >تعداد کامنت :" + data[i].commentsNumber +"</span>");
+                        $(".float-left").last().append("<span class='btn btn-info' >تعداد کامنت :" + data[i].commentsNumber + "</span>");
                         $(".float-left").last().append("<span class='text-info' >تعداد بازدید :" + data[i].visit + "</span>");
-
                         $(".tp-item-row").last().append("<div class='col-xl-3 text-center'></div>");
                         $(".col-xl-3").last().append("<div><img class='tp-item-image mx-auto' id=img></div>");
                         $(".tp-item-image").last().attr("src", data[i].image);
-                        
-                    }
                        
-
+                    }
+                 
                 });
-                
+
             });
         })
-    </script> 
- }
+    </script>
+}

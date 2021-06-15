@@ -49,7 +49,7 @@
                                         <td>@Model.Commentes[i].PlaceId</td>
                                         <td>
                                             <a asp-page="./Delete" asp-route-id="@Model.Commentes[i].Id" class="btn btn-danger" >حذف</a>
-                                            <a href="commentedit.html" class="btn btn-success">ویرایش</a>
+                                            <a asp-page="./Update" asp-route-id="@Model.Commentes[i].Id" class="btn btn-success">ویرایش</a>
                                         </td>
                                     </tr>
                                 }

@@ -141,7 +141,7 @@ namespace TravellingCore.Services.Models.Services.CategoryServise
                                                           .Select(p => new Place()
                                                           {
                                                               AverageRates = p.Rates.Average(x => x.UserRate),
-                                                              CommentsNumber = 0,
+                                                              CommentsNumber = TuristplaceRepository.GetQuery().Include(p=>p.Comments).Where(c=> c.Id==p.Id).Select(p=> p.Comments.Count).FirstOrDefault(),
                                                               Name = p.Name,
                                                               Image = p.Image,
                                                               Description = p.Description,

@@ -7,7 +7,7 @@
     <link href="~/css/City/City.css" rel="stylesheet" />
 </head>
 <div class="text-center">
-    <div class="banner">
+    <div class="banner" style="background-image:url(@Model.City.Image)">
         <div class="container">
             <div class="banner-text">
                 <div class="banner-heading">
@@ -22,12 +22,17 @@
         {
             <div class="row country-item-row">
                 <div class="col-xl-9 text-right">
-                    <h3>@Model.City.Places[i].Name</h3>
+                    <h3>
+                        <a asp-page="/Place" asp-route-id="@Model.City.Places[i].Id">
+                            @Model.City.Places[i].Name
+                        </a>
+                    </h3>
                     <p class="country-item-p">
                         @Model.City.Places[i].Description
                     </p>
 
-                    <a asp-page="/Place" asp-route-id="@Model.City.Places[i].Id" class="btn btn-info">تعداد کامنت : @Model.City.Places[i].Comments</a>
+                    <span  class="text text-info">تعداد کامنت : @Model.City.Places[i].Comments</span>
+                    <span  class="text text-info">تعداد بازدید : @Model.City.Places[i].Visit</span>
                     @for (int k = 0; k < Convert.ToInt32(Model.City.Places[i].AverageRates); k++)
                     {
                         <span class="fa fa-star checked"></span>

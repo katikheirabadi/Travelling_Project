@@ -23,6 +23,7 @@
         <div class="container" style="direction: rtl;">
             <div class="row">
                 <div class="col-lg-3 col-md-12">
+                    <partial name="_AdminNavbar" />
                 </div>
                 <div class="col-lg-9 col-md-12">
                     <div class="account-infos panel-boxes fullsize text-right">
@@ -33,12 +34,12 @@
                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                             <div class="form-group">
                                 <label>دسته بندی :</label>
-                                <input type="text" class="form-control" asp-for="registerInput.Category">
+                                <select type="text" class="form-control" asp-for="registerInput.Category" asp-items="ViewBag.categories"></select>
                                 <span asp-validation-for="registerInput.Category" class="text-danger"></span>
                             </div>
                             <div class="form-group">
                                 <label>جاذبه ها </label>
-                                <input type="text" class="form-control" asp-for="registerInput.TuristPlace">
+                                <select type="text" class="form-control" asp-for="registerInput.TuristPlace" asp-items="ViewBag.places"></select>
                                 <span asp-validation-for="registerInput.Category" class="text-danger"></span>
                             </div>
                             <button type="submit" class="btn btn-primary">ایجاد</button>

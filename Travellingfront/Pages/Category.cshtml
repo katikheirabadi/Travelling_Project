@@ -21,12 +21,17 @@
         {
             <div class="row country-item-row">
                 <div class="col-xl-9 text-right">
-                    <h3>@Model.Category.Places[i].Name</h3>
+                    <h3>
+                        <a  asp-page="/Place" asp-route-id="@Model.Category.Places[i].Id">
+                            @Model.Category.Places[i].Name
+                        </a>
+                    </h3>
                     <p class="country-item-p">
                         @Model.Category.Places[i].Description
                     </p>
 
-                    <a asp-page="/Place" asp-route-id="@Model.Category.Places[i].Id" class="btn btn-info">تعداد کامنت : @Model.Category.Places[i].CommentsNumber</a>
+                    <span class="text text-info">تعداد کامنت : @Model.Category.Places[i].CommentsNumber </span>
+                    <span class="text text-info">تعداد بازدید : @Model.Category.Places[i].Visit </span>
                     @for (int k = 0; k < Convert.ToInt32(Model.Category.Places[i].AverageRates); k++)
                     {
                         <span class="fa fa-star checked"></span>

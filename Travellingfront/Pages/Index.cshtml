@@ -8,10 +8,10 @@
         <div class="container">
             <div class="banner-text">
                 <div class="banner-heading">
-                    خاطرات سفر خود را با ما شروع کنید
+                     سفر خود را با ما شروع کنید
                 </div>
                 <div class="banner-sub-heading">
-                    با ما می‌توانید اطلاعات جامعی از مکان های گردشگری داخلی و خارجی بدست آورید و انتخاب راحتی داشته باشید
+                   انتخاب مقصد سفرتان را به ما بسپارید
                 </div>
             </div>
         </div>
@@ -25,7 +25,6 @@
                     <h2 class="text-right" style="margin-bottom: 25px;">کجا میخوای بری ؟</h2>
                         <input type="submit" value="جستجو" id="search" style="width:230px;height:48px;background-color:#17a2b8;border:0px;">
                         <input type="text" placeholder="جستجو ..." name="search" id="ss" style="width:664px;height:48px">
-                        <input type="submit" value="بعدی" id="next" style="height:48px;width:200px;border:0px;background-color:#17a2b8;" />
                 </div>
             </div>
             <br />  
@@ -299,7 +298,7 @@
             $("#searchbyname").hide();
             $("#search").click(function () {
                 $.get("https://localhost:44375/api/Search/SearchbyName", { turistPlace: $("#ss").val() }, function (data, status) {
-                    console.log(data);
+                    $("#searchbyname").hide();
                     $("#searchbyname").show();
                     $("#name").text(data.name);
                     $("#description").text(data.description);
@@ -333,14 +332,11 @@
                     var visit =  data.visit;
                     $("#visit").text(visit);
 
-                    $("#image").attr("src", data.image);
+                    $("#image").attr("src","~/Image/"+data.image);
 
                 });
 
-                $("#next").click(function () {
-    
-                   $("#searchbyname").hide();
-                })
+                
             });
             $("#b").click(function () {
                 $.get("https://localhost:44375/api/TuristPlace/GetAllPlace", function (data, status) {

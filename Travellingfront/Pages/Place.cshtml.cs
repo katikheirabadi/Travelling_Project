@@ -10,6 +10,7 @@ using TravellingCore.Dto.Coment.GetPlaceComment;
 using TravellingCore.Dto.Rate;
 using TravellingCore.Dto.TuristPlace.GetPlace;
 using TravellingCore.Dto.TuristPlaces.GetPlaceWithId;
+using TravellingCore.Dto.Visit;
 using TravellingCore.Model;
 using TravellingCore.Services.Models.Services.CommentServise;
 using TravellingCore.Services.Models.Services.RateService;
@@ -45,6 +46,7 @@ namespace Travellingfront.Pages
         public async Task OnGet(int id)
         {
             getPlace = await turistPlaceService.GetByid(id);
+            await turistPlaceService.View(new VisitInputDto() { TuristPlaceName = getPlace.Name });
             PlacesComment = await commentService.ShowPlaceComments(new GetPlaceCommentsInputDto() {  TuristPlaceName = getPlace.Name});
             CurrentUser = await userManager.GetUserAsync(HttpContext.User);
             PlaceId = id;
