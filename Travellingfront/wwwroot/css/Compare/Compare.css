@@ -1,0 +1,30 @@
+﻿.comparebody {
+    direction: rtl;
+    font-family: iranyekan;
+}
+
+.select-turistplace {
+    width: 100%;
+    line-height: 80px;
+}
+
+.select2-container .select2-selection--single {
+    height: 50px !important;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+    line-height: 50px !important;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__arrow {
+    top: 15px !important;
+}
+
+.compareshow {
+    background: linear-gradient(90deg, rgba(125,244,255,1) 0%, rgba(118,255,145,1) 43%, rgba(125,244,255,1) 100%);
+    border-radius: 10px;
+}
+
+.top-boxes {
+    padding: 30px 10px 30px 0px;
+}

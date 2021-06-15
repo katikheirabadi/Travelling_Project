@@ -6,10 +6,11 @@
     <link href="~/css/Admin/admin.css" rel="stylesheet" />
     <link href="~/css/Admin/all.css" rel="stylesheet" />
     <link href="~/css/Admin/style.css" rel="stylesheet" />
+    <link href="~/css/Compare/Compare.css"  rel="stylesheet"/>
 
 </head>
 <div class="text-center">
-    <div class="banner" style="background-image:url('image/compareheader.jpg');">
+    <div class="banner" style="  background-image: url('../../compare-crms-like-a-pro-01.png');">
         <div class="container">
             <div class="banner-text">
                 <div class="banner-heading">
@@ -19,19 +20,19 @@
         </div>
     </div>
     <div class="container comparebody">
-        <form action="#">
+        <form method="post">
             <div class="row">
                 <div class="col-xl-6">
                     <div class="form-group">
                         <h2 class="text-right">انتخاب جاذبه گردشگری اول</h2>
-                        <select class="select-turistplace form-control" asp-items="ViewBag.Places">
+                        <select class="select-turistplace form-control" asp-for="compareInput.FirstPlace" asp-items="ViewBag.Places">
                         </select>
                     </div>
                 </div>
                 <div class="col-xl-6">
                     <div class="form-group">
                         <h2 class="text-right">انتخاب جاذبه گردشگری دوم</h2>
-                        <select class="select-turistplace form-control" asp-items="ViewBag.Places">
+                        <select class="select-turistplace form-control" asp-for="compareInput.SecendPlace" asp-items="ViewBag.Places">
                         </select>
                     </div>
                 </div>

@@ -1,5 +1,5 @@
 ﻿@page
-@model Travellingfront.Pages.Admins.Cities.CityModel
+@model Travellingfront.Pages.Admins.TuristPlaceCategories.TuristPlaceCategoryModel
 @{
 }
 <head>
@@ -12,12 +12,11 @@
         <div class="container">
             <div class="banner-text">
                 <div class="banner-heading">
-                    مدیریت شهر ها
+                    مدیریت جاذبه و دسته بندی
                 </div>
             </div>
         </div>
     </div>
-
     <div class="body-of-admin">
         <div class="container" style="direction: rtl;">
             <div class="row">
@@ -26,26 +25,29 @@
                 <div class="col-lg-9 col-md-12">
                     <div class="account-infos panel-boxes fullsize text-right">
                         <div class="jazebe allinfo-heading fullsize">
-                            <div>شهر ها</div>
+                            <div>رابطه جاذبه و دسته بندی ها</div>
                             <div class="jazebe-btn"><a asp-page="./Add" class="btn btn-primary">ایجاد</a></div>
                         </div>
                         <table class="table">
                             <thead class="thead-dark">
                                 <tr>
                                     <th>شناسه</th>
-                                    <th>نام</th>
+                                    <th>دسته بندی </th>
+                                    <th>جاذبه گردشگری</th>
                                     <th>عملیات</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @for (int i = 0; i < Model.Cities.Count; i++)
+                                @for (int i = 0; i < Model.showAllTuristPlace.Count; i++)
                                 {
                                     <tr>
-                                        <td>@Model.Cities[i].Id</td>
-                                        <td>@Model.Cities[i].Name</td>
+                                        <td>@Model.showAllTuristPlace[i].Id</td>
+                                        <td>@Model.showAllTuristPlace[i].CategoryName</td>
+                                        <td>@Model.showAllTuristPlace[i].TuristPlaceName</td>
                                         <td>
-                                            <a asp-page="./Delete" asp-route-id="@Model.Cities[i].Id" class="btn btn-danger">حذف</a>
+                                            <a asp-page="./Delete" asp-route-id="@Model.showAllTuristPlace[i].Id" class="btn btn-danger">حذف</a>
                                         </td>
+
                                     </tr>
                                 }
                             </tbody>
@@ -55,5 +57,4 @@
             </div>
         </div>
     </div>
-
 </div>

@@ -1,5 +1,5 @@
 ﻿@page
-@model Travellingfront.Pages.Admins.Categories.DeleteModel
+@model Travellingfront.Pages.Admins.TuristPlaceCategories.DeleteModel
 @{
 }
 <head>
@@ -9,11 +9,12 @@
 
 </head>
 <div class="text-center">
-    <div class="banner" style="background-image: url('../../adminbg.jpg');">
+
+    <div class="banner" style="background-image:url('../../adminbg.jpg');">
         <div class="container">
             <div class="banner-text">
                 <div class="banner-heading">
-                    @Model.Category.Name  حذف
+                    حذف 
                 </div>
             </div>
         </div>
@@ -23,21 +24,16 @@
         <div class="container" style="direction: rtl;">
             <div class="row">
                 <div class="col-lg-3 col-md-12">
+                  
                 </div>
                 <div class="col-lg-9 col-md-12">
-                    @if (Model.State == true)
+                    @if (Model.State != true)
                     {
-                        <p>@Model.Category.Name حذف شد</p>
+                        <p>@ViewBag.Error</p>
                     }
-                    else
-                    {
-                       <div>
-                           <span class="text-danger">@ViewBag.Error</span>
-                       </div>
-                    }
+
                 </div>
             </div>
         </div>
     </div>
-
 </div>

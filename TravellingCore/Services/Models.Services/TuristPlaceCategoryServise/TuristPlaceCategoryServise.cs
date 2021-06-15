@@ -1,12 +1,15 @@
 ﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using TravellingCore.ContextRepositoryInterface;
+using TravellingCore.Dto.TuristPlaceCategory;
 using TravellingCore.Dto.TuristPlaceCategory.Regisster;
 using TravellingCore.Exceptions;
 using TravellingCore.Model;
+using System.Linq;
 
 namespace TravellingCore.Services.Models.Services.TuristPlaceCategoryServise
 {
@@ -98,6 +101,30 @@ namespace TravellingCore.Services.Models.Services.TuristPlaceCategoryServise
 
             return result;
 
+        }
+        public async Task<List<ShowAllTuristPlaceCategoryOutputDtol>> ShowAll()
+        {
+            return TuristPlaceCategoryRepository.GetQuery()
+                                                .Include(c => c.Categories)
+                                                .Include(p => p.TuristPlaces)
+                                                .Select(p => new ShowAllTuristPlaceCategoryOutputDtol()
+                                                {
+                                                    CategoryName = p.Categories.Name,
+                                                    TuristPlaceName = p.TuristPlaces.Name,
+                                                    Id = p.Id
+                                                }
+                                                ).ToList();
+            
+        }
+        public async Task DeleteById(int id)
+        {
+            var delete = await TuristPlaceCategoryRepository.GetAll();
+            var delete1 = delete.FirstOrDefault(d => d.Id == id);
+            if (delete1 == null)
+                throw new KeyNotFoundException("Not Found");
+
+            TuristPlaceCategoryRepository.Delete(id);
+            await TuristPlaceCategoryRepository.Save();
         }
 
     }

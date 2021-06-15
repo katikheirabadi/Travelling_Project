@@ -235,7 +235,7 @@ namespace TravellingCore.ModelsServiceRepository.Models.Methods
         public async Task<List<GetAllPlaces>> ShowAll()
         {
             var places = await TuristPlaceRepository.GetAll();
-            var myplaces = places.Select(p => new GetAllPlaces() { id = p.Id, Naame = p.Name }).ToList();
+            var myplaces = places.Select(p => new GetAllPlaces() { id = p.Id, Name = p.Name }).ToList();
             return myplaces;
         } 
         public async Task<string> DeleteById(int id)
