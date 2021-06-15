@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -24,14 +26,17 @@ namespace TravellingCore.ModelsServiceRepository.Models.Methods
         private readonly IRepository<Rate> RateRepository;
         private readonly IRepository<TuristPlace> TuristPlaceRepository;
         private readonly IMapper mapper;
+        private readonly UserManager<User> userManager;
 
         public RateService(IRepository<Rate> RateRepository,
                           IRepository<TuristPlace> TuristPlaceRepository,
-                          IMapper mapper)
+                          IMapper mapper,
+                          UserManager<User> userManager)
         {
             this.RateRepository = RateRepository;
             this.TuristPlaceRepository = TuristPlaceRepository;
             this.mapper = mapper;
+            this.userManager = userManager;
         }
       
        
@@ -55,23 +60,28 @@ namespace TravellingCore.ModelsServiceRepository.Models.Methods
 
             return findrate;
         }
-        public async Task<string> AddRate(RateInputDto  rate , string Token)
+        public async Task<string> AddRate(RateInputDto  rate)
         {
-            //var user = await FindUserLogin(Token);
-            //IsExpired(user);
-            //var place = FindPlace(rate.place);
-
-            //RateRepository.Insert(new Rate()
-            //{
-            //    RecordDate = DateTime.Now,
-            //    UserRate = rate.Rate,
-            //    TuristPlaceId = place.Id,
-            //    UserId = user.UserId
-            //}) ;
-            //await RateRepository.Save();
-
-
-            return "we add your Rate .";
+            var places = await TuristPlaceRepository.GetAll();
+            var place = places.Find(p => p.Id == rate.place);
+            try
+            {
+                var user = await userManager.FindByIdAsync(rate.UserId);
+                RateRepository.Insert(new Rate()
+                {
+                    RecordDate = DateTime.Now,
+                    UserRate = rate.Rate,
+                    TuristPlaceId = place.Id,
+                    UserId = user.Id
+                });
+                await RateRepository.Save();
+                return "we add your Rate .";
+            }
+            catch 
+            {
+                throw new KeyNotFoundException("not found this user");
+            }
+           
           }
         public async Task<GetRateOutputDto> GetRate(GetrateInputDto getinput)
         {

@@ -26,13 +26,13 @@ namespace Travelling.Controllers
             this.RateServise = RateServise;
         }
         [HttpPost]
-        public async Task<IActionResult> AddRate([FromBody]RateInputDto rate,[FromHeader]string Token)
+        public async Task<IActionResult> AddRate([FromBody]RateInputDto rate)
         {
             if(!ModelState.IsValid)
             {
                 return BadRequest();
             }
-            var result = await RateServise.AddRate(rate, Token);
+            var result = await RateServise.AddRate(rate);
             return Ok(result);
         }
         [HttpGet]

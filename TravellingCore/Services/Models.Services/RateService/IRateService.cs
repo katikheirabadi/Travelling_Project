@@ -15,7 +15,7 @@ namespace TravellingCore.Services.Models.Services.RateService
 {
     public interface IRateService
     {
-        public Task<string> AddRate(RateInputDto rate, string Token);
+        public Task<string> AddRate(RateInputDto rate);
         public Task<GetRateOutputDto> GetRate(GetrateInputDto getinput);
         public Task<List<GetRateOutputDto>> GetAllRate();
         public Task<List<GetPlaceRatesOutputDto>> GetAllRatesOfPlace(GetPlaceRatesInputDto getplaceinput);

@@ -26,13 +26,13 @@ namespace Travelling.Controllers
             this.CommentServise = CommentServise;
         }
         [HttpPost]
-        public async Task<IActionResult> CreateComment([FromBody]ComentInsertDto coment,[FromHeader] string Token)
+        public async Task<IActionResult> CreateComment([FromBody]ComentInsertDto coment)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest();
             }
-            var result = await CommentServise.AddComment(coment, Token);
+            var result = await CommentServise.AddComment(coment);
             return Ok(result);
         }
         [HttpGet]

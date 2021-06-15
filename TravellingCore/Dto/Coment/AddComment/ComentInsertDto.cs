@@ -10,6 +10,8 @@ namespace TravellingCore.Dto.Coment
         [Required(ErrorMessage ="this field is empty")]
         public string comment { get; set; }
         [Required(ErrorMessage = "this field is empty")]
-        public string TuristPlace { get; set; }
+        public int TuristPlace { get; set; }
+        [Required(ErrorMessage = "this field is empty")]
+        public string UserId { get; set; }
     }
 }

@@ -2,10 +2,11 @@
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TravellingCore.ContextRepositoryInterface;
-using TravellingCore.Dto.TuristPlaceCategory;
+using TravellingCore.Dto.TuristPlaceCategory.GetAll;
 using TravellingCore.Dto.TuristPlaceCategory.Regisster;
 using TravellingCore.Exceptions;
 using TravellingCore.Model;
@@ -71,6 +72,7 @@ namespace TravellingCore.Services.Models.Services.TuristPlaceCategoryServise
             return relation;
 
         }
+
         public async Task<string> Register(RegisterInputDto registerinput)
         {
             var findplace = await FindPlace(registerinput.TuristPlace);
@@ -102,29 +104,16 @@ namespace TravellingCore.Services.Models.Services.TuristPlaceCategoryServise
             return result;
 
         }
-        public async Task<List<ShowAllTuristPlaceCategoryOutputDtol>> ShowAll()
+        public async Task<List<GetturistPlaceOutputDto>> GetAll()
         {
-            return TuristPlaceCategoryRepository.GetQuery()
-                                                .Include(c => c.Categories)
-                                                .Include(p => p.TuristPlaces)
-                                                .Select(p => new ShowAllTuristPlaceCategoryOutputDtol()
-                                                {
-                                                    CategoryName = p.Categories.Name,
-                                                    TuristPlaceName = p.TuristPlaces.Name,
-                                                    Id = p.Id
-                                                }
-                                                ).ToList();
-            
-        }
-        public async Task DeleteById(int id)
-        {
-            var delete = await TuristPlaceCategoryRepository.GetAll();
-            var delete1 = delete.FirstOrDefault(d => d.Id == id);
-            if (delete1 == null)
-                throw new KeyNotFoundException("Not Found");
+            var placecategories = await TuristPlaceCategoryRepository.GetAll();
+            return placecategories.Select(pr => new GetturistPlaceOutputDto()
+            {
+                Id = pr.Id,
+                CategoryId = pr.CategoryId,
+                PlacrId = pr.TuristPlaceId
+            }).ToList();
 
-            TuristPlaceCategoryRepository.Delete(id);
-            await TuristPlaceCategoryRepository.Save();
         }
 
     }

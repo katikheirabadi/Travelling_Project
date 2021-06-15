@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -7,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TravellingCore.ContextRepositoryInterface;
 using TravellingCore.Dto.Favorites;
+using TravellingCore.Dto.SearchByFilter;
 using TravellingCore.Exceptions;
 using TravellingCore.Model;
 
@@ -15,53 +17,82 @@ namespace TravellingCore.Services.FavoriteService
     public class FavorteService : IFavoriteService
     {
         private readonly IRepository<TuristPlaceCategory> TuristPlaceCategoryRepository;
+        private readonly UserManager<User> userManager;
+        private readonly IRepository<Comment> commentrepository;
+        private readonly IRepository<TuristPlace> TuristPlaceRepository;
         private readonly IMapper mapper;
-
         public FavorteService(IRepository<TuristPlaceCategory> TuristPlaceCategoryRepository
+                              ,UserManager<User> userManager
+                              ,IRepository<Comment> Commentrepository
+                              ,IRepository<TuristPlace> TuristPlaceRepository
                               ,IMapper mapper)
         {
             this.TuristPlaceCategoryRepository = TuristPlaceCategoryRepository;
+            this.userManager = userManager;
+            commentrepository = Commentrepository;
+            this.TuristPlaceRepository = TuristPlaceRepository;
             this.mapper = mapper;
         }
-        public async Task<List<FavoroteOutputDto>> ReccomendedByFavorite(string Token)
+        private List<FilterOutputDetailDTO> ConCat(List<FilterOutputDetailDTO> First , List<FilterOutputDetailDTO> Secend)
         {
-        //    var finduserlogin = await FindUserLogin(Token);
-        //    IsExpiresdToken(finduserlogin, Token);
+            var add = false;
+            foreach (var item in Secend)
+            {
+                if (First.Count == 0)
+                    First.Add(item);
+                else
+                {
+                    foreach (var item2 in First)
+                    {
+                        if (item.id != item2.id)
+                            add = true;
+                        else
+                            add = false;
+                    }
+                    if (add)
+                        First.Add(item);
+                }
+            }
+            return First;
+        }
+        private List<FilterOutputDetailDTO> RecommendedByCountry(User User)
+        {
+            return TuristPlaceRepository.GetQuery().Include(c => c.Country)
+                                                .Include(p => p.Rates)
+                                                .Include(p => p.Comments)
+                                                .Where(p => p.CountryId == User.FavoriteCountry)
+                                                .Select(p => mapper.Map<FilterOutputDetailDTO>(p)).ToList();
+        }
+        private List<FilterOutputDetailDTO> RecommendedByCategory(User User)
+        {
+            var places = TuristPlaceRepository.GetQuery().Include(c => c.Country)
+                                                .Include(p => p.Rates)
+                                                .Include(p => p.Comments)
+                                                .Select(p => mapper.Map<FilterOutputDetailDTO>(p)).ToList();
+            var placescategories = TuristPlaceCategoryRepository.GetQuery().Include(tc => tc.Categories)
+                                                           .Include(tc => tc.TuristPlaces)
+                                                           .Where(tc => tc.CategoryId == User.FavoriteCategory)
+                                                           .Select(tc => tc.TuristPlaceId).ToList();
+            return places.Where(p => placescategories.Contains(p.id)).ToList();                                         
+        }
+        public async Task<List<FilterOutputDetailDTO>> ReccomendedByFavorite(string UserId)
+        {
+            var user = await userManager.FindByIdAsync(UserId);
+            var recommended = new List<FilterOutputDetailDTO>();
+            if (user.FavoriteCategory != null)
+            {
+                var categoryrecommended = RecommendedByCategory(user);
+                recommended = ConCat(recommended, categoryrecommended);
+            }
+            if (user.FavoriteCountry != null)
+            {
+                var countryrecommended = RecommendedByCountry(user);
+                recommended = ConCat(recommended, countryrecommended);
+            }
+            if (recommended.Count==0)
+                throw new KeyNotFoundException("remommended is null");
 
-        //    var favorites = GetFavorites(finduserlogin);
-
-        //    var reccomended = new List<TuristPlace>();
-
-        //    if (favorites[0] != null)
-        //    {
-        //        var result = TuristPlaceCategoryRepository.GetQuery()
-        //                                                  .Include(p => p.TuristPlaces)
-        //                                                  .ThenInclude(p=>p.Comments)
-        //                                                  .Include(p => p.Categories)
-        //                                                  .Where(p => p.Categories.Id == favorites[0])
-        //                                                  .Select(p => p.TuristPlaces)
-        //                                                  .Include(p=>p.Rates)
-        //                                                  .ToList();
-        //        reccomended = result;
-        //    }
-        //    if (favorites[1] != null)
-        //    {
-        //        var result = TuristPlaceCategoryRepository.GetQuery()
-        //                                                  .Include(p => p.TuristPlaces)
-        //                                                  .ThenInclude(p => p.Country)
-        //                                                  .Where(p => p.TuristPlaces.Country.Id == favorites[1])
-        //                                                  .Select(p => p.TuristPlaces)
-        //                                                  .Include(p=>p.Rates)
-        //                                                  .ToList();
-
-        //        reccomended = reccomended.Concat(result).ToList();
-        //    }
-
-        //    if (reccomended == null)
-        //        throw new KeyNotFoundException("شما علاقه مندی در ثبت نام خود انتخاب نکردی");
-
-
-            return null; //reccomended.Select(p => mapper.Map<FavoroteOutputDto>(p)).ToList();
+            return recommended;
 
         }
     }

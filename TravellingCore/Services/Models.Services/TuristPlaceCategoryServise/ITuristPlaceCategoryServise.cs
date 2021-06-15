@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
-using TravellingCore.Dto.TuristPlaceCategory;
+using TravellingCore.Dto.TuristPlaceCategory.GetAll;
 using TravellingCore.Dto.TuristPlaceCategory.Regisster;
 
 namespace TravellingCore.Services.Models.Services.TuristPlaceCategoryServise

@@ -54,14 +54,14 @@ namespace Travellingfront.Pages
             ViewData["Countries"] = new SelectList(countries, "Id", "Name");
             ViewData["categories"] = new SelectList(categories, "Id", "Name");
 
-           // return Task.CompletedTask;
+          
         }
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
             returnUrl = returnUrl ?? Url.Content("~/");
             if (ModelState.IsValid)
             {
-                var user = new TravellingCore.Model.User
+                var user = new User
                 {
                     FullName = Signin.FullName,
                     UserName = Signin.Username,
