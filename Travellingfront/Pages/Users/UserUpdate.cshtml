@@ -6,6 +6,7 @@
     <link href="~/css/User/all.css" rel="stylesheet" />
     <link href="~/css/User/user.css" rel="stylesheet" />
     <link href="~/css/User/style.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 </head>
 <partial name="_StatusMessage" model="Model.StatusMessage" />
@@ -30,8 +31,7 @@
                             <img src="~/profile.png">
                         </div>
                         <div class="profile-name text-right">
-                            <div>علی میرزایی</div>
-                            <div style="color: red;">کاربر</div>
+                            <div>@Model.Me.FullName</div>
                         </div>
                     </div>
                     <div class="profile-foot fullsize">

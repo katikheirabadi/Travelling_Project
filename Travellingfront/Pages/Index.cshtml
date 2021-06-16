@@ -32,7 +32,11 @@
           
                 <div class="row tp-item-row" id="searchbyname" style="background-color:rgba(23, 162, 184, 0.1);">
                 <div class="col-xl-9 text-right" id="a">
-                    <h3 id="name"></h3>
+                    <h3 id="name">
+                        <a id="link">
+
+                        </a>
+                    </h3>
                     <p class="tp-item-p text-right" id="description">  
                     </p>
                     <img id="delete" src="~/delete.jpg" style="width:27px;" />
@@ -301,7 +305,8 @@
                 $.get("https://localhost:44375/api/Search/SearchbyName", { turistPlace: $("#ss").val() }, function (data, status) {
                     $("#searchbyname").hide();
                     $("#searchbyname").show();
-                    $("#name").text(data.name);
+                    $("#link").text(data.name);
+                    $("#link").attr('href', './Place?id=' + data.id);
                     $("#description").text(data.description);
                     var count = data.averageRates;
                     if (count != 0)

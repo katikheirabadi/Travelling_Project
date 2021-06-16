@@ -29,13 +29,14 @@ namespace Travellingfront.Pages.Compare
         public async Task OnGet()
         {
             var places = await turistPlaceService.ShowAll();
-
             ViewData["Places"] = new SelectList(places, "Name", "Name");
         }
         public async  Task<IActionResult> OnPost()
         {
             try
             {
+                var places = await turistPlaceService.ShowAll();
+                ViewData["Places"] = new SelectList(places, "Name", "Name");
                 if (!ModelState.IsValid)
                     return Page();
                 compareOutput = await compareService.Compare(compareInput);

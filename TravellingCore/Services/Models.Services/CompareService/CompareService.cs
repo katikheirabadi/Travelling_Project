@@ -21,11 +21,10 @@ namespace TravellingCore.Services.Models.Services.CompareService
             this.rate = rate;
             this.turistPlace = turistPlace;
         }
-        private async Task<double> GetAverage(int TuricePlaceId)
+        private  double GetAverage(int TuricePlaceId)
         {
-            var computingRate = await rate.GetAll();
-            return computingRate.Where(r => r.TuristPlaceId == TuricePlaceId)
-                                .Average(r => r.UserRate);
+            var computingRate = turistPlace.GetQuery().Include(p => p.Rates).FirstOrDefault(r => r.Id == TuricePlaceId);
+            return computingRate.Rates.Average(r => r.UserRate);
         }
         private async Task<int> GetPlaceId(string placeName)
         {
@@ -40,11 +39,11 @@ namespace TravellingCore.Services.Models.Services.CompareService
             var FirstPlaceId = await GetPlaceId(compareInput.FirstPlace);
             var SecendPlaceId = await GetPlaceId(compareInput.SecendPlace);
 
-            var FirstPlaceRate = await GetAverage(FirstPlaceId);
-            var FirstPlaceIdRate = await GetAverage(SecendPlaceId);
+            var FirstPlaceRate =  GetAverage(FirstPlaceId);
+            var secendPlaceRate =  GetAverage(SecendPlaceId);
 
 
-            if (FirstPlaceRate == FirstPlaceIdRate)
+            if (FirstPlaceRate == secendPlaceRate)
             {
                 return new CompareOutputDto
                 {
@@ -52,14 +51,14 @@ namespace TravellingCore.Services.Models.Services.CompareService
 
                     SecendPlace = compareInput.SecendPlace,
 
-                    AverageRate1 = FirstPlaceId,
+                    AverageRate1 = FirstPlaceRate,
 
-                    AverageRate2 = SecendPlaceId,
+                    AverageRate2 = secendPlaceRate,
 
                     Result = "میانگین رای  این دو مکان توریستی با هم برابر است"
                 };
             }
-            else if (FirstPlaceRate >= FirstPlaceIdRate)
+            else if (FirstPlaceRate > secendPlaceRate)
             {
                 return new CompareOutputDto
                 {
@@ -67,11 +66,11 @@ namespace TravellingCore.Services.Models.Services.CompareService
 
                     SecendPlace = compareInput.SecendPlace,
 
-                    AverageRate1 = FirstPlaceId,
+                    AverageRate1 = FirstPlaceRate,
 
-                    AverageRate2 = SecendPlaceId,
+                    AverageRate2 = secendPlaceRate,
 
-                    Result = "میانگین رای " + compareInput.FirstPlace + "بیش تر از" + compareInput.SecendPlace
+                    Result = "میانگین رای " + compareInput.FirstPlace + " بیش تر از" + compareInput.SecendPlace
 
                 };
              }
@@ -83,11 +82,11 @@ namespace TravellingCore.Services.Models.Services.CompareService
 
                     SecendPlace = compareInput.SecendPlace,
 
-                    AverageRate1 = FirstPlaceId,
+                    AverageRate1 = FirstPlaceRate,
 
-                    AverageRate2 = SecendPlaceId,
+                    AverageRate2 = secendPlaceRate,
 
-                    Result = "میانگین رای " + compareInput.SecendPlace + "بیش تر از" + compareInput.FirstPlace
+                    Result = "میانگین رای " + compareInput.SecendPlace + " بیش تر از" + compareInput.FirstPlace
 
                 };
             }

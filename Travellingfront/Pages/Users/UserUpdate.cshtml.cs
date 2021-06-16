@@ -40,7 +40,7 @@ namespace Travellingfront.Pages.Users
         [BindProperty]
         public SigninInputDTO Input { get; set; }
 
-
+        public User Me { get; set; }
 
         private async Task LoadAsync(User user)
         {
@@ -66,6 +66,7 @@ namespace Travellingfront.Pages.Users
             var countries = await countryService.GetAll();
             var categories = await categoryServise.GetAll();
 
+            Me = await _userManager.GetUserAsync(HttpContext.User);
             ViewData["Countries"] = new SelectList(countries, "Id", "Name");
             ViewData["categories"] = new SelectList(categories, "Id", "Name");
 

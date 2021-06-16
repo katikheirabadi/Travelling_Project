@@ -63,7 +63,8 @@
                         console.log(data[i]);
                         $(".secend").append("<div class='row tp-item-row item'></div>");
                         $(".tp-item-row").last().append("<div class='col-xl-9 text-right'></div>");
-                        $(".col-xl-9").last().append("<h3>" + data[i].turistPlaceName + "</h3>");
+                        $(".col-xl-9").last().append("<h3><a id='link'>" + data[i].turistPlaceName + "</a></h3>");
+                        //$("#link").last().attr('href', './Place?id=' + data[i].id);
                         $(".col-xl-9").last().append("<p class='tp-item-p text-right'>" + data[i].description + "</p>");
                         $(".col-xl-9").last().append("<div class='float-left'></div>");
                         var count = data[i].averageRates;
