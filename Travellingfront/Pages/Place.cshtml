@@ -193,9 +193,7 @@
                     };
 
                     $.ajax(settings).done(function (response) {
-                        $(".other-comments").last().append("<h6 id='profile'><img id='profileimg'>" + $("#email").text() + "</h6>");
-                        $("#profileimg").last().attr("src", "../../profile.png");
-                        $(".other-comments").last().append("<p>" + comment + "</p>");
+                        alert("نظر شما ثبت شد..");
                     });
                 }
                 else {
