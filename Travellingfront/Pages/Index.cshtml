@@ -35,6 +35,7 @@
                     <h3 id="name"></h3>
                     <p class="tp-item-p text-right" id="description">  
                     </p>
+                    <img id="delete" src="~/delete.jpg" style="width:27px;" />
                     <div class="float-left">
                           <span class="fa fa-star " id="1"></span>
                           <span class="fa fa-star " id="2"></span>
@@ -332,7 +333,7 @@
                     var visit =  data.visit;
                     $("#visit").text(visit);
 
-                    $("#image").attr("src","~/Image/"+data.image);
+                    $("#image").attr("src","../../image/"+data.image);
 
                 });
 
@@ -342,8 +343,11 @@
                 $.get("https://localhost:44375/api/TuristPlace/GetAllPlace", function (data, status) {
                     console.log(data[0]);
                 })
-            })
-            
+            });
+            $("#delete").click(function () {
+                $("#searchbyname").hide();
+            }
+           )
 
         });
     </script>

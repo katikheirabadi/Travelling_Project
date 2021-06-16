@@ -37,7 +37,11 @@
                         <span asp-validation-for="NewUserLogin.Password" class="text-danger"></span>
                     </div>
                     <br>
-                    <button type="submit" class="btn" style="background-color:#17a2b8; text-align: center;">ثبت نام</button>
+                    <button type="submit" class="btn" style="background-color:#17a2b8; text-align: center;">ورود</button>
+                    @if (Model.State == false)
+                    {
+                        <p class="text-danger">@ViewBag.Error</p>
+                    }
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
                     <br>

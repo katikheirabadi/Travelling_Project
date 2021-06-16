@@ -19,6 +19,7 @@ namespace TravellingCore.Dto.Sign_in
         public string Password { get; set; }
         [DisplayName("تکرار رمز عبور")]
         [Required(ErrorMessage = "پر کردن این فیلد الزامی می‌باشد.")]
+        [Compare("Password", ErrorMessage ="رمز عبور را درست وارد کنید")]
         public string RePassword { get; set; }
         [DisplayName("شماره همراه")]
         public string PhoneNumber { get; set; }

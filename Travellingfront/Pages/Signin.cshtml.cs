@@ -44,6 +44,7 @@ namespace Travellingfront.Pages
         [BindProperty]
         public SigninInputDTO Signin { get; set; }
         public string ReturnUrl { get; set; }
+        public bool State { get; set; }
 
         public  async Task OnGet(string returnUrl = null)
         {
@@ -58,38 +59,47 @@ namespace Travellingfront.Pages
         }
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
-            returnUrl = returnUrl ?? Url.Content("~/");
-            if (ModelState.IsValid)
+            try
             {
-                var user = new User
+                returnUrl = returnUrl ?? Url.Content("~/");
+                if (ModelState.IsValid)
                 {
-                    FullName = Signin.FullName,
-                    UserName = Signin.Username,
-                    Password = Signin.Password,
-                    RePassword = Signin.RePassword,
-                    PhoneNumber = Signin.PhoneNumber,
-                    FavoriteCategory = Signin.FavoriteCategory,
-                    FavoriteCountry = Signin.FavoriteCountry,
-                };
+                    var user = new User
+                    {
+                        FullName = Signin.FullName,
+                        UserName = Signin.Username,
+                        Password = Signin.Password,
+                        RePassword = Signin.RePassword,
+                        PhoneNumber = Signin.PhoneNumber,
+                        FavoriteCategory = Signin.FavoriteCategory,
+                        FavoriteCountry = Signin.FavoriteCountry,
+                    };
 
 
-                var result = await _userManager.CreateAsync(user, Signin.Password);
-                await _userManager.AddToRoleAsync(user, AppRole.User.ToString());
-                if (result.Succeeded)
-                {
-                    _logger.LogInformation("User created a new account with password.");
+                    var result = await _userManager.CreateAsync(user, Signin.Password);
+                    await _userManager.AddToRoleAsync(user, AppRole.User.ToString());
+                    if (result.Succeeded)
+                    {
+                        _logger.LogInformation("User created a new account with password.");
 
-                    await _signInManager.SignInAsync(user, isPersistent: false);
-                    return LocalRedirect(returnUrl);
+                        await _signInManager.SignInAsync(user, isPersistent: false);
+                        return LocalRedirect(returnUrl);
+                    }
+                    foreach (var error in result.Errors)
+                    {
+                        ModelState.AddModelError(string.Empty, error.Description);
+                    }
                 }
-                foreach (var error in result.Errors)
-                {
-                    ModelState.AddModelError(string.Empty, error.Description);
-                }
+
+                // If we got this far, something failed, redisplay form
+                return Page();
             }
-
-            // If we got this far, something failed, redisplay form
-            return Page();
+            catch (Exception e)
+            {
+                State = false;
+                ViewData["Error"] = e.Message;
+                return Page();
+            }
         }
     }
 }

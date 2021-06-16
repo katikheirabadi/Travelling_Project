@@ -46,14 +46,22 @@
                             <label asp-for="Signin.Password"></label>
                             <input type="password" class="form-control" asp-for="Signin.Password" placeholder="رمز عبور خود را وارد کنید" id="pwd" style="text-align: right;">
                             <span asp-validation-for="Signin.Password" class="text-danger"></span>
-
+                            <p class="text-info" style="font-size:11px;">
+                               یکی از علامت های % # / در پسورد خود استفاده کنید.
+                            </p>
+                            <p class="text-info" style="font-size:11px;">
+                                رمز عبور باید هم شامل رقم و هم حرف باشد
+                            </p>
+                            <p class="text-info" style="font-size:11px;">
+                                رمز عبور شما باید 6 رقم باشد
+                            </p>
                         </div>
 
                         <div class="form-group">
                             <label asp-for="Signin.RePassword"></label>
                             <input asp-for="Signin.RePassword" type="password" class="form-control" placeholder="رمز عبور خود را دوباره وارد کنید" id="pwd" style="text-align: right;">
                             <span asp-validation-for="Signin.RePassword" class="text-danger"></span>
-
+                            
                         </div>
 
                         <div class="from-group">
@@ -72,6 +80,10 @@
                         <br>
                         <br>
                         <button type="submit" class="btn" style="background-color:#17a2b8; text-align: center;">ثبت نام</button>
+                        @if (Model.State==false)
+                        {
+                            <p class="text-danger">@ViewBag.Error</p>
+                        }
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                         <br>
                         <br>
