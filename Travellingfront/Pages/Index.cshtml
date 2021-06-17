@@ -302,7 +302,7 @@
             
             $("#searchbyname").hide();
             $("#search").click(function () {
-                $.get("https://localhost:44375/api/Search/SearchbyName", { turistPlace: $("#ss").val() }, function (data, status) {
+                $.get("http://api.travelling-project.ir/api/Search/SearchbyName", { turistPlace: $("#ss").val() }, function (data, status) {
                     $("#searchbyname").hide();
                     $("#searchbyname").show();
                     $("#link").text(data.name);
@@ -345,7 +345,7 @@
                 
             });
             $("#b").click(function () {
-                $.get("https://localhost:44375/api/TuristPlace/GetAllPlace", function (data, status) {
+                $.get("http://api.travelling-project.ir/api/TuristPlace/GetAllPlace", function (data, status) {
                     console.log(data[0]);
                 })
             });

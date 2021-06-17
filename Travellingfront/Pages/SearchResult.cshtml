@@ -57,7 +57,7 @@
                 if (country == "کشور") {
                     country = null;
                 }
-                $.get("https://localhost:44375/api/Search/SearchByFilter", { CountryId: country, CityId: city }, function (data, status) {
+                $.get("http://api.travelling-project.ir/api/Search/SearchByFilter", { CountryId: country, CityId: city }, function (data, status) {
                     console.log(data);
                     for (var i = 0; i < data.length; i++) {
                         console.log(data[i]);

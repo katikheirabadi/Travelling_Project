@@ -45,17 +45,7 @@ namespace Travelling
             services.AddDependency();
             services.AddSwaggerGen(c => c.SwaggerDoc("Travelling", new Microsoft.OpenApi.Models.OpenApiInfo { Title = "Travelling", Version = "Travelling_Priject" }));
             // services.AddSwaggerGen(c=>c.SwaggerDoc() )
-            services.AddCors(options =>
-            {
-                options.AddDefaultPolicy(builder =>
-                {
-                    builder.AllowAnyOrigin()
-                    .AllowAnyMethod()
-                    .AllowAnyHeader();
-
-                }
-              );
-            });
+           
            services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<TravellingDBContext>();
 
         }
@@ -69,12 +59,17 @@ namespace Travelling
             }
             app.UseSwagger();
             app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/Travelling_Project/swagger.json", "Travelling_Project"));
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
 
             app.UseRouting();
-            app.UseCors();
+            
 
             app.UseAuthorization();
+            app.UseCors(x => x
+               .AllowAnyMethod()
+               .AllowAnyHeader()
+               .SetIsOriginAllowed(origin => true)
+               .AllowCredentials());
             app.UseMiddleware<CustomExceptionHandlerMiddleware>();
 
             app.UseEndpoints(endpoints =>
